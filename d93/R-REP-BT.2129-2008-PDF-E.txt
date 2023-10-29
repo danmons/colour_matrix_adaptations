@@ -1,0 +1,1313 @@
+Report ITU-R BT.2129
+(05/2009)
+
+User requirements for a Flat Panel
+Display (FPD) as a Master monitor
+in an HDTV programme
+production environment
+
+BT Series
+Broadcasting service
+(television)
+
+Rep. ITU-R BT.2129
+
+ii
+
+Foreword
+The role of the Radiocommunication Sector is to ensure the rational, equitable, efficient and economical use of the
+radio-frequency spectrum by all radiocommunication services, including satellite services, and carry out studies without
+limit of frequency range on the basis of which Recommendations are adopted.
+The regulatory and policy functions of the Radiocommunication Sector are performed by World and Regional
+Radiocommunication Conferences and Radiocommunication Assemblies supported by Study Groups.
+
+Policy on Intellectual Property Right (IPR)
+ITU-R policy on IPR is described in the Common Patent Policy for ITU-T/ITU-R/ISO/IEC referenced in Annex 1 of
+Resolution ITU-R 1. Forms to be used for the submission of patent statements and licensing declarations by patent
+holders are available from http://www.itu.int/ITU-R/go/patents/en where the Guidelines for Implementation of the
+Common Patent Policy for ITU-T/ITU-R/ISO/IEC and the ITU-R patent information database can also be found.
+
+Series of ITU-R Reports
+(Also available online at http://www.itu.int/publ/R-REP/en)
+
+Series
+BO
+BR
+BS
+BT
+F
+M
+P
+RA
+RS
+SA
+SF
+SM
+
+Title
+Satellite delivery
+Recording for production, archival and play-out; film for television
+Broadcasting service (sound)
+Broadcasting service (television)
+Fixed service
+Mobile, radiodetermination, amateur and related satellite services
+Radiowave propagation
+Radio astronomy
+Remote sensing systems
+Space applications and meteorology
+Frequency sharing and coordination between fixed-satellite and fixed service systems
+Spectrum management
+
+Note: This ITU-R Report was approved in English by the Study Group under the procedure detailed
+in Resolution ITU-R 1.
+
+Electronic Publication
+Geneva, 2009
+© ITU 2009
+All rights reserved. No part of this publication may be reproduced, by any means whatsoever, without written permission of ITU.
+
+Rep. ITU-R BT.2129
+
+1
+
+REPORT ITU-R BT.2129*
+User requirements for a Flat Panel Display (FPD) as a Master** monitor
+in an HDTV programme production environment
+(2008)
+Introduction
+Flat panel displays will replace CRT based master monitors in TV programme production, and
+monitoring, it is therefore urgent that a set of user requirements be addressed. Flat panel displays
+have recently shown display performance closely emulating that of the CRT, as with most
+technologies the performance characteristics improves over time. It is the aim of this Report to be
+technology agnostic, although it should be remembered that certain technologies have
+characteristics that can not be ignored.
+As of this writing, technologies such as Plasma, LCD, and FED may all be contenders for
+consideration as Master monitors. In all cases, commercial products may well vary in their
+performance, generally based on price.
+In developing this Report the following assumptions are being made:
+1
+A master monitor is a measuring instrument of image quality in TV programme production.
+The purpose of a monitor is to faithfully and reliably display the signal as it is, and it must
+not attempt to “enhance” or otherwise alter the image. To do this, the input signal should be
+subjected to as little signal processing as possible.
+2
+A FPD will be used in the same way as a CRT master monitor in daily operation of TV
+programme production.
+3
+The focus of this Report is the display of HDTV images.
+4
+Recommendation ITU-R BT.709 was developed based on the assumed characteristics of
+CRT monitors (ex. colour gamut, gamma characteristics). Master monitors play a critical
+role of being utilized as a measuring instrument which displays the image in accordance
+with the specification of Recommendation ITU-R BT.709. FPD when used as a master
+monitor should have the same or similar characteristics as those of the CRT.
+5
+The input signals should have 10 bit pixel depth.
+
+____________________
+*
+
+Radiocommunication Study Group 6 made editorial amendments to this Report in 2009 in accordance
+with Resolution ITU-R 1.
+
+** The term Master monitor is also called Reference monitor, or Grade 1 monitor in different regions.
+
+Rep. ITU-R BT.2129
+
+2
+
+CONTENTS
+Page
+Introduction..............................................................................................................................
+
+1
+
+1
+
+User requirements – Image quality.................................................................................
+
+4
+
+1.1
+
+Peak luminance/all-white luminance ..................................................................
+
+4
+
+1.2
+
+Black ...................................................................................................................
+
+4
+
+1.3
+
+Contrast ratio ......................................................................................................
+
+4
+
+1.4
+
+Gamma characteristics........................................................................................
+
+4
+
+1.5
+
+Tone reproduction (Grey scale) ..........................................................................
+
+5
+
+1.6
+
+Colour gamut ......................................................................................................
+
+5
+
+1.7
+
+Colour temperature (White)................................................................................
+
+5
+
+1.8
+
+Viewing-angle dependency ................................................................................
+
+5
+
+1.9
+
+Motion artefacts ..................................................................................................
+
+5
+
+1.10
+
+Screen resolution ................................................................................................
+
+5
+
+1.11
+
+Image scaling, de-interlacing and overscan........................................................
+
+6
+
+1.12
+
+Uniformity ..........................................................................................................
+
+6
+
+1.13
+
+Mura....................................................................................................................
+
+6
+
+1.14
+
+Smear (vertical and horizontal crosstalk) ...........................................................
+
+6
+
+1.15
+
+Stability...............................................................................................................
+
+6
+
+1.16
+
+Screen size ..........................................................................................................
+
+6
+
+1.17
+
+Pixel defects........................................................................................................
+
+7
+
+1.18
+
+Ringing ...............................................................................................................
+
+7
+
+1.19
+
+Image sticking (long-term after-image)..............................................................
+
+7
+
+1.20
+
+Interface signal....................................................................................................
+
+7
+
+User requirements – Functionality of a master monitor (Informative) ..........................
+
+7
+
+2.1
+
+Input signal format and interface ........................................................................
+
+7
+
+2.2
+
+Display range on display for each input signal...................................................
+
+7
+
+2.3
+
+Selection of display range (scan selection).........................................................
+
+7
+
+2.4
+
+Backlight intensity control..................................................................................
+
+8
+
+2.5
+
+Reference white ..................................................................................................
+
+8
+
+2.6
+
+Black and white/colour display switch ...............................................................
+
+8
+
+2.7
+
+Delay time...........................................................................................................
+
+8
+
+2
+
+Rep. ITU-R BT.2129
+
+3
+Page
+
+2.8
+
+Aspect ratio markers ...........................................................................................
+
+8
+
+2.9
+
+Safe area markers................................................................................................
+
+9
+
+2.10
+
+Selection of plain colour R, G, B ........................................................................
+
+10
+
+2.11
+
+Gain control (RGB independent gain control) ....................................................
+
+10
+
+2.12
+
+Bias control (RGB independent pedestal (Black level) control).........................
+
+10
+
+2.13
+
+Brightness control (Black level) .........................................................................
+
+10
+
+2.14
+
+Contrast control (RGB gain control)...................................................................
+
+10
+
+2.15
+
+Auto set-up..........................................................................................................
+
+10
+
+Guide to measurement techniques – (Informative) ........................................................
+
+10
+
+3.1
+
+Base line conditions............................................................................................
+
+11
+
+3.2
+
+Input signal .........................................................................................................
+
+11
+
+3.3
+
+Peak luminance/all-white luminance ..................................................................
+
+11
+
+3.4
+
+Black ...................................................................................................................
+
+11
+
+3.5
+
+Contrast ratio ......................................................................................................
+
+11
+
+3.6
+
+Gamma characteristics........................................................................................
+
+12
+
+3.7
+
+Tone reproduction...............................................................................................
+
+12
+
+3.8
+
+Colour gamut ......................................................................................................
+
+12
+
+3.9
+
+Colour temperature (White point) ......................................................................
+
+12
+
+3.10
+
+Viewing-angle dependency ................................................................................
+
+12
+
+3.11
+
+Motion blur .........................................................................................................
+
+13
+
+3.12
+
+Resolution ...........................................................................................................
+
+13
+
+3.13
+
+Uniformity ..........................................................................................................
+
+13
+
+3.14
+
+Mura....................................................................................................................
+
+13
+
+3.15
+
+Vertical and horizontal crosstalk ........................................................................
+
+13
+
+3.16
+
+Stability...............................................................................................................
+
+14
+
+3.17
+
+Pixel defects........................................................................................................
+
+14
+
+3.18
+
+Ringing ...............................................................................................................
+
+14
+
+3.19
+
+Image sticking (long-term afterimage) ...............................................................
+
+15
+
+Appendix A ..............................................................................................................................
+
+15
+
+Appendix B ..............................................................................................................................
+
+16
+
+Appendix C – Illustration of the direction and the four planes in measurement .....................
+
+19
+
+3
+
+Rep. ITU-R BT.2129
+
+4
+1
+
+User requirements – Image quality
+
+In reviewing the user requirements, the reader should be cautioned that the parameter values noted
+are a moving target and the performance will no doubt be improved over time.
+1.1
+
+Peak luminance/all-white luminance
+
+When a luma signal of level 940 (100% white) is input, the display should be adjusted so that the
+peak luminance on the screen can be set at any luminance level within the range of 100 to
+250 cd/m2.
+When a luma signal of level 64 (black) through 1 019 (109% white) is input, grey scale tracking
+should be performed on each level between level 64 and 1 019.
+The above conditions must be met for a colour temperature of 6 500 K (D65) (in some regions the
+above conditions must be met for a colour temperature of 9 300 K (D93)).
+ABL (Automatic Brightness Limiter) function if provided should be disabled.
+1.2
+
+Black
+
+When a luma signal of level 64 (black) is input, the luminance level on the screen should be less
+than 0.01 cd/m2.
+Measurement for this item must be conducted after adjustment of the display using the PLUGE test
+signal specified in Recommendation ITU-R BT.814, in case of LCD monitors, neither automatic
+nor manual control of backlight intensity should be active during the measurement of black level.
+This measurement may prove to be difficult under some conditions.
+1.3
+
+Contrast ratio
+
+Contrast ratio should be more than 350:1.
+The FPD is adjusted using the PLUGE test signal as specified in Recommendation ITU-R BT.814
+so that the luminance setting of the 100% white part on the screen becomes 100 cd/m2. Then,
+contrast ratio is measured as the ratio between the luminance of the part displaying 100% white
+(luma signal of value 940) on the screen, and that corresponding to displaying only the black level
+(luma signal of value 64) in a completely dark room when the signal specified in Recommendation
+ITU-R BT.815 for measurement of contrast ratio is input. Neither automatic control nor manual
+control of backlight intensity should be active during the measurement of contrast ratio.
+1.4
+
+Gamma characteristics
+
+The gamma characteristics (electro-optical transfer characteristic) of the display should be
+equivalent to those of a reference CRT. The value for Gamma is still under discussion, the intent is
+that the final value should emulate the CRT or at minimum produce image characteristic that
+closely match the CRT.
+Appendixes A and B – These appendixes reflect the finding of two industry bodies that have been
+investigating this issue. This information should be considered informative. It is expected that
+further information will be available in 2008/2009.
+1.5
+
+Tone reproduction (Grey scale)
+
+Grey scale tracking in R, G and B components should be performed with no less than 10-bit
+precision. Grey scale tracking between colour channels shall be within ellipses defined:
+±0.0010 Δu', ±0.0015 Δv' (CIE 1976 chromaticity differences) for luminances from 1 cd/m2
+to 100 cd/m2 and deviation from grey should not be visible for luminances below 1 cd/m2.
+
+Rep. ITU-R BT.2129
+
+5
+
+The suggested tolerances may need further definition in the range above reference white up to the
+limit of 109% white (1019).
+1.6
+
+Colour gamut
+
+The FPD should display images with the colour gamut specified in Recommendation
+ITU-R BT.709.
+1.7
+
+Colour temperature (White)
+
+The FPD should display pictures with a reference white colour temperature of 6 500 K(D65)
+±0.0010 Δu', ±0.0015 Δv' (CIE 1976 chromaticity differences) or (in some regions of the
+world 9 300 K (D93) is used)1.
+1.8
+
+Viewing-angle dependency
+
+Deviations in reproduced colour on the screen should not be visible to a human observer when
+viewing the screen from an angle of up to ±45° horizontally and vertically in any direction from the
+perpendicular axis to the centre of the screen (see Appendix C).
+As a guide to an acceptable numerical value, Δu', Δv' (CIE 1976 chromaticity differences) should
+be less than 0.01 for any of the colours within the Recommendation ITU-R BT.709 gamut.
+As a guide to an acceptable numerical value, the luminance value should drop less than 10% for
+viewing angles within ±30° horizontally, vertically, and diagonally, and less than 20% for viewing
+angles within ±30° and ±45° horizontally, vertically, and diagonally.
+The black level, when measured from viewing angles up to ±20° in any direction from the
+perpendicular axis to the centre of the screen, horizontally and vertically, = Δu', Δv' = < 0.01. When
+measured from viewing angles between ±20 – ±45° horizontally and vertically = Δu', Δv' = < 0.02.
+1.9
+
+Motion artefacts
+
+Motion blur on FPD screens should be comparable to those of the CRT, or to a degree at which it
+cannot be detected. Work continues on decreasing the visibility of motion artefacts. Different FPD
+technologies require different solutions and produce different artefacts. In addition the refresh rate
+of FPDs may not be at the same rate as the native rate of the image. Care should be taken to ensure
+that no difference in motion rendition is introduced.
+1.10
+
+Screen resolution
+
+The horizontal and vertical pixel counts on the screen must be equal to the number of active
+samples per line and the number of active lines per frame of TV system for R, G and B,
+respectively. The desire is to have a one to one pixel mapping without the use of image scalers. In
+some cases, scaling may be required in order for the image to completely fill the screen End users
+are advised to determine the characteristics of the scaler before performing any critical evaluation.
+1.11
+a)
+b)
+
+Image scaling, de-interlacing and overscan
+Image scaling should be done in such a way as to avoid the introduction of artefacts, such
+as excessive ringing, aliases or banding, noise, etc.
+It is desirable that monitors display the image in the native interlace or progressive format
+that is present on the input interface. De-interlacing of interlace images, if equipped, should
+be able to be turned off.
+
+1 If the colour temperature is designed for either D65 or D93 only, the other colour temperature must be
+
+realized by signal processing. Under these circumstances, 10-bit precision may not be obtained.
+
+Rep. ITU-R BT.2129
+
+6
+c)
+
+d)
+
+The default mode should be to display without overscan, that is, showing the full active
+image area right to its edges. This should be the optimal mode for scaling quality, and often
+may be one-to-one pixel mapping.
+Monitors should offer optional programmable overscan/underscan mode of up to 5%.
+
+1.12
+
+Uniformity
+
+The luminance values measured at many points for each luma signal level on the whole screen
+should meet the following conditions when the signal of the grey level is input: (the maximum
+measured value – the minimum measured value)/the average value ≤ 0.10. This measurement
+should be performed at a mid grey level, and white level.
+1.13
+
+Mura2
+
+Mura should not be visually detected on the screen regardless of reproduced luminance levels or
+colour saturation. This artefact is not expected to be a problem however in the interest of
+completeness it is included in this Report.
+1.14
+
+Smear3 (vertical and horizontal crosstalk)
+
+When the input signal has a rectangle of luma signal of value 64 (black) or 940 (100% white) near
+the centre and has a grey area in its surroundings (see Fig. 2), the difference in luminance between
+the horizontal and vertical belt-like portions and the other grey portions should not be greater
+than 0.5%.
+1.15
+a)
+b)
+1.16
+
+Stability
+A 30-min warm-up period from a “cold” start should be allowed before any observations or
+measurements are taken.
+After this warm-up time, the measurements shall remain within the specifications given
+for 24 h.
+Screen size
+
+The screen size of the display is at the discretion of users, but may need to be larger (because of the
+target viewing distance of 3 times picture height) for adequate monitoring of HD. Production spaces
+are still designed for the same size CRT monitors previously used, because there are often
+constraints which make moving to larger screen sizes difficult. This may have an impact on the
+ability to adequately monitor HD quality. It is suggested that screen sizes in the range of
+18-32 inches may suite current environments. It is anticipated that larger screen sizes will be
+required in the future.
+1.17
+
+Pixel defects
+
+The ideal situation would be that there are no pixel defects. A more pragmatic approach may that
+there should be no visible pixel defects. Specific image content may expose pixel defects
+differently.
+2 “Mura” is a defect that looks like a small-scale crack with very small changes in luminance or colour.
+
+“Mura” is likely to be noticeable in the flat portions of images even if the size of the mura is very small.
+3
+
+“Smear” is a term for capturing devices with CCD, and it means the phenomenon that a vertical bright bar
+occurs when such strong light source as the sun or electric bulbs is shot. In case of CRT monitors, when a
+much brighter or darker spot than the surrounding area causes vertical or horizontal bars, this phenomenon
+is also often called as smear. The similar phenomenon is called as “crosstalk” for LCD and “image
+streaking” for PDP. Here, smear means the phenomenon that the data on one part of the display influences
+what is displayed elsewhere.
+
+Rep. ITU-R BT.2129
+1.18
+
+7
+
+Ringing
+
+Ringing or overshoots should not be introduced by any processing in the display. Ringing “in the
+image signal” should be displayed. Monitors should not cut off under- and over-shoots, or sub-black
+and super-white levels.
+1.19
+
+Image sticking (long-term after-image)
+
+The characteristics for image sticking (long-term afterimage) on the screen of a FPD should be less
+than a CRT monitor.
+1.20
+
+Interface signal
+
+The input interface should comply with Recommendation ITU-R BT.1120 for both 4:2:2 signals
+and 4:4:4 signals.
+2
+
+User requirements – Functionality of a master monitor (Informative)
+
+Defining master monitor functionality is NOT intended to be a product design, manufacturers are
+encouraged to design products with features and functionality as they see fit. This list of functional
+requirements is not intended to be a complete list. These requirements are intended to be guidelines
+only.
+2.1
+
+Input signal format and interface
+
+The input signal format should be HD-SDI interface specified in Recommendation ITU-R BT.1120.
+2.2
+
+Display range on display for each input signal
+
+The default aspect ratio should be 16:9, all pixels contained in the pixel matrix 1 920 x 1 080 should
+be displayed without rescaling.
+In some cases, when a 4 × 3 aspect ratio image is carried by the interface, the image should be
+1 440 × 1 080 pixels mapped within the 1 920 × 1 080 interface format.
+2.3
+
+Selection of display range (scan selection)
+
+Normal (100%) displays all active image area of the input signal.
+Over-scan (105%)/under-scan (95%) display format is optional, and should not be used for image
+evaluation. The over-scan/under-scan programmable functionality may be used to verify consumer
+viewing conditions.
+To perform “underscan display” in a simple way, an adjustable black border is suggested to
+surround the image. The overscan amount being adjustable, up to 5%.to account for local regional
+conditions
+2.4
+
+Backlight intensity control
+
+When adjusting the monitor luminance, it is preferable to use backlight intensity control rather to
+use signal level scaling to retain the bit precision. Accordingly, where applicable, it should be
+possible to change the backlight intensity manually in small increments, and to switch to preset
+values. It should be possible to change and store the preset values.
+When a luma signal of value 940 (100% white) is input, the backlight should be adjustable so that
+the luminance can be within the range of 100 to 250 cd/m2.
+
+Rep. ITU-R BT.2129
+
+8
+
+Some technologies do not use a backlight, in this case the white level should be adjusted to be
+within the range of 100 to 250 cd/m2 by the means other than signal level scaling.
+2.5
+
+Reference white
+
+D65 should be the default value (in some regions D93 may be the default setting).
+2.6
+
+Black and white/colour display switch
+
+When an input signal is in Y, CB, CR, format it should be possible to display the Y signal only (black
+and white display mode). If an input signal is in the RGB format, black and white display mode is
+not required.
+Black and white/colour switch should be easily accessible, with minimal disturbance to the
+displayed image.
+2.7
+
+Delay time4
+
+The use of FPDs introduces a potential systems design problem. FPDs typically use some form of
+image processing that may well introduce significant delay before the image is displayed. Different
+technology, and modes of operation, could introduce delays that are not consistent between
+manufacturers and or monitors from one manufacturer. Users should be aware that applications
+requiring accurate switching times or verification of Lip Sync will also need to know the delay time
+of a monitor. It is suggested that manufacturers indicate the delay time of their master monitor.
+2.8
+
+Aspect ratio markers
+
+It should be possible to display the lines to display the positions for 14:9, 13:9 and 4:3, and the line
+colours should be selectable. The sample numbers defining the borders should comply with Fig. 1.
+It should be possible to perform a shadow display for the outside parts of 14:9, 13:9 and 4:3, and the
+luminance for the shadow parts should be selectable. The sample numbers (Black, Grey, etc.) which
+define the borders should comply with Fig. 1.
+2.9
+
+Safe area markers
+
+As shown in Fig. 2, it should be possible to perform a marker display for the safety zone in full
+screen display. Users should be able to change the marker position for safety zone from 80% to
+100% in increments of 1%, and the current % should be displayed on the screen.
+If a signal with aspect ratio of 14:9, 13:9 or 4:3 is displayed, the marker position should be
+changeable from 80% to 100% in increments of 1%, and the current % should be displayed on the
+screen.
+2.10
+
+Selection of plain colour R, G, B
+
+It should be possible to independently display the R, G, B, signals.
+2.11
+
+Gain control (RGB independent gain control)
+
+The gains for R, G and B should be independently adjustable.
+
+4
+
+“Delay time” here means the latency between the input signal and the displayed signal, namely “delay
+time” refers to the period from the time when a signal is input into the input signal terminal of FPD to the
+time when it is displayed.
+
+Rep. ITU-R BT.2129
+
+2.12
+
+9
+
+Bias control (RGB independent pedestal (Black level) control)
+
+Where applicable the biases of R, G and B should be independently adjustable.
+2.13
+
+Brightness control (Black level)
+
+It should be possible to change the brightness settings manually and switch to preset settings. The
+preset settings should be programmable.
+2.14
+
+Contrast control (RGB gain control)
+
+It should be possible to change the contrast settings manually and switch to preset settings. The
+preset settings should be programmable.
+
+Rep. ITU-R BT.2129
+
+10
+
+2.15
+
+Auto set-up
+
+The monitor should offer some form of Auto or semi auto set-up functions that can be operator
+initiated, the intent being that a large number of monitors will match one to another.
+3
+
+Guide to measurement techniques – (Informative)
+
+The suggested measurement methods may vary from this text depending upon the test instrument
+that is being used. Moreover in many cases only subjective observations may be made. End users
+should be aware that many adjustments to an FPD may differ to adjustments made to a CRT, the
+manufacturers recommendations should be followed.
+3.1
+
+Base line conditions
+
+As a base line, measurement is performed in a dark room after a 30 min or longer warm up time.
+Measurement should be conducted in a dark room for the following reasons:
+a)
+
+locations where master monitors are used, are dark; and
+
+b)
+
+measurements can be made with minimal influence from the surrounding light.
+
+3.2
+
+Input signal
+
+The digital signal values should be a minimum of 10-bit decimal representation as defined in
+Recommendation ITU-R BT.709. The “signals” shown below refer to “digital signals” at the
+specified value. Care should be taken when selecting measuring equipment because there are
+variations in accuracy (variation included in the measurement data, limit value of measurement,
+etc.), depending on the measuring method.
+3.3
+
+Peak luminance/all-white luminance
+
+Measurement method – (Luminance meter) Input a flat field signal of Y level 940 (100% white)
+and CB, CR value 512, and use the measurement equipment to measure the luminance of the screen
+in the dark room.
+Reason
+While the peak luminance/all-white luminance is defined as that corresponding to a signal of
+Y value 940 and CB, CR value 512, the luma signal through value 941 to 1 019 can be used as video
+data, normally overshoot and undershoot area. Accordingly, FPD should be adjusted so that the
+video can be displayed with the grey scale tracking maintained even when the luminance is over the
+peak luminance/all-white luminance.
+
+Rep. ITU-R BT.2129
+3.4
+
+11
+
+Black
+
+Measurement method – (Luminance meter)
+Input a flat field signal of Y value 64 (Black) and CB, CR value 512, and use the measurement
+equipment to measure the luminance of the screen in the dark room.
+Adjustment method
+Measurement for this item must be conducted after adjustment of the display using the PLUGE test
+signal specified in Recommendation ITU-R BT.814.
+Where applicable, automatic backlight intensity should be disabled during this measurement.
+3.5
+
+Contrast ratio
+
+Measurement method – (Luminance meter)
+The measured FPD is adjusted so that the luminance of 100% white on the screen equals 100 cd/m2.
+Brightness of the display is adjusted using the PLUGE test signal and the set up procedure specified
+in Recommendation ITU-R BT.814.
+The contrast ratio measurement signal specified in Recommendation ITU-R BT.815-1 and use the
+measurement equipment to measure the luminance displaying 100% white (Y value 940) on the
+screen, and that corresponding to the black value (Y value 64). (CB, CR values are set to 512).
+Contrast ratio is the ratio of luminance values, Black and White.
+Where applicable, automatic backlight intensity should be disabled during this measurement.
+3.6
+
+Gamma characteristics
+
+Measurement method – (Tristimulus meter or spectroradiometer)
+The method of measurement between tradition CRT and FPD is the same. However the adjustment
+procedure for different display technologies may be quite different from that of a CRT. Users are
+recommended to use the manufactures adjustment procedure.
+3.7
+
+Tone reproduction
+
+Measurement method – (Luminance meter)
+For luminance range from 1 to 100 cd/m2
+Deviation from grey should not be visible for luminance below 1 cd/m2
+Another suggested method is to change the Y value of the signal by 1 LSB in 10-bit decimal
+representation (with the CB, CR value set to 512). Use the measurement equipment to check that the
+measured luminance value changes according to the Y value of the signal.
+3.8
+
+Colour gamut
+
+Measurement method – (Tristimulus meter or spectroradiometer)
+Measured chromaticity coordinates of the displayed images of the input signals corresponding to
+the primary colours described in Recommendation ITU-R BT.709 is basically used to express the
+colour gamut, although some additional means are required to measure whole «three-dimensional»
+colour gamut.
+3.9
+
+Colour temperature (White point)
+
+Measurement method – (Tristimulus meter or spectroradiometer)
+Input a signal of Y value 283, 502, 721 and 940 (CB, CR value 512) use the measurement equipment
+to measure the colour temperature. Adjustments to modify the colour temperature setting of a FPD
+may differ significantly to that of a CRT. Manufacturers recommendations should be followed.
+
+Rep. ITU-R BT.2129
+
+12
+3.10
+
+Viewing-angle dependency
+
+Measurement method – (Luminance meter, Tristimulus meter or spectroradiometer)
+For the measurement of the viewing-angle dependency of reproduced colours, input full screen
+signal with the colour coordinates of the Macbeth chart. Measurement angles in addition to the front
+measurement should be Colour ±45° horizontally, vertically, diagonally, and luminance ±45°
+horizontally, vertically, diagonally.
+For the measurement of the viewing-angle dependency of luminance-drop and black-level colour
+shift, use reference white and black signals, respectively.
+3.11
+
+Motion blur
+
+Measurement method
+The degree of motion blur should basically be evaluated by visual inspection.
+There still remains some concern in using MPRT values5. MPRT6 values are sited in this technical
+Report for information only.
+3.12
+
+Resolution
+
+Reason
+On a master monitor, it is desired to display an image without rescaling, a one to one pixel mapping
+of the display device and the source image is recommended.
+3.13
+
+Uniformity
+
+Measurement method – (Tristimulus meter or spectroradiometer)
+Input a series of flat field signals consisting of Y value 283, 502, 721 and 940 (CB, CR value 512)
+and use the measurement equipment to measure the luminance values at 50 to 40 000 points on the
+screen. Use these measured values to calculate the following formula; (the maximum measured
+value – the minimum measured value)/the average value.
+3.14
+
+Mura
+
+Measurement method
+At this point there is no objective measurement simple subjective observations are all that is
+possible.
+
+5
+
+MPRT is the abbreviation for Moving Picture Response Time. The blur on the FPD is influenced not only
+by response time of the FPD but also by hold time. (Even if the response time is 0, a blur is caused by a
+hold- display.) MPRT is the calculation method of obtaining blur values which are proportional to
+perceived motion blur values based on two parameters (response time and hold time). There are products
+that automatically measure MPRT values.
+
+6
+
+Since the MPRT value for CRT is approximately 3 to 4 ms, if the MPRT value for FPD is 4 ms, it can be
+judged that there is no problem on motion blur. It is not proven that MPRT can be used for evaluating the
+motion blur for FPD screen. One option has been expressed in SOMEYA J. [2005] Correlation between
+Perceived Motion Blur and MPRT Measurement. SID 2005 Digest, p. 1018-1021.
+
+Rep. ITU-R BT.2129
+3.15
+
+13
+
+7
+
+Vertical and horizontal crosstalk
+
+Measurement method
+Measurement for this item must be conducted after adjustment of the display using the PLUGE test
+signal specified in Recommendation ITU-R BT.814.
+Evaluate by visual inspection if the difference in luminance between the horizontal and vertical
+belt-like portions and the other grey portions is detectable when the input signal has a rectangle
+luma signal of value 64 (Black) or value 940 (White) (area ratio of window signal: 4 to 25% to the
+screen) near the centre and has a grey surrounding area. Since a luminance difference may occur
+depending on the rectangle size, it is preferable to evaluate by visual inspection by changing the
+rectangle size.
+With regard to the signal value of grey area surrounding the white window, adjust the grey
+surrounding area to the following values Y value 64, 152, 239, 327, 414, 502 and grey area
+surrounding the black window: Y value 502, 590, 677, 765, 852, (the CB, CR channel value should
+be 512), observations should be made to determine if any modulation of the grey area is detectable.
+
+3.16
+
+Stability
+
+Measurement method
+Following a 30 min “warm up time” the master monitor should retain desired setting for at least
+24 h without needing any readjustment.
+3.17
+
+Pixel defects
+
+Measurement method
+The measurement of a pixel defect is frequently conducted with the measurement equipment that
+measures light intensity using a CCD and determines if there is any pixel defect from the difference
+between the measured value and peripheral pixel luminance level detection.
+A visual observation of the display using a flat field grey signal may prove to be the most practical
+approach at this time.
+3.18
+
+Ringing
+
+Measurement method
+Using any fast rise time signal, visually observe the displayed image for “ringing”.
+7
+
+Crosstalk is the phenomenon that display data influence other display area on a part of display. A much
+brighter or darker spot than the surrounding area causes vertical or horizontal bars, which is similar to
+camera smear. The term «Crosstalk» is used for this phenomenon in LCD, and «Image streaking» is
+used in PDP.
+
+Rep. ITU-R BT.2129
+
+14
+
+3.19
+Image sticking (long-term afterimage)
+Measurement method
+For example, after displaying the specific pattern continuously for six hours, change to the grey
+signal of level 10% or 20%, then judge whether the previous pattern can be detectable on the
+screen.
+If the pattern is detectable, measure how long it takes to disappear.
+
+Appendix A
+Note – These are the findings of one industry body and are included in this Report for information.
+Additional verification of some values stated in this Report are underway.
+
+Television has evolved to give pleasing results in a viewing environment described by colour
+scientists as “dim surround”.
+This outcome includes three invariant components:
+The requirement to match luminance level coding (whether analogue or digital) to the
+approximately logarithmic characteristic of the human vision system by means of an appropriate
+nonlinear coding or “perceptual” coding of level. Such a characteristic has the effect of equalizing
+the visibility over the tone scale of quantizing in a digital signal, or noise in an analogue one. A
+linear or other non-perceptual based characteristic would require greater dynamic range (bandwidth
+or bit rate) for the same perceptual quality, with adverse economic consequences;
+The immovable legacy effect of the CRT gamma characteristic on which the entire television
+system was empirically founded. This legacy consists of both archived content and world-wide
+consumer display populations; gamma is also the characteristic which coding schemes such as
+MPEG-2 and MPEG-4 AVC are designed to match, and any other characteristic will be less than
+ideal in terms of artefact and noise visibility, to the extent that much of the impairment seen these
+days on transmitted television material, when viewed on flat screen displays, is caused by the
+failure of the display to adhere closely to a gamma characteristic, particularly near black.
+It has been found that the end-to-end or “system” gamma for consumer viewing environment is
+approximately 1.2, i.e. definitely not linear.
+The system gamma can be expressed as:
+System gamma = camera encoding gamma (OETF*) × display gamma (EOTF)
+*
+
+Opto-electrical transfer function.
+
+It has been found from measurement techniques, progressively refined over several decades, that
+a correctly designed CRT display has an EOTF gamma of approximately 2.35. This is part of the
+“immovable legacy effect” of the CRT.
+Therefore our system gamma equation is rewritten as:
+System gamma = 1.2 = OETF gamma × 2.35
+Therefore OETF (camera) gamma = 0.51.
+
+Rep. ITU-R BT.2129
+
+15
+
+Since a pure gamma curve would require infinite gain to be applied to camera signals near black,
+resulting in unacceptable noise; in practice this curve is modified to consist of a small linear region
+near black in combination with a reduced gamma curve of 0.45 [2]. Note however, that a “best fit”
+single power law curve for this characteristic comes out as 0.51, the same as the calculation above.
+From the above, since the consumer viewing environment is not changing, and the OETF gamma
+cannot change (for compatibility reasons and for the continuation of an optimal perceptual coding
+characteristic), the EOTF gamma must also remain at 2.35, regardless of which new physical
+display device is used to implement it.
+
+Appendix B
+Note – These are the findings of one industry body and are included in this Report for information.
+Additional verification of some values stated in this Report are underway.
+
+The requirement for “gamma characteristics” is as follows:
+The gamma characteristics (electro-optical transfer characteristic) of the display should be
+equivalent to those of a reference CRT.
+It is useful to know the gamma characteristics which the CRT master monitor has for understanding
+the actual condition described above as requirement for gamma characteristics.
+Figures 4 and 5 show the measurement results on gamma characteristics of CRT master monitor
+under the two conditions, namely luminance on the screen at level 64 is 0.01 cd/m2 and 0.1 cd/m2,
+and each figure has two graphs, one is drawn on logarithmic axis and the other on linear axis and
+both show the same measurement result.
+These graphs show that a CRT monitor changes the gamma characteristic (gamma index)8
+depending on the luminance value on the screen at the level of 64. In case of luminance on the
+screen at level 64 is 0.01 cd/m2, gamma index is about 2.4 to 2.6, and in case of 0.1 cd/m2, gamma
+index is about 2.2.
+
+8
+
+The gamma characteristic above may be expressed “input-output characteristic” because the original
+gamma characteristic of “Cathode-Ray Tube” itself doesn’t change. However, the adjustment of
+“Contrast” and “Brightness” of the CRT monitor changes the range of the so-called gamma curve which
+corresponds to the levels 64 to 940 of the input signal. This seems to be the reason why it appears the
+so-called gamma characteristic of a CRT monitor changes depending on the luminance value on the
+screen at the black level.
+
+Rep. ITU-R BT.2129
+
+16
+
+FIGURE 4
+Measurement result of the gamma characteristic (input-output characteristic)
+of a CRT master monitor
+
+100
+
+Luminance of screen at value 64: 0.01 cd/m
+Colour temperature: 9 300K
+
+2
+
+(Logarithmic axis)
+
+Percent of luminance of screen
+
+10
+
+1
+
+0.1
+
+0.01
+
+0.001
+
+Gamma 2.2
+Gamma 2.4
+Gamma 2.6
+Measured gamma of CRT
+
+1
+
+0.1
+
+10
+
+100
+
+Signal level (%)
+
+(Linear axis)
+
+140
+
+Percent of luminance of screen
+
+120
+100
+80
+60
+40
+Gamma 2.2
+Gamma 2.4
+Gamma 2.6
+Measured gamma of CRT
+
+20
+0
+
+0
+
+20
+
+40
+
+60
+Signal level (%)
+
+80
+
+100
+
+120
+Rap 2129-04
+
+Rep. ITU-R BT.2129
+
+17
+
+FIGURE 5
+Measurement result of the gamma characteristic (input-output characteristic)
+of a CRT master monitor
+2
+
+Luminance of screen at value 64: 0.1 cd/m
+Colour temperature: 9 300K
+
+100
+
+(Logarithmic axis)
+
+Percent of luminance of screen
+
+10
+
+1
+
+0.1
+
+0.01
+
+0.001
+
+0.1
+
+1
+
+10
+
+100
+
+Signal level (%)
+
+(Linear axis)
+
+140
+
+Percent of luminance of screen
+
+120
+100
+80
+60
+40
+20
+0
+
+0
+
+20
+
+40
+
+60
+Signal level (%)
+
+80
+
+100
+
+120
+Rap 2129-05
+
+18
+
+Rep. ITU-R BT.2129
+
+Appendix C
+Illustration of the direction and the four planes in measurement
+
+

@@ -1,0 +1,4938 @@
+A Review of
+RGB
+Color Spaces
+A Review
+of
+RGB Color Spaces
+
+… from xyY
+to R’G’B’
+
+Danny Pascale
+Danny Pascale
+
+Title: A Review of RGB Color Spaces …from xyY to R’G’B’
+©2002-2003 Danny Pascale
+The BabelColor Company
+5700 Hector Desloges
+Montreal (Quebec)
+Canada H1T 3Z6
+E-mail: dpascale@BabelColor.com
+
+Front cover: The xyY representation of the sRGB color space and its corresponding R’G’B’ cube.
+
+Adobe®, Apple®, ColorChecker®, ColorMatch®, ColorSync®, Digital Origin™, GretagMacbeth™, IBM®,
+iMac™, Intel®, International Color Consortium®, LG™, Mac®, Macintosh®, Microsoft®, Munsell®,
+Pantone®, Photoshop®, PressView™, Radius®, Silicon Graphics®, SGI™, Sony®, Trinitron®, VGA™
+and Windows® are Trademarks or Registered Trademarks of their respective owners.
+Document revised 2003-10-06.
+
+A Review of
+RGB Color Spaces
+… from xyY to R’G’B’
+Danny Pascale
+
+Why another document about RGB? While there are many sources of information describing Red-Green-Blue spaces, their
+use, and why you should or should not use some of them, there are few self-contained sources of information on how to get
+there. You may find books, standards, and articles with equations on how to transform colorimetric data into a specific RGB
+space, or even how to translate data between some RGB spaces, but only a few spaces may be covered, or there is not enough
+information on how these formulas were derived and how to recalculate for different conditions, or they are not up to date with
+the most recent standards, or there are inaccuracies and mistakes, especially in non peer-reviewed freely accessible Web-based
+documents, or all of these “or”s.
+
+Why bother? Accurate colorimetric data is no longer the realm of top tier professionals for which this is the only way to
+survive and which are willing, and capable, to invest heavily both time and money. Accurate colorimetric data formerly required
+proprietary – read expensive –, often esoteric, color management equipment and software. With the availability of low cost high
+quality devices such as scanners, printers, monitors, and calibration equipment, and with the significant increase in the per dollar
+computing power, accurate color capabilities are now available to small shops as well as consumers. The incentive to bother is
+that most users now expect a higher quality end product.
+
+Who should read this document? This text is targeted to professionals who wish to acquire a basic understanding of
+colorimetry applied to computer and TV display systems and who want to see how theory translates into practice. A
+programmer involved in developing color transformation routines will find the flow chart and detailed conversion process of
+Section 4 helpful. Someone simply interested in checking the calibration of a camera or scanner using the GretagMacbeth
+ColorChecker card will find useful the RGB values of the card’s color patches presented, in Section 5, for many common
+spaces.
+
+What is not covered? Although referred to in the text, ICC profile generation and gamut mapping are not developed.
+Nonetheless, this text is a good introduction to these more advanced topics.
+
+4
+
+•
+
+A Review of RGB Color Spaces…
+
+TABLE OF CONTENT
+
+1
+2
+
+Introduction .................................................................................................................................................................................................. 5
+Color spaces .................................................................................................................................................................................................. 6
+2.1
+Parameters of color spaces................................................................................................................................................................ 7
+2.1.1
+The human eye........................................................................................................................................................................... 7
+2.1.2
+The “abc” of XYZ .................................................................................................................................................................... 8
+2.1.3
+Limitations of the CIE 1931 chromaticity diagram........................................................................................................... 14
+2.1.4
+Illuminants ................................................................................................................................................................................ 15
+2.1.5
+The Bradford Matrix............................................................................................................................................................... 16
+2.1.6
+Gamma ...................................................................................................................................................................................... 17
+2.2
+The various RGB color spaces....................................................................................................................................................... 20
+3
+Television and multimedia systems......................................................................................................................................................... 23
+4
+From xyY to R’G’B’ .................................................................................................................................................................................. 26
+4.1
+From xyY to XYZ ............................................................................................................................................................................ 26
+4.2
+From L*a*b* to XYZ ...................................................................................................................................................................... 27
+4.3
+From XYZ (Source illuminant) to XYZ (Destination illuminant) – Bradford Matrix......................................................... 27
+4.4
+From XYZ to RGB, and vice-versa .............................................................................................................................................. 27
+4.5
+From RGB to R’G’B’....................................................................................................................................................................... 29
+4.6
+Conversion accuracy vs. requirements.......................................................................................................................................... 29
+5
+A practical example: the GretagMacbeth ColorChecker .................................................................................................................... 33
+
+A Review of RGB Color Spaces…
+
+1
+
+Introduction
+Not so long ago, in fact just before the personal computers era, color displays used to be either color film (slides,
+prints and movies), the good old TV, or an image printed with ink on paper. These media were based on different
+color processes and standards, and the interchange between them, while done scientifically, involved complex
+dedicated machines and a good dose of black magic (some call it experience). The advent of the personal computer
+mixed the cards. Using an Apple Macintosh, anyone could soon do its own page layout. At first, the results were
+bland more often than not, and it proved once again that having a hammer does not make someone a carpenter.
+With time, the software evolved so that some graphic designer know-how is now integrated with the layout tools, in
+the form of Wizards – on screen step-by-step instructions – for example, and more time can be spent on the content
+than on the container.
+The same situation is happening with color management. In the personal computer world, you used to have only one
+choice, the default Apple RGB space, whatever that was, since it was not really easy to find its specification. You
+could use it to generate images that would be compatible at least with future generations of Macintoshes. However,
+an image generated on a Macintosh did not look the same on a Windows based machine simply because, among
+other things, they do not have the same transfer function in the graphics card (one of the elements that control the
+display brightness in relation to graphic data), not to mention the limited amount of colors available on first
+generation Intel compatible computers. Later, proprietary color management schemes were imported to or created
+for the personal computer, and standards slowly emerged from them.
+Very recently, the cross-platform acceptance of the International Color Consortium (ICC) color profiling method
+helped bring uniformity to the picture. It enables the input, output and display devices vendors to transparently, at
+least to the general user, exchange color data that conform to well characterized color spaces. The color management
+workflow tools are the latest trend in this development. In particular, the set of tools first offered by Adobe in their
+Photoshop version 5.0.2 program started a new era in the color environment controls available to the laymen. Not
+that the process is simple. There is a cumbersome heritage to support, to which we have to add all the proposed
+standards emerging from the work done on High-Definition TV (HDTV) and for the coming-real-soon-now
+computer-TV-multimedia convergence. The shear number of combinations resulting from the various alternatives is
+frightening to the novice, annoying to the expert, and some of both for anyone in between. The fact that very good
+color output, either in print or electronically displayed, can now be obtained by a user who does not need to
+understand what makes the system work is a tribute to the skill of the programmers and engineers who designed
+these systems based on moving-sand standards, and to the complexity of the human eye and brain which marvelously
+adapt to a wide array of environmental conditions and compensate for many differences and errors in color
+reproduction.
+The next section presents the fundamentals of color spaces based on the standards of the Commission Internationale
+de l’Éclairage (CIE), which are derived from the human eye response, and the methods used to assign numbers –
+color coordinates – to colors. The effects of the illuminant on the perceived color, and of the various non-linear
+compression or expansion operations – i.e. the “gammas” – on the recorded coordinates, are discussed. From there,
+the principal RGB color spaces that can be found are presented and defined. Follows a commented listing of key TV
+and multimedia standards that have some relevance to colorimetry. The procedure and equations required to convert
+colorimetric data to RGB data in device specific configurations are then detailed. Finally, as an example, R’G’B’
+values for the GretagMacbeth ColorChecker card color patches are given for the RGB color spaces defined
+previously.
+
+•
+
+5
+
+6
+
+•
+
+A Review of RGB Color Spaces…
+
+2
+
+Color spaces
+Color models, like all mathematical representations of physical phenomena, can be expressed in many different ways,
+each with its advantages and drawbacks. Some representation are formulated to help humans select colors – the
+Munsell system for example – and others are formulated to ease data processing in machines, with the various RGB
+spaces all falling in this last category. The goal is to minimize formulation complexity and the number of variables
+while maximizing “substance” and breath of coverage. One thing they have in common is the number of variables,
+or dimensions. Historically, whatever the meaning assigned to the variables, three of them were enough to describe
+all colors: RGB, Hue-Saturation-Brightness (HSB) and other HS based models, L*a*b*, xyY, etc. From this
+observation alone, one would be tempted to conclude that color is perceived with a three-signal-output mechanism
+to the brain since nature often uses a minimalist approach to do things.
+In many cases, more variables are added to complete a theory’s coverage or to supplement a physical limitation of the
+reproduction process. For example, black content (“K”) is added to cyan, magenta and yellow (CMY) inks to obtain
+better dark tones in traditional printing. Printing processes with more than four colors – Pantone Hexachrome with
+six colors, HiFi color with up to eight colors – have been developed to extend the reproducible color range. Some
+desktop printers are now offered with two additional color cartridges, consisting of light cyan and light magenta,
+which are designed to improve color gradients uniformity in the highlights, where print density would be low, and the
+dots visible, for normally concentrated cyan and magenta inks. These added variables are not additional dimensions
+per se since they are not totally independent of the primary coordinates – i.e. some of the colors generated by mixing
+the additional inks with the primaries can also be generated by mixing only the original primaries.
+The first major distinction between color-spaces is device dependency. Color coordinates from a device independent
+space are the same on all output media. For example, discounting surface reflection effects such as “shininess” or
+gloss, if the coordinates of a car color and the coordinates of that color in an image of that car are the same, then
+these colors are identically perceived by the human eye. The xyY space, and its equivalent XYZ representation, falls
+in this category. Expressing the previous example differently, a stimulus characterized by a given XYZ triad will be
+perceived as the same color as a stimulus from another source which has the same XYZ triad. The XYZ space is
+based on how human perceive light and is thus independent of the media on which the color is seen. On the other
+hand, a device dependent color space will have different coordinates for the same color for various output media. All
+RGB and CMYK spaces fall in the device dependent camp since they are defined in relation to very specific primary
+colors, either phosphors or ink. As many have found, an RGB triad from an Apple Macintosh computer does not
+represent the same color as the triad with identical values on a Windows machine.
+Another distinction is the ease with which the coordinates can be mentally associated with the codified color. The
+HSB space is being promoted as user-friendly since it is “relatively” easy to relate a HSB triad to the color
+represented by a given hue (the chromatic content, the presence of a color), its saturation (the ratio between
+chromatic and achromatic – i.e. white, gray, black, contents), and brightness (a relative-to-white lightness-darkness
+level; note: this is not the “accepted” definition of brightness, but the one used in the HSB model). This ease of use is
+also true for other hue-saturation based models but the varieties of name and definitions for the third parameter,
+brightness, value, or intensity, can bring confusion. On the other hand, a set of RGB or CMYK coordinates can be
+difficult to visualize, and xyY values are almost impossible to deal with for the infrequent user.
+This being said, the most commonly used systems for exact color data interchange are nonetheless the xyY space,
+and its L*a*b* derivative. The RGB space, which is used in most computer generated images, was not omitted for
+the pleasure of it. The reason is simply the presence of the word “exact” before the word “color” in the first sentence
+of this paragraph. There is a long tradition of using the term “RGB” without any mention of the environment – the
+display, operating systems, software or printer – used to generate the image, with the result that RGB is far from
+being a standard. Thankfully, there are rigorous ways of going from xyY coordinates to device specific RGB
+coordinates, and vice-versa.
+As if it was not already confusing, there is still another element in the recipe: gamma. Gamma is a way of
+mathematically expressing the non-linear perception of the eye to light intensity. It is also a way of expressing the
+relation between the light output of a monitor and the input voltage. It can even be a mathematical method to
+encode the data representing color so that more dynamic range in intensity is represented with fewer bits. In fact, all
+of these flavors of gamma have to be considered in understanding computer graphics.
+
+A Review of RGB Color Spaces…
+
+2.1
+
+Parameters of color spaces
+
+2.1.1
+
+The human eye
+Color perception is a brain process that starts in the eye’s cone receptors. These receptors are found in three varieties
+that exhibit somewhat reddish, greenish, and bluish sensitivities. The “probable” sensitivities, according to Hunt,1 can
+be seen in Figure 1. The separation between colors is not clean and there is significant overlap between the
+sensitivities of all three varieties, particularly between the red and green cones.
+The other eye receptors, the rods, which are good at detecting luminance, but not color, in low light conditions, are
+saturated at the light levels relevant to the applications concerned by this text.
+
+Relative sensitivity
+
+Figure 1: "Probable" Human-Eye Cones Sensitivities (from Reference 1).
+100
+90
+80
+70
+60
+50
+40
+30
+20
+10
+0
+350
+
+"greenish"
+
+"bluish"
+
+400
+
+"reddish"
+
+450
+
+500
+
+550
+
+600
+
+650
+
+700
+
+750
+
+Wavelength (nm)
+
+The experiments that brought us these curves were performed in the last 50 years whereas the trichromatic theory itself
+dates back to the seventeenth and eighteenth centuries from work done by Isaac Newton, Thomas Young, John
+Dalton, and others.2 It is perhaps superfluous to mention that the modern measurements did bring some comfort to
+the practitioners and solidified the trichromatic theory base. We may be tempted to conclude from these findings that
+three chromatic signals go from the eye to the brain. However, some processing occurs near the light receptors and
+one current theory is that three signals, consisting of a lightness level plus two color difference signals, are
+transmitted, which is, as we surmised in this section’s introduction, a number of signals equal to the number of
+variables of most color models. These color difference signals are analogous to the color encoding found in many
+television standards.
+Figure 1 is crucial in understanding that any trichromatic theory cannot generate all the colors perceived by the brain,
+which is to say that, like most theories, there are some limitations. For example, using a modern laser-display system
+with monochromatic primaries at 635 nm (red), 532 nm (green), and 447 nm (blue), lets see if we can simulate the
+perception of a monochromatic light at 580 nm (an orange color). Since the monochromatic orange stimulus excites
+the greenish and reddish cones, a contribution is required by both the green and red primaries, while no contribution
+is required from the blue primary. The problem is that the green primary also excites the bluish cones, making it
+impossible to exactly replicate the orange stimulus. This situation is not exclusive to the set of primaries in this
+example and is mostly perceptible when trying to reproduce very pure or monochromatic colors.
+So why should we use the trichromatic theory anyway? Because it works very well for most colors that are not
+monochromatic, and because there is no urgent need to add a fourth or fifth color stimulus to the picture. Not to
+mention the fact that monochromatic colors, typically generated by lasers or far away cosmic phenomenon, are
+seldom seen in our daily lives. Nonetheless, it can be shown that, in some instances, some of the out-of-range colors
+can be obtained by clever signal processing (see chapter 19 of Reference 1 for more information on this subject).
+
+•
+
+7
+
+•
+
+A Review of RGB Color Spaces…
+
+Figure 2: CIE 1931 Color-Matching Functions.
+
+Tristimulus Values
+
+8
+
+2
+1,8
+1,6
+1,4
+1,2
+1
+0,8
+0,6
+0,4
+0,2
+0
+350
+
+z
+
+y
+
+400
+
+450
+
+500
+
+x
+
+550
+
+600
+
+650
+
+700
+
+750
+
+Wavelength (nm)
+
+In 1931, the Commission Internationale de l’Éclairage (CIE) established standards for color representation based on
+the physiological perception of light. They are built on a set of three color-matching functions, collectively called the
+Standard Observer, related to the red, green and blue cones in the eye.3 These functions are shown in Figure 2. They
+were derived by showing subjects color patches and asking them to match the color by adjusting the output of three
+pure (monochromatic) colors (435,8, 546,1, and 700 nm).
+But then, how can it be reconciled that no trichromatic theory can explain all colors and that three primaries were
+used to build a space for all colors? The answer lies partly in Figure 1 and partly in a clever experimental procedure.
+In fact, it was possible to simulate all colors perceived by the eye by mixing the three primaries together AND by
+illuminating the reference color patches with some of the primaries. The amounts of each primary in the simulated
+patch and the compensating illumination on the reference patch were then processed to obtain the color-matching
+functions of Figure 2. It is important to note that the primaries referred to by the color-matching functions of Figure
+2 are not the “real” primaries used in the experiments but mathematically derived “imaginary” versions of them
+which make it possible to cover the complete spectrum (those interested in knowing how they were derived should
+read chapters 7 and 8 of Reference 1).
+The color-matching functions give the amount of each primary, called the tristimulus value, necessary to match a
+hypothetical equal-energy spectrum – same energy at all wavelengths, illuminant “E” in Table 3 – which would be
+seen as white. These functions are the basis of almost all modern color models. The Munsell system, which predates
+the CIE 1931 model and which is still in use, is one exception. It has its own reference frame made of carefully
+manufactured and controlled color patches designed for uniform perceptual differences between them, and to which
+unknown colors are compared. When required, this model can be translated to the CIE model.
+
+2.1.2
+
+The “abc” of XYZ
+Color is not an intrinsic property of an object. It is the perception of the energy emitted or reflected from the object,
+once processed by the human visual system and the brain, which makes us assign colors to this energy. This
+psychophysical process is described by the color-matching functions of Figure 2. The mathematical derivation of
+color coordinates from these functions first requires measuring the spectrum of the source. This spectrum is usually
+expressed in terms of a Spectral Power Density (SPD), in Watt/nm, and it can be determined by separating the
+visible spectrum in a number of wavelength bands, with 10 nm per band for example, and by measuring the power,
+in Watt, within each band.
+For reflected light, the reflectance is measured for each wavelength band and a ratio is computed relative to a perfect
+white diffuser. For transmitted light, a ratio is computed relative to a perfect transmitter. In the case of self-luminous
+sources, a radiance factor, the ratio between actual output and maximum output, may be determined.
+Then, for each wavelength band, the reflectance, transmittance, or radiance factor is multiplied by the source SPD
+and by the spectral tristimulus value of each color-matching function. Results are then added separately for each
+
+A Review of RGB Color Spaces…
+
+•
+
+function. In other words, the reflected or transmitted spectrum is weighted by the color-matching functions and
+integrated to provide a single value, a scalar, also called the tristimulus value, for each function.
+The scalar obtained with the x color-matching function is named “X”. Similarly, the scalars obtained with the other
+functions are “Y” and “Z”.
+Modern instruments automate this procedure, and the only task left to the operator is to point the probe toward the
+source or sample and press a button, which is not very helpful to learn the principle behind it. In practice, even with
+a very basic spectrometer, the computation is simple enough that it can be done manually. Spectral resolution does
+not need to be fine since the cone’s response curve is very broad and smooth, and measurements can be done at
+every 5, 10 or 20 nm. The only important point is that the data be measured with a radiometric detector, which means
+an instrument with uniform sensitivity across the spectrum. Radiometric units are based on the Watt, but in practice,
+since the data is often normalized, any detector output such as current of voltage can be used directly, as long as the
+detector is characterized in terms of signal response, ideally linear, and spectral sensitivity, ideally uniform. A
+photometric detector should not be used. Photometric detectors are based on the lumen, and its derivative units: lux,
+lambert, candela, nit, etc., which take into consideration the overall spectral response of the human eye, with its
+maximum sensitivity in the green portion of the spectrum and decreasing sensitivities going into the red or blue
+regions.
+Once the spectral reflectance or transmittance data is gathered, it is processed in the fashion described by Table 1.
+For each wavelength step the reflectance, transmittance, or radiance factor (column B), expressed as a value between
+zero and one, is multiplied by the source SPD (C). The source SPD may not have to be measured if the source is one
+of the many standard illuminants for which tabulated data is available. The data is further multiplied by the
+corresponding spectral tristimulus value of each color-matching function (D1, D2 or D3), as well as by the
+wavelength step (E). Intermediary results (F1, F2, or F3) are then summed over all steps – i.e. numerically integrated.
+An additional calculation (G) is performed for calibration purposes. The source SPD multiplied by the y colormatching function is integrated to provide the calibration constant “k”. The y color-matching function was defined
+in such a way that it matches the spectral response of the human eye (X and Z have no such easily attributed
+correspondence to a real phenomenon). “k” is thus, by definition, a photometric quantity and so are all values
+represented by Y. Y is the reflectance, transmittance, or radiance weighted by the eye sensitivity and is equal to 100
+when the reflectance, transmittance, or radiance are equal to one for all wavelengths. Therefore, the color coordinates
+of the source are, by definition, the ones for which Y equals 100.
+
+(A)
+wavelength
+
+(nm)
+380
+385
+…
+585
+…
+775
+780
+
+(B)
+
+(C)
+
+Reflectance,
+source Spectral
+Transmittance, Power Density
+or Radiance
+(SPD)
+(%)
+(« power » / nm)
+
+(D)
+CIE 1931 spectral
+tristimulus values
+(D1)
+(D2)
+(D3)
+
+x (λ )
+
+y (λ )
+
+z (λ )
+
+0,0014
+0,0022
+…
+0,9786
+…
+0,0001
+0
+
+0
+0,0001
+…
+0,8163
+…
+0
+0
+
+0,0065
+0,0105
+…
+0,0014
+…
+0
+0
+
+(E)
+
+(F) =
+
+(G) =
+
+wavelength
+step
+
+(B) x (C) x (D_ ) x (E)
+
+(C) x (D2) x (E)
+(used for
+calibration)
+(« power »)
+
+(nm)
+5
+5
+5
+5
+5
+5
+5
+
+(F1)
+
+(« power »)
+(F2)
+(F3)
+
+SUM :
+SUM x (100 / k) :
+=
+
+=k
+X
+
+Y
+
+Z
+
+Table 1: A detailed method to determine XYZ tristimulus values from measured data.
+Derived from ASTM E308-99.
+
+9
+
+10
+
+•
+
+A Review of RGB Color Spaces…
+
+(A)
+
+(B)
+
+wavelength
+
+Reflectance
+
+(nm)
+400 410
+420
+430
+440
+450
+460
+470
+480
+490
+500
+510
+520
+530
+540
+550
+560
+570
+580
+590
+600
+610
+620
+630
+640
+650
+660
+670
+680
+690
+700 +
+
+(%)
+0,3483
+0,4273
+0,4563
+0,45678
+0,44942
+0,43662
+0,42362
+0,40476
+0,38328
+0,36026
+0,33704
+0,31172
+0,26668
+0,22506
+0,20396
+0,2021
+0,19362
+0,18848
+0,19974
+0,21676
+0,22714
+0,23448
+0,2325
+0,23366
+0,25284
+0,29694
+0,35894
+0,41466
+0,44788
+0,46516
+0,47134
+
+(D)
+D65 source SPD x
+CIE 1931 tristimulus values
+(D1)
+(D2)
+(D3)
+Wx
+0,121
+0,311
+1,164
+2,400
+3,506
+3,755
+3,298
+2,141
+1,001
+0,293
+0,028
+0,054
+0,581
+1,668
+2,860
+4,257
+5,632
+6,960
+8,344
+8,676
+9,120
+8,568
+7,119
+5,049
+3,522
+2,112
+1,229
+0,658
+0,331
+0,142
+0,147
+
+Wy
+0,003
+0,009
+0,033
+0,092
+0,221
+0,413
+0,662
+0,973
+1,509
+2,107
+3,288
+5,122
+7,082
+8,833
+9,472
+9,830
+9,446
+8,709
+7,901
+6,357
+5,379
+4,259
+3,149
+2,070
+1,370
+0,794
+0,454
+0,240
+0,120
+0,051
+0,053
+
+(F) =
+(B) x (D_ )
+
+Wz
+0,575
+1,477
+5,581
+11,684
+17,532
+19,729
+18,921
+14,161
+8,730
+4,623
+2,769
+1,584
+0,736
+0,421
+0,191
+0,081
+0,034
+0,018
+0,015
+0,009
+0,007
+0,003
+0,001
+0
+0
+0
+0
+0
+0
+0
+0
+
+(F1)
+0,042
+0,133
+0,531
+1,096
+1,576
+1,640
+1,397
+0,867
+0,384
+0,106
+0,009
+0,017
+0,155
+0,375
+0,583
+0,860
+1,090
+1,312
+1,667
+1,881
+2,072
+2,009
+1,655
+1,180
+0,891
+0,627
+0,441
+0,273
+0,148
+0,066
+0,069
+
+(« power »)
+(F2)
+0,001
+0,004
+0,015
+0,042
+0,099
+0,180
+0,280
+0,394
+0,578
+0,759
+1,108
+1,597
+1,889
+1,988
+1,932
+1,987
+1,829
+1,641
+1,578
+1,378
+1,222
+0,999
+0,732
+0,484
+0,346
+0,236
+0,163
+0,100
+0,054
+0,024
+0,025
+
+(F3)
+0,200
+0,631
+2,547
+5,337
+7,879
+8,614
+8,015
+5,732
+3,346
+1,665
+0,933
+0,494
+0,196
+0,095
+0,039
+0,016
+0,007
+0,003
+0,003
+0,002
+0,002
+0,001
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+SUM :
+=
+
+25,15
+X
+
+23,66
+Y
+
+45,76
+Z
+
+Table 2: A simplified method to determine XYZ tristimulus values from measured data applied to reflectance
+measurements of the GretagMacbeth ColorChecker card “Blue Flower” sample, with a D65 Illuminant. As per
+ASTM E308-99, when spectral data is not available, the weights of the color-matching functions between 360 nm
+and 390 nm were added to the 400 nm weight, and the weights of the color-matching functions between 710 nm and
+780 nm were added to the 700 nm weight.
+
+A Review of RGB Color Spaces…
+
+If the source SPD was determined in absolute radiometric units, then “k” represents an absolute photometric
+reference. If this was not the case, an absolute photometric reference can still be obtained by measuring the
+maximum output of a self-luminous source, or the reflection of a perfectly diffusing sample, with a photometer. For
+example, an 82 cd/m2 luminance is typical of what can be measured with a photometer on a modern Cathode Ray
+Tube (CRT). The computed Y values of all measured colors obtained from spectral measurements would then be
+scaled to this luminance to obtain absolute luminance data, Y = 100 corresponding to 82 cd/m2, and so on.
+An excellent complete source of data, presented in tabular forms, on the SPD of all standard illuminants, such as C,
+D50, D65, F6 etc., which are presented in more details in Section 2.1.4, and for the color-matching functions, is
+ASTM Standard E308-994 which describes the procedure of Table 1 in detail as well as a simplified procedure that
+can be used with standard sources. The simplified procedure is demonstrated in Table 2 where the XYZ coordinates
+of the “Blue Flower” sample5 found in the GretagMacbeth ColorChecker6 card are computed for the D65 illuminant,
+which is a standardized version of typical North Sky Daylight.
+In Table 2, the source SPD data is already combined with the spectral tristimulus data. This data is available in tabular
+forms in ASTM E308-99 for both 10 nm and 20 nm steps, and for most standard illuminants. Also, while the colormatching functions are defined in the 360 to 830 nm range, it is not always possible or necessary to gather data within
+this range. Using only the 380 to 780 nm range will not lead to significant error in most cases since the colormatching functions weights are very small outside of it. On the other hand, if data is not available for even the
+reduced 380 to 780 nm range, as is the case in Table 2, a procedure is suggested in ASTM E308-99 to fill-in the
+blanks.
+The procedure calls for adding the weights of all the color-matching functions for which there is no data to the first
+wavelength where data is available. In Table 2, this means adding the weights of the color-matching functions
+between 360 nm and 390 nm to the 400 nm weight, and adding the weights of the color-matching functions between
+710 nm and 780 nm to the 700 nm weight.
+With D65 as an illuminant, the sample has XYZ coordinates of (25,15 23,66 45,76)D65. A similar calculation with
+D50, an illuminant representative of high power tungsten lighting, gives XYZ coordinates of (24,64 23,41 34,43)D50.
+Comparing the data sets we see that the sample under the D50 illuminant has significantly less bluish content, the Z
+coordinate, a result which is coherent with the expectation of more reddish-orange content from tungsten
+illumination but not necessarily intuitive to deduce.
+Another way of presenting the tristimulus data is to determine the proportion of each value relative to the sum of all
+three. These ratios are defined as:
+x=
+
+X
+(X +Y + Z)
+
+y=
+
+Y
+(X +Y + Z)
+
+z=
+
+Z
+(X +Y + Z)
+
+,
+
+(1)
+
+with, as a complement, the relation
+
+x + y + z =1
+
+.
+
+(2)
+
+The xyz coordinates of the Blue Flower sample are (0,266 0,250 0,484)D65 and (0,299 0,284 0,417)D50. Again,
+comparing the two sets, we see an increase in the reddish-greenish content (x and y), or more yellow, and a decrease
+of the bluish content, a more intuitive result than the one deduced from XYZ data.
+D50, D65 and all other so-called white illuminants have hues that are not perceived when the illuminant is used
+alone. The eye, with help from the brain, adapts itself to make these illuminants look like what we expect: pure white.
+This adaptation to white is effective for a certain range of chromaticities only and, for example, CIE ILL A, a low
+power incandescent type illuminant, will always have a faint yellowish orange hue.
+In the xyz representation, because of the redundancy of Equation (2), only two coordinates are required, usually “x”
+and “y”, to convey the chromatic content of a sample. The representation of color is thus simplified from 3
+dimensions to 2 dimensions. However, the absolute luminance information of Y is lost in the process. For these
+reasons, it is a common practice to present color data as xyY.
+When plotted in the xy notation, the pure monochromatic colors of the spectrum form the now familiar horseshoe
+shape of Figure 3. The straight line at the base of the horseshoe represents the mixture of red and blue light, two
+
+•
+
+11
+
+12
+
+•
+
+A Review of RGB Color Spaces…
+
+colors at the opposite of the spectrum. All other “impure”, or non-monochromatic, or less saturated colors fall
+within the horseshoe. Only the colors inscribed within the horseshoe are possible. The colors outside the horseshoe
+are “imaginary” and result from the mathematical treatment behind the color-matching functions. The horse shoe is
+inscribed in a larger triangle, defined by the (x,y) = (0,0), (1,0), and (0,1) coordinates, which is called the Maxwell
+triangle, from the name of the Scottish physicist, James Clerk Maxwell (1831-1879), who used a similar triangle to
+understand color and which is considered the inventor of the trichromatic photographic process.
+The more one goes away from the edges of the horseshoe, the more the color is de-saturated. The ideal white, also
+called the equal energy illuminant since all three reference functions are equal, has x, y and z equal to 0,33333… and is
+located somewhere in the center of the horseshoe. It is interesting to note that the ideal black is located at the same
+spot. This seemingly contradictory result is simply because the diagram does not represent intensity, thus its name
+chromaticity diagram, and the importance of the “Y” information in comparing measured color data.
+A very useful feature of this diagram is that it can be used to determine the color resulting from the mix of two
+known emissive colors. The chromaticity of a color resulting from the mixture of two colored lights will simply be
+located on the straight line between the two. This is one of the characteristics of additive color mixture, also called
+Grassmann’s laws. Adjusting the ratio between the two lights will make the resulting color move along the line. An
+interesting consequence is that mixing two colors located at such positions on the chromaticity diagram that a line
+between them goes through the white point region will result in “white” being perceived for certain ratios. This last
+example is just to contradict the often-heard statement that you need at least three colors to generate white, and is a
+direct consequence of the overlapping bandwidths of the cones.
+Similarly to the color mix obtained with two sources, we can extend the concept to three sources. To be called
+primaries these sources have to be selected in such a way that it is not feasible to simulate one of them by mixing the
+two others. From this requirement we see that three sources will enclose a triangular shape. Mixing the primaries in
+various proportions will generate all the colors within the triangle, also called the color gamut. This property of the
+diagram makes it easy to understand how color TV and computer monitors use only three different phosphors to
+simulate a multitude of colors.
+One of the first challenges is to select the best primaries to generate a maximum number of colors. As we saw before,
+it is impossible to generate all colors with three primaries. Ideally, you could use four, five, or more, different basic
+colors to define a multi-facet polygon that would encompass most of the horseshoe shape. This is difficult in practice
+for a CRT display, firstly because of the limited availability of high-brightness long-life monochromatic phosphors –
+quite a challenge in itself –, and secondly because of the complexity of controlling multiple partially color-redundant
+sources, a technology which is presently not cost-effective for a consumer level product. The phosphors of the first
+color TVs were selected in most part for the two following reasons: they were available, and three phosphors are
+enough to get a very good job done.
+According to a study that looked at how to optimize the luminous efficiency of displays with three primaries, the
+ideal wavelengths are 610, 530, and 450 nm.7 The rationale here is that, as long as the cost per watt for
+monochromatic light is the same for all wavelengths, the system cost is driven by the eye sensitivity. For example, for
+a given brightness sensation, significantly more power is required at 410 nm than at 450 nm. Practical laser display
+systems have been developed with 635, 532, and 447 nm primaries,8 and with 656, 532, and 457 nm primaries.9
+Figure 3a shows various RGB spaces proposed in the last decades. Figure 3b shows practical and common
+contemporary choices. All of these are discussed in more details in Section 2.2.
+Figure 3b also contains the gamut for the “SWOP coated” printing process (SWOP: Specifications for Web Offset
+Publications) a widely used process based on CMYK ink primaries. Contrary to monitor displays that generate color
+by adding lights together, called an additive process, printing is a subtractive process. The subtractive process is not
+perfectly linear, mixing two inks, like mixing two paints, will not always give a color on a line between the originals.
+Some mixes will, and others will not. The gamut shown in Figure 3b has six apexes, one for each C, M and Y
+component, and one for the M+Y (or red), C+Y (or green), and C+M (or blue) components. In particular, we can
+see that the C+Y mix is far away from a straight line mix of C and Y and that the gamut is much bigger that what
+would have been deduced with the CMY primaries only. Also, the straight lines between the apexes are
+approximations of the mixtures between these points.
+The representation of Figure 3 has many other practical applications that are not within the scope of this short
+tutorial. The reader with an affinity for applications of color science in art is encouraged to read the book by
+Agoston10 for an in-depth presentation of the subject.
+
+A Review of RGB Color Spaces…
+
+Figure 3a: CIE 1931 chromaticity diagram : Examples of RGB spaces. The labels
+indicate the wavelengths, in nm, and locations of specific monochromatic colors.
+
+0,85
+
+530
+
+0,80
+
+520
+
+0,75
+
+550
+
+510
+
+0,70
+0,65
+0,60
+
+spectrum
+
+570
+
+Adobe
+
+500
+
+0,55
+
+Apple & SGI
+
+0,50
+
+CIE
+
+590
+
+0,45
+
+y
+
+NTSC
+
+0,40
+
+PAL / SECAM
+
+0,35
+
+490
+
+SMPTE-C & 240M
+
+620
+
+0,30
+
+Wide Gamut
+
+0,25
+
+780
+
+0,20
+0,15
+
+480
+
+0,10
+0,05
+
+470
+
+0,00
+0
+
+380
+
+0,05 0,1 0,15 0,2 0,25 0,3 0,35 0,4 0,45 0,5 0,55 0,6 0,65 0,7 0,75 0,8 0,85
+
+x
+
+Figure 3b: CIE 1931 chromaticity diagram : Practical and common RGB spaces,
+and one example (SWOP coated) of a CMYK space.
+
+0,85
+0,80
+0,75
+0,70
+0,65
+0,60
+
+spectrum
+
+0,50
+
+Adobe
+
+0,45
+
+Apple & SGI
+
+y
+
+0,55
+
+ColorMatch
+
+0,40
+
+HDTV & sRGB
+
+0,35
+
+SWOP coated
+0,30
+0,25
+0,20
+0,15
+0,10
+0,05
+0,00
+0
+
+0,05 0,1 0,15 0,2 0,25 0,3 0,35 0,4 0,45 0,5 0,55 0,6 0,65 0,7 0,75 0,8 0,85
+
+x
+
+•
+
+13
+
+14
+
+•
+
+A Review of RGB Color Spaces…
+
+2.1.3
+
+Limitations of the CIE 1931 chromaticity diagram
+As good as it may be, the CIE 1931 chromaticity diagram presented in the preceding section is not without faults.
+Soon after it was issued, it was found that it does not represent color gradations in a uniform matter. David L.
+MacAdam11 showed in the early forties that the minimum distance between two discernible colors is smaller in the
+lower left portion of the horseshoe, and progressively bigger toward the top. It is also non-uniform; for any given
+point, tracing the coordinates of the minimally discernible colors around the point forms an ellipse, called a MacAdam
+ellipse.
+Attempts to transform the original diagram into a more uniform representation have first resulted in the 1960 CIE
+Uniform Chromaticity Space (UCS), where projective transforms of the x and y space distort it to obtain somewhat
+more uniform u and v coordinates. More recently, there was industry wide “agreement” on two standards, the
+L*a*b* representation – called either CIE 1976 (L*a*b*) or CIELAB – and the L*u*v* space – called either CIE
+1976 (L*u*v*) or CIELUV –, the later a slightly revised version of the 1960 CIE UCS. Since both spaces have their
+proponent and preferred applications, it is up to the users to select the most appropriate model, at least until a better
+“universal” one is defined and accepted. The L*a*b* space will be used in this document.
+The L*a*b* is derived from the XYZ data with the following transform:
+L* = 116(Y / Yn )1 / 3 − 16
+
+(for Y/Yn > 0,008856)
+
+L* = 903,3(Y / Yn )
+
+(for Y/Yn ≤ 0,008856)
+
+(
+
+)
+
+(
+
+)
+
+a* = 500 ( X / X n )1 / 3 − (Y / Yn )1 / 3
+
+b* = 200 (Y / Yn )1 / 3 − (Z / Z n )1 / 3
+
+(3)
+
+where Xn, Yn, Zn, are the values of X, Y, Z for a specified reference white – i.e. illuminant. Better uniformity is thus
+obtained by normalizing the color coordinates by the illuminant coordinates, and by applying a 1/3 exponent to the
+ratios, which corresponds to the non-linear perception – i.e. dynamic range compression – of the eye subjected to
+increased luminance.
+The relation for L* for Y/Yn ratios of less than 0,008856 has been presented for completeness, but the reader will
+realize that it corresponds to quite dark colors.
+Another limitation of the CIE 1931 representation is that it was determined from color patches covering a two
+degrees Field Of View (FOV). This FOV is well within the angle subtended by the eye’s fovea, the region of the
+retina near the eye’s optical axis where the density of cones is the highest. Cone density falls rapidly to less than ten
+times the peak value at plus or minus five degrees from the fovea center12 and, in practice, color patches subtending
+FOVs between one and four degrees can be treated using the CIE 1931 data. For larger patches it was found that the
+eye has a somewhat different response. This resulted in a new set of measurements called the CIE 1964 data set that
+was done for patches subtending a FOV of ten degrees. Data corresponding to the CIE 1964 data set is presented as
+(X10, Y10, Z10) or (x10, y10, Y10) to distinguish it from the 1931 system.
+Since most displays and print material are made of combinations of small color patches, the CIE 1931 system
+remains the system of choice for this analysis.
+
+A Review of RGB Color Spaces…
+
+2.1.4
+
+15
+
+Illuminants
+Illuminants, either standard or custom, cannot be dissociated from the XYZ data they helped generate. When
+providing colorimetric data, information on the illuminant used for the measurements always has to be given in order
+to understand and further process the data. Various standard illuminants have been devised to satisfy the evolving
+needs. Table 3 shows the coordinates of the principal standard illuminants in the CIE 1931 and CIE 1964 systems.
+CIE 1931
+
+Illuminant
+
+•
+
+Description
+
+CIE 1964
+
+x
+
+y
+
+z
+
+X
+
+Z
+
+x
+
+y
+
+z
+
+X
+
+Z
+
+0,44757
+
+0,40744
+
+0,14499
+
+109,850
+
+35,585
+
+0,45117
+
+0,40594
+
+0,14289
+
+111,144
+
+35,200
+
+A
+
+Tungsten or Incandescent, 2856 K
+
+B
+
+Direct Sunlight at Noon, 4874 K * (obsolete)
+
+0,34840
+
+0,35160
+
+0,30000
+
+99,090
+
+85,324
+
+C
+
+North Sky Daylight, 6774 K *
+
+0,31006
+
+0,31615
+
+0,37379
+
+98,074
+
+118,232
+
+0,31039
+
+0,31905
+
+0,37056
+
+97,285
+
+116,145
+
+D50
+
+Daylight, used for Color Rendering, 5000 K *
+
+0,34567
+
+0,35850
+
+0,29583
+
+96,422
+
+82,521
+
+0,34773
+
+0,35952
+
+0,29275
+
+96,720
+
+81,427
+
+D55
+
+Daylight, used for Photography, 5500 K *
+
+0,33242
+
+0,34743
+
+0,32015
+
+95,682
+
+92,149
+
+0,33411
+
+0,34877
+
+0,31712
+
+95,799
+
+90,926
+
+D65
+
+New version of North Sky Daylight, 6504 K *
+
+0,31273
+
+0,32902
+
+0,35825
+
+95,047
+
+108,883
+
+0,31382
+
+0,33100
+
+0,35518
+
+94,811
+
+107,304
+
+D75
+
+Daylight, 7500 K *
+
+0,29902
+
+0,31485
+
+0,38613
+
+94,972
+
+122,638
+
+0,29968
+
+0,31740
+
+0,38292
+
+94,416
+
+120,641
+
+9300 K
+
+High eff. blue phosphor monitors, 9300 K
+
+0,28480
+
+0,29320
+
+0,42200
+
+97,135
+
+143,929
+
+E
+
+Uniform energy Illuminant, 5400 K *
+
+0,33333
+
+0,33333
+
+0,33334
+
+100
+
+100
+
+0,33333
+
+0,33333
+
+0,33334
+
+100
+
+100
+
+F2
+
+Cool White Fluorescent (CWF), 4200 K *
+
+0,37207
+
+0,37512
+
+0,25281
+
+99,186
+
+67,393
+
+0,37928
+
+0,36723
+
+0,25349
+
+103,279
+
+69,027
+
+F7
+
+Broad-band Daylight Fluorescent, 6500 K *
+
+0,31285
+
+0,32918
+
+0,35797
+
+95,041
+
+108,747
+
+0,31565
+
+0,32951
+
+0,35484
+
+95,792
+
+107,686
+
+F11
+
+Narrow-band White Fluorescent, 4000 K *
+
+0,38054
+
+0,37691
+
+0,24254
+
+100,962
+
+64,350
+
+0,38543
+
+0,37110
+
+0,24347
+
+103,863
+
+65,607
+
+Table 3: Coordinates of the principal standard illuminants in the CIE 1931 and CIE 1964 systems. Temperatures
+followed by “*” are correlated color temperatures. “Y” coordinates are normalized to 100.
+It is common to associate a temperature with an illuminant. This temperature is related to the emission of a blackbody.
+A blackbody is by definition a material that has perfect emissivity and absorptivity at all wavelengths – it will
+therefore not reflect or scatter light. The light emitted from the blackbody has a spectral content with a dominant
+color that shifts from red to blue with increasing material temperature. Temperature is expressed in the Kelvin scale,
+with zero Kelvin defined as the absolute zero (-273 Celsius). The spectral content is described by Planck’s radiation
+law while the peak of the spectral curve is described by Wien’s displacement law13:
+
+λ max = 2 897 885 / T nm,
+
+(4)
+
+with T expressed in Kelvin. As we shall see, the peak does not correspond exactly to the perceived dominant hue but
+is a good indication of where the dominant color lies in the spectrum.
+Few illuminants are perfect blackbodies. However, when a source matches the chromaticity of a blackbody, we refer
+to the source temperature as the color temperature. If the chromaticity does not match, the blackbody temperature that
+most closely matches the spectral properties of the illuminant is given; this temperature is called the correlated color
+temperature.
+The illuminant referred to as 9300 K in Table 3 has the same chromaticity as a blackbody. Its spectrum has a
+significant short wavelength content and λmax as determined with Equation (4) is 312 nm, way into the ultraviolet.
+The illuminant referred as D65, with a correlated temperature of 6504 K, emits light with a spectrum close to midday daylight illumination and can be considered a good “general use” white. At this temperature, λmax is 446 nm, a
+deep blue. D65 is part of the standard CIE D series illuminants which cover the 4000 K to 10000 K plus range where
+the number following the “D” is an abbreviation of the correlated temperature – all D series illuminant have
+chromaticities slightly different than same temperature blackbodies.
+For D50, with a correlated 5000 K temperature, the spectrum has a strong orange content typical of tungsten lights
+and λmax = 580 nm, a well-defined orange. D50 is the reference illuminant for the print industry and the only
+illuminant used to compute L*a*b* data in Adobe Photoshop. D50 is also, presently, the only illuminant in the Profile
+Connection Space (PCS), a color space used as the link between devices, in the International Color Consortium (ICC)
+profile definition.14
+
+16
+
+•
+
+A Review of RGB Color Spaces…
+
+2.1.5
+
+The Bradford Matrix
+Transforming colorimetric data taken with one illuminant into data corresponding to another illuminant is often
+required. In the ideal case, the spectral data of each color sample is reprocessed with the new illuminant using the
+method shown in Table 2. However, this computer intensive process is not efficient and requires a large spectral
+database for each color. But more importantly, for most applications, like image processing, spectral data is simply
+not available. All modern color appearance models competing for international acceptance15 incorporate such a
+chromatic adaptation transform. One contender that has withstood critical revue is called the Bradford, or BFD for short,
+chromatic adaptation transform, from the name of the city, in England, where the researchers who developed it came
+from.
+A simplified matrix representation of the Bradford transform was found to give excellent results during the work
+performed in the development of the sRGB standard.16 In its simplified version, the only data required to generate
+the Bradford matrix are the XYZ coordinates of the source and destination whites. The source white is the illuminant
+used to measure the original data, and the destination white is the illuminant to which the data has to be translated. The
+Bradford conversion matrix is derived with the following relations:
+⎡ Rdw ⎤ ⎡ 0,8951
+⎢
+⎥ ⎢
+⎢Gdw ⎥ = ⎢− 0,7502
+⎢
+⎥ ⎢
+⎢⎣ Bdw ⎥⎦ ⎣⎢ 0,0389
+⎡ R sw ⎤ ⎡ 0,8951
+⎢
+⎥ ⎢
+⎢G sw ⎥ = ⎢− 0,7502
+⎢
+⎥ ⎢
+⎣⎢ B sw ⎦⎥ ⎣⎢ 0,0389
+
+0,2664
+1,7135
+− 0,0685
+0,2664
+1,7135
+− 0,0685
+
+⎡ Bradford ⎤ ⎡ 0,9870
+⎥ ⎢
+⎢
+⎢ 3 × 3 ⎥ = ⎢ 0,4323
+⎥ ⎢
+⎢
+⎣⎢ matrix ⎦⎥ ⎣⎢− 0,0085
+
+− 0,1614 ⎤ ⎡ X dw ⎤
+⎥
+⎥ ⎢
+0,0367 ⎥ • ⎢ Ydw ⎥
+⎥
+⎥ ⎢
+1,0296 ⎦⎥ ⎢⎣ Z dw ⎥⎦
+
+(5)
+
+− 0,1614 ⎤ ⎡ X sw ⎤
+⎥
+⎥ ⎢
+0,0367 ⎥ • ⎢ Y sw ⎥
+⎥
+⎥ ⎢
+1,0296 ⎦⎥ ⎣⎢ Z sw ⎦⎥
+
+(6)
+
+− 0,1471
+0,5184
+0,0400
+
+0,1600 ⎤ ⎡ R dw / R sw
+⎥ ⎢
+0
+0,0493 ⎥ • ⎢
+⎥ ⎢
+0,9685 ⎦⎥ ⎣⎢
+0
+
+0
+
+⎤ ⎡ 0,8951
+⎥ ⎢
+0
+⎥ • ⎢− 0,7502
+⎥ ⎢
+B dw / B sw ⎦⎥ ⎣⎢ 0,0389
+0
+
+G dw / G sw
+0
+
+0,2664
+1,7135
+− 0,0685
+
+− 0,1614 ⎤
+⎥
+0,0367 ⎥
+⎥
+1,0296 ⎦⎥
+(7)
+
+where (RGB)dw and (XYZ)dw are the coordinates of the destination white, and (RGB)sw and (XYZ)sw are the
+coordinates of the source white. In Equations (5), (6) and (7), the 3x3 matrix, with "0,8951" as its top-left element, is
+called the cone response matrix. In Equation (7), the 3x3 matrix, with "0,9870" as its top-left element, is called the inverse
+cone response matrix. These two matrices are, as their name says, the inverse of one another, and multiplying one by the
+other will result in a unitary diagonal matrix.
+(RGB)dw and (RGB)sw are first calculated with Equations (5) and (6), then the Bradford matrix is determined from
+Equation (7) using these values. Bradford matrices for specific sets of CIE 1931 illuminants, whose XYZ coordinates
+can be found in Table 3, are shown in Table 4.
+Here is an example of the use of the Bradford matrix: Lets say you need to determine the XYZ coordinates of the
+ColorChecker "Blue Flower" sample as it would be measured with a D50 illuminant but you only have the XYZ
+coordinates obtained with the D65 illuminant, and no sample. The XYZ coordinates of this sample as seen with the
+D65 illuminant were shown to be (25,15 23,66 45,76)D65 in Table 2. Using the D65-to-D50 Bradford matrix we
+obtain:
+
+⎡24,60⎤
+⎡ 1,0478
+⎢
+⎥
+⎢
+= ⎢ 0,0295
+⎢23,40⎥
+⎢
+⎥
+⎢
+⎢⎣34,54 ⎥⎦ D50 ⎢⎣− 0,0092
+
+0,0229
+0,9905
+0,0150
+
+− 0,0501 ⎤ ⎡ 25,15 ⎤
+⎥ ⎢
+⎥
+− 0,0171 ⎥ • ⎢23,66⎥
+⎥ ⎢
+⎥
+0,7521 ⎥⎦ ⎢⎣45,76⎥⎦ D65
+
+.
+
+(8)
+
+The result is very close to what is computed for D50 with the more precise method of Table 2, (24,64 23,41
+34,43)D50, and is indicative of the precision that can provide the simplified representation of the Bradford matrix.
+
+A Review of RGB Color Spaces…
+
+C --> D50
+0,0154 -0,0583
+1,0057 -0,0189
+0,0204 0,6906
+
+D50 --> D65
+0,9556 -0,0230 0,0632
+-0,0283 1,0099 0,0210
+0,0123 -0,0205 1,3299
+
+C --> A
+0,1030 -0,1567
+0,9280 -0,0559
+0,0388 0,2892
+
+D50 --> C
+0,9649 -0,0164 0,0810
+-0,0161 0,9941 0,0258
+0,0173 -0,0297 1,4486
+
+D65 --> D50
+1,0478 0,0229 -0,0501
+0,0295 0,9905 -0,0171
+-0,0092 0,0150 0,7521
+
+A --> D50
+0,8779 -0,0915 0,2566
+-0,1117 1,0925 0,0852
+0,0502 -0,0838 2,3994
+
+A --> D65
+0,8447 -0,1179 0,3948
+-0,1366 1,1042 0,1292
+0,0799 -0,1349 3,1924
+
+C --> D65
+0,9904 -0,0072 -0,0116
+-0,0124 1,0156 -0,0029
+-0,0036 0,0068 0,9182
+
+A --> C
+0,8530 -0,1130
+-0,1239 1,0854
+0,0912 -0,1554
+1,2040
+0,1407
+-0,0253
+
+1,1574
+0,1199
+-0,0200
+
+0,4404
+0,1426
+3,4776
+
+D50 --> A
+0,0872 -0,1269
+0,9219 -0,0456
+0,0304 0,4178
+
+1,0377
+0,0171
+-0,0120
+
+1,2165
+0,1533
+-0,0239
+
+D65 --> A
+0,1110 -0,1549
+0,9152 -0,0560
+0,0359 0,3148
+
+1,0098
+0,0123
+0,0038
+
+D65 --> C
+0,0070 0,0128
+0,9847 0,0033
+-0,0072 1,0892
+
+Table 4: Bradford Matrices between various sets of standard CIE 1931 illuminants.
+2.1.6
+
+Gamma
+The eye is more sensitive to variations of luminance in low luminance levels than similar variations in high luminance
+levels. R’G’B’ values, commonly referred to by “RGB” in most application software, are scaled according to this nonlinear perception of the eye and more data triads are assigned to the lower luminance levels. As a result, the R’G’B’
+scale is close to a perceptively linear scale where doubling the values of a triad will result in a color whose brightness
+appears doubled
+Gamma (γ) is a subject of much debate. Even the use of the word gamma is an element of discord. Originally coined
+to explain the straight-line portion of the S-shaped (sigmoid) curve obtained when tracing, on log-log scales, the
+optical density of photographic film in relation to exposure, the so-called H&D curve from its inventors Hurter and
+Driffield, it has been since misused and overused. Some authors, for the sake of scientific rectitude, even proscribe
+the use of gamma in relation to displays and propose the more generic term “exponent” instead. We will nonetheless
+continue to use the term gamma in this paper since it is associated with fundamental aspects of display technology
+and human perception, to which a generic term like “exponent” would not do justice. However, you should always
+verify how gamma is defined before making comparisons with other sources of information, and you should get used
+to the fact that any author’s gamma value could be the reciprocal of another author’s definition.
+A very thorough presentation of modern CRT characteristics is contained in a paper by Berns, Motta and
+Gorzynski.17 Easily readable presentations of gamma can be found in the book and the Internet articles of Poynton.18
+The definition of the various flavors of gamma is well presented in a tutorial that is part of the Portable Network
+Graphics (PNG) Specification19 published by the World Wide Web Consortium (W3C). A typical vision chain
+includes:
+i-
+
+A file gamma that combines the camera gamma and the software-encoding gamma (γfile = γcamera *
+γencoding). In this document we will consider that the camera gamma and the encoding gamma are
+defined by the same equation, that only one of them is used at one time, and that they simply
+distinguish the origin of the data.
+
+ii-
+
+A decoding gamma, which is defined as the gamma of any transformation performed by the
+software reading the image file. In this document we will assume that the software does not modify
+the gamma once the original file is created and that the decoding gamma is equal to one.
+
+iii-
+
+A display gamma, which combines the lookup-table (LUT) gamma and the CRT gamma:
+(γdisplay = γLUT * γCRT) or (γdisplay = γLUT / γCRT) depending on how γCRT is defined.
+
+iv-
+
+The overall gamma that combines all the preceding gammas.
+
+v-
+
+The human eye gamma.
+
+•
+
+17
+
+18
+
+•
+
+A Review of RGB Color Spaces…
+
+The effect of camera gamma is often defined in the form:
+V = (1 + offset )Lγ − offset
+
+for 1 ≥ L ≥ transition
+
+V = slope × L
+
+for transition > L ≥ 0
+
+(9)
+
+where L is the image luminance (0 ≤ L ≤ 1) and V is the corresponding electrical signal (in Volt). An example of the
+values found for the offset, gamma, transition and slope parameters in ITU-R BT.709-3 (a standard for High-Definition
+TV, HDTV) are:
+γ = 0,45
+
+offset = 0,099
+
+transition = 0,018
+
+slope = 4,5
+
+.
+
+The function is defined by two segments: a linear segment at low light levels, below the defined transition level,
+which makes the transform less susceptible to noise around zero luminance, and a power segment with a 0,45
+exponent. The effect of that exponent is to compress the luminance signal by assigning a larger signal range to dim
+colors, where the eye is most sensitive, and a small signal range to bright colors.
+The offset term of Equation (9) is related to what is generally identified in TVs and monitors as the black level, intensity
+or brightness control knob. The combination of (1 + offset) is related to the picture, gain or contrast knob. It may sound
+surprising that brightness be associated with a DC level and contrast to a term which controls the maximum
+luminance level, but these terms were defined in relation to what is perceived, not the mathematical expression. In
+effect, the eye perceives as a brightness increase a change in the black level more than it does of a change in the gain.
+Note: in some displays, the brightness and contrast knobs are effectively labeled the reverse of what is “generally”
+found!
+Equation (9) can be approximated by a simpler function of the form:
+V = Lγ
+
+for 0 ≤ L ≤ 1
+
+,
+
+(10)
+
+with a gamma optimized to fit the data of the detailed transform. Taking ITU-R BT.709-3 again as an example, a
+best-fit curve can be obtained with the simpler form of Equation (10) and a gamma of 0,519. The two curves are
+shown superimposed in Figure 4. The simpler form is often retained to improve computing efficiency.
+If the image was computer generated, it is customary to apply a simple gamma correction of the form described in
+Equation (10) with an exponent value that is different between computing platforms. As shown in Table 5, this
+exponent is usually 0,45 (1/2,2) for sRGB – a space used only in Windows based computers as this text is written. It
+is 0,56 (1/1,8) for Macintosh and 0,68 (1/1,47) for SGI – formerly called Silicon Graphics Inc. The luminance “L” in
+Equation (10) corresponds, and is linearly proportional, to either one of the R, G or B channels. The voltage “V”
+corresponds to the “gamma corrected” coordinates R’, G’, or B’, the values shown in graphic software dialog boxes,
+even though we seldom, if ever, see the primes against the RGB letters.
+In Windows type PCs, the graphics card LUT is nominally a straight-line one-to-one transfer function. In Apple
+Macintosh and SGI machines, the graphics card LUT has a transfer function as per Equation (10) with the exponent
+being 0,69 (1/1,45) for Macintosh and 0,59 (1/1,7) for SGI. It just so happens, and it should not be surprising, that
+the value of (γfile * γLUT) is very similar for all platforms.
+In many TV standards, a reference reproducer, which corresponds to an idealized display, is expressed in a form which is
+the reverse of the camera transfer function shown as Equation (9):
+1/ γ
+
+⎞
+L = ⎛⎜ (V + offset )
+(1 + offset ) ⎟⎠
+⎝
+
+.
+
+(11)
+
+There again, a simpler, approximate, transfer function can be written:
+L = V 1/ γ
+
+.
+
+(12)
+
+A Review of RGB Color Spaces…
+
+Normalized Input (I.e. camera) Voltage
+
+Figure 4: A comparison between the detailed and simple way of defining gamma.
+In this example, the detailed gamma is defined by
+V = 1,099 L 0,45 - 0,099 and the simple gamma by V = L 0,519 .
+
+1
+0.9
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+
+detailed
+simple
+
+0
+
+0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+
+1
+
+Normalized Luminance
+
+In practice, however, the camera and display gammas are different so that the displayed contrast is higher than the
+original image contrast. This is done because in dim or dark ambient conditions, a frequent condition for TV
+viewing, dark tones are perceived brighter than they should and the black to white contrast is lower. Assuming that
+γencoding and γLUT are equal to one, a normal assumption for TV work, the ratio between the camera and CRT gammas
+is typically fixed to 1,25 for dim viewing conditions.
+In a properly set monitor for color related work, it is recommended to adjust the black level, or offset, near zero – i.e.
+barely perceptible from a no-signal state. Also, it is recommended to adjust the video gain – contrast – to maximum
+value. This is the method used in the Adobe Gamma “Control Panel” tool provided with many Adobe products, and
+a recent paper by J. R. Jiménez & al.20 confirms it maximizes the color gamut.
+Berns & al.21 present results of measurements taken on properly set monitors that are best fitted, using Equation (11),
+with a gamma of 0,406 (1/2,46) and an offset of zero. In this case Equation (11) corresponds exactly to Equation
+(12). A rounded value of 0,4 (1/2,5) is used as a generic CRT gamma for most spaces in Table 5.
+The overall system gamma is:
+
+γ overall =
+
+γ file × γ LUT
+γ CRT
+
+.
+
+(13)
+
+It can be seen in Table 5 that the overall gamma varies between 0,96 and 1,30, with the lower range values associated
+with color spaces dedicated for computer work. This result is consistent with the brighter illumination conditions
+typical of computer work and the correspondingly higher, in fact more normally, perceived contrast. At some point
+however, veiling glare could lower the contrast again. This explains why professional systems have glare protecting
+hoods around monitors, as well as neutral gray bezels – and sometimes an entirely gray workplace – to prevent
+unwanted color contamination.
+The human eye has a response similar to the one assigned for cameras. The perceived luminance L*, called lightness,
+as described by Equation (3) is essentially the same as Equation (9) but with a 0,33 (1/3) exponent. The camera
+signals, or encoded file data if the image is generated directly in software, are thus compressed in an efficient way
+with more signal range associated with the lower brightness colors where the eye has more discrimination. To be
+viewed, the image goes through the graphics LUT and the CRT electronics, a path that effectively decompresses the
+recorded signal so that the eye can perceive it as if he saw the original scene, with a more or less serious correction
+added to account for viewing conditions.
+
+•
+
+19
+
+20
+
+•
+
+A Review of RGB Color Spaces…
+
+2.2
+
+The various RGB color spaces
+Defining a color space is a compromise between the availability of good primaries, the signal noise, and the number
+of digital levels supported by the file type. There is no point in defining a very large gamut if the number of possible
+colors is so small that the eye will see discrete steps – banding – where uniform gradients are required, a typical
+problem of digital systems, or if the color space gamut is much bigger than the gamut of all output devices. Assigning
+more bits to each primary is a solution which is now seen more often; it requires more computing power but it
+minimizes banding due to repetitive image correction and manipulation even if the final image is down-sampled to be
+compatible with the range of the output device.
+Because there is still a large quantity of software which is not able to cope with image files embedded with color
+calibration profiles, either for competitive or practical reasons, the spaces associated to computing platforms are
+usually defined relative to a specific reference display. For example, the Apple RGB space is defined with Sony
+Trinitron phosphors, even though other Apple products, like the iMac, use a CRT from another manufacturer with
+different characteristics. For all files generated from an Apple platform which do not contain embedded profiles, and
+which are of unknown origin, the “standard” Apple RGB space should be assumed. In most modern operating
+systems (Mac OS 9, Windows 98), display calibration is handled by the operating system.
+RGB spaces have evolved, sometimes for technological reasons (NTSC to SMPTE-C), sometimes to fulfill
+professional requirements (ColorMatch, Adobe RGB), and sometimes because that’s how the display was built and it
+became a, de-facto, standard (Apple RGB). A short description of many RGB spaces follows; detailed specifications
+are shown in Table 5. The gamut of many of them can be visualized in Figures 3a and 3b.
+Adobe RGB
+Formerly known as SMPTE-240M for Photoshop user, this space has been renamed once the final SMPTE-240M
+standard committee settled for a smaller gamut. Adobe RGB is very close to the original NTSC space and represents
+a good compromise between gamut size and the number of colors available in an 8 bit per primary system. However,
+if available, 16 bit per primary should be preferred. While a relatively large number of colors cannot be printed using
+the SWOP process, particularly in the green portion of the gamut, newer printing processes, such as Pantone
+Hexachrome, take advantage of this space.
+Apple RGB
+A very common RGB space on the desktop that is similar in gamut size to the ColorMatch and sRGB spaces. The
+Apple RGB, like the ColorMatch and SGI spaces, has a non-unity display LUT gamma which is compensated by the
+file encoding gamma. Apple specifies its displays in terms of display gamma as per the definition mentioned in
+Section 2.1.6. When a value of 1,8 is entered by the user in the control panel for display gamma, the LUT is filled
+with numbers corresponding to a gamma equal to 1,8/2,6=0,69 (or 1,45 if you define gamma using the reciprocal
+value).
+ColorSync, Apple’s color management technology at the operating system level,
+automatically takes care of color calibration for all input and output devices and can
+be used to convert files from one space to another. For example, the first iMac
+display, manufactured by LG Electronics, had the following phosphor
+chromaticities, different from the Apple RGB space values. Its gamma was specified
+as 1,8, or 0,56 (= 1/1,8), and an adjustable white point.
+
+x
+y
+
+iMac phosphors
+R
+G
+B
+0,610
+0,298
+0,151
+0,342
+0,588
+0,064
+
+CIE RGB
+A relatively large gamut space specified by the monochromatic primaries at 435,8, 546,1, and 700 nm that were used
+in the experiments at the origin of the color-matching functions. The gamma values shown for this space are
+“generic”; for instance, an encoding gamma of 0,455 (1/2,2) is assigned by default to this space by Adobe
+Photoshop.
+ColorMatch RGB
+This space was originally devised by Radius to be used in conjunction with its PressView line of calibrated displays
+dedicated to professional use. Often favored over other desktop spaces by critics, the gamut of this space is not
+significantly larger than the Apple RGB or sRGB. For example, compared with sRGB, it has a slightly larger gamut in
+the blue-green region but a smaller one in the red-blue region.
+
+A Review of RGB Color Spaces…
+
+Primaries / Phosphors
+
+•
+
+21
+
+Power Functions Exponents, i.e. gamma (γ)
+encoding gamma
+γ for each element of
+the imaging chain
+"detailed"
+
+White
+Illuminant
+
+XYZ to RGB matrix
+
+RGB to XYZ matrix
+
+Adobe RGB (1998)
+Adobe (1998)
+x : 0,6400 0,2100 0,1500
+y : 0,3300 0,7100 0,0600
+z : 0,0300 0,0800 0,7900
+
+D65
+0,3127
+0,3290
+0,3583
+
+XYZ to RGB (Adobe)
+2,0414 -0,5649 -0,3447
+-0,9693 1,8760 0,0416
+0,0134 -0,1184 1,0154
+
+RGB (Adobe) to XYZ
+0,5767 0,1856 0,1882
+0,2974 0,6273 0,0753
+0,0270 0,0707 0,9911
+
+x : 0,6250
+y : 0,3400
+z : 0,0350
+
+Trinitron
+0,2800 0,1550
+0,5950 0,0700
+0,1250 0,7750
+
+D65
+0,3127
+0,3290
+0,3583
+
+XYZ to RGB (Apple)
+2,9516 -1,2894 -0,4738
+-1,0851 1,9909 0,0372
+0,0855 -0,2695 1,0913
+
+RGB (Apple) to XYZ
+0,4497 0,3162 0,1845
+0,2447 0,6720 0,0833
+0,0252 0,1412 0,9225
+
+x : 0,7350
+y : 0,2650
+z : 0,0000
+
+CIE RGB
+0,2740 0,1670
+0,7170 0,0090
+0,0090 0,8240
+
+E
+0,3333
+0,3333
+0,3333
+
+XYZ to RGB (CIE)
+2,3707 -0,9001 -0,4706
+-0,5139 1,4253 0,0886
+0,0053 -0,0147 1,0094
+
+RGB (CIE) to XYZ
+0,4887 0,3107 0,2006
+0,1762 0,8130 0,0108
+0,0000 0,0102 0,9898
+
+x : 0,6300
+y : 0,3400
+z : 0,0300
+
+P22-EBU
+0,2950 0,1500
+0,6050 0,0750
+0,1000 0,7750
+
+D50
+0,3457
+0,3585
+0,2958
+
+XYZ to RGB (P22-EBU)
+2,6423 -1,2234 -0,3930
+-1,1120 2,0590 0,0160
+0,0822 -0,2807 1,4560
+
+RGB (P22-EBU) to XYZ
+0,5093 0,3209 0,1340
+0,2749 0,6581 0,0670
+0,0243 0,1088 0,6922
+
+HDTV (ITU-R BT.709-5)
+0,6400 0,3000 0,1500
+0,3300 0,6000 0,0600
+0,0300 0,1000 0,7900
+
+D65
+0,3127
+0,3290
+0,3583
+
+XYZ to RGB (R709)
+3,2405 -1,5371 -0,4985
+-0,9693 1,8760 0,0416
+0,0556 -0,2040 1,0572
+
+RGB (R709) to XYZ
+0,4125 0,3576 0,1804
+0,2127 0,7152 0,0722
+0,0193 0,1192 0,9503
+
+offset: 0,099 "simple" encoding: 0,51 (1,95)
+1
+LUT:
+γ : 0,45
+transition: 0,018
+CRT: 0,40 (2,50)
+1,28
+slope: 4,5
+overall:
+
+NTSC (1953)
+NTSC (1953)
+x : 0,6700 0,2100 0,1400
+y : 0,3300 0,7100 0,0800
+z : 0,0000 0,0800 0,7800
+
+C
+0,3101
+0,3161
+0,3738
+
+XYZ to RGB (NTSC)
+1,9100 -0,5325 -0,2882
+-0,9847 1,9992 -0,0283
+0,0583 -0,1184 0,8976
+
+RGB (NTSC) to XYZ
+0,6069 0,1735 0,2003
+0,2989 0,5866 0,1145
+0,0000 0,0661 1,1162
+
+offset: 0,099 "simple" encoding: 0,51 (1,95)
+1
+LUT:
+γ : 0,45
+transition: 0,018
+CRT: 0,40 (2,50)
+1,28
+slope: 4,5
+overall:
+
+EBU 3213 / ITU
+PAL / SECAM
+x : 0,6400 0,2900 0,1500
+y : 0,3300 0,6000 0,0600
+z : 0,0300 0,1100 0,7900
+
+D65
+0,3127
+0,3290
+0,3583
+
+XYZ to RGB (EBU)
+3,0629 -1,3932 -0,4758
+-0,9693 1,8760 0,0416
+0,0679 -0,2289 1,0694
+
+RGB (EBU) to XYZ
+0,4306 0,3415 0,1783
+0,2220 0,7066 0,0713
+0,0202 0,1296 0,9391
+
+offset: 0,099 "simple" encoding: 0,51 (1,95)
+1
+LUT:
+γ : 0,45
+transition: 0,018
+CRT: 0,40 (2,50)
+1,28
+slope: 4,5
+overall:
+
+Trinitron
+0,2800 0,1550
+0,5950 0,0700
+0,1250 0,7750
+
+D65
+0,3127
+0,3290
+0,3583
+
+XYZ to RGB (SGI)
+2,9516 -1,2894 -0,4738
+-1,0851 1,9909 0,0372
+0,0855 -0,2695 1,0913
+
+RGB (SGI) to XYZ
+0,4497 0,3162 0,1845
+0,2447 0,6720 0,0833
+0,0252 0,1412 0,9225
+
+SMPTE-C
+SMPTE-240M
+x : 0,6300 0,3100 0,1550
+y : 0,3400 0,5950 0,0700
+z : 0,0300 0,0950 0,7750
+
+D65
+0,3127
+0,3290
+0,3583
+
+XYZ to RGB (240M)
+3,5054 -1,7395 -0,5440
+-1,0691 1,9778 0,0352
+0,0563 -0,1970 1,0502
+
+RGB (240M) to XYZ
+0,3936 0,3652 0,1916
+0,2124 0,7010 0,0865
+0,0187 0,1119 0,9582
+
+offset: 0,112 "simple" encoding: 0,52 (1,92)
+1
+LUT:
+γ : 0,45
+transition: 0,023
+CRT: 0,40 (2,50)
+1,30
+slope: 4,0
+overall:
+
+SMPTE-C
+0,3100 0,1550
+0,5950 0,0700
+0,0950 0,7750
+
+D65
+0,3127
+0,3290
+0,3583
+
+XYZ to RGB (SMPTE-C)
+3,5054 -1,7395 -0,5440
+-1,0691 1,9778 0,0352
+0,0563 -0,1970 1,0502
+
+RGB (SMPTE-C) to XYZ
+0,3936 0,3652 0,1916
+0,2124 0,7010 0,0865
+0,0187 0,1119 0,9582
+
+offset: 0,099 "simple" encoding: 0,51 (1,95)
+1
+LUT:
+γ : 0,45
+transition: 0,018
+CRT: 0,40 (2,50)
+1,28
+slope: 4,5
+overall:
+
+sRGB
+
+HDTV (ITU-R BT.709-5)
+x : 0,6400 0,3000 0,1500
+y : 0,3300 0,6000 0,0600
+z : 0,0300 0,1000 0,7900
+
+D65
+0,3127
+0,3290
+0,3583
+
+XYZ to RGB (R709)
+3,2405 -1,5371 -0,4985
+-0,9693 1,8760 0,0416
+0,0556 -0,2040 1,0572
+
+RGB (R709) to XYZ
+0,4125 0,3576 0,1804
+0,2127 0,7152 0,0722
+0,0193 0,1192 0,9503
+
+offset: 0,055 "simple" encoding: 0,45 (2,20)
+1
+LUT:
+γ : 0,42
+transition: 0,003
+CRT: 0,40 (2,50)
+1,14
+slope: 12,92
+overall:
+
+Wide Gamut
+
+700 / 525 / 450 nm
+x : 0,7347 0,1152 0,1566
+y : 0,2653 0,8264 0,0177
+z : 0,0000 0,0584 0,8257
+
+D50
+0,3457
+0,3585
+0,2958
+
+XYZ to RGB (Wide)
+1,4625 -0,1845 -0,2734
+-0,5228 1,4479 0,0681
+0,0346 -0,0958 1,2875
+
+RGB (Wide) to XYZ
+0,7164 0,1010 0,1468
+0,2587 0,7247 0,0166
+0,0000 0,0512 0,7740
+
+RGB space
+
+R
+
+G
+
+Apple
+
+CIE
+
+ColorMatch
+
+HDTV (HD-CIF)
+x:
+y:
+z:
+
+SGI
+x : 0,6250
+y : 0,3400
+z : 0,0350
+
+SMPTE-C
+x : 0,6300
+y : 0,3400
+z : 0,0300
+
+B
+
+Ν.Α.
+
+Ν.Α.
+
+Ν.Α.
+
+Ν.Α.
+
+Ν.Α.
+
+Ν.Α.
+
+"simple" encoding: 0,45 (2,20)
+1
+LUT:
+CRT: 0,40 (2,50)
+1,14
+overall:
+"simple" encoding: 0,56 (1,80)
+LUT: 0,69 (1,45)
+CRT: 0,40 (2,50)
+0,96
+overall:
+"simple" encoding: 0,45 (2,20)
+1
+LUT:
+CRT: 0,40 (2,50)
+1,14
+overall:
+"simple" encoding: 0,56 (1,80)
+LUT
+0,56 (1,80)
+(combined)
+and CRT:
+1,00
+overall:
+
+"simple" encoding: 0,68 (1,47)
+LUT: 0,59 (1,70)
+CRT: 0,35 (2,86)
+1,14
+overall:
+
+"simple" encoding: 0,45 (2,20)
+1
+LUT:
+CRT: 0,40 (2,50)
+1,14
+overall:
+
+Table 5: Colorimetric specifications of various RGB spaces and transform matrices between RGB space
+and CIE 1931 XYZ values.
+
+22
+
+•
+
+A Review of RGB Color Spaces…
+
+The main advantages for its users are a reproducible and well-characterized environment. A calibrated PressView
+system takes into account, independently for each RGB channel, the CRT gain, offset and brightness combined with
+the display LUT, which it uses for calibration purposes. The resulting system, between the graphics file and the eye,
+has a “perfect” 0,56 (1/1,8) gamma on a 0,33 cd/m2 black pedestal and a white point luminance of 85 cd/m2.
+The primaries shown in Table 5 are different than the ones used in Photoshop. The ones in this document were
+confirmed by miro displays,22 which recently purchased the Radius brands and technologies from Radius, now
+renamed Digital Origin.
+HDTV RGB and sRGB
+Identical in terms of gamut, these two spaces differ only in their definition of the viewing conditions, which are
+simply assumed in ITU-R BT.709-3, a High-Definition-TV (HDTV) standard, and precisely defined in IEC 61966-21, the sRGB standard (see Table 6 for a more complete description of these standards). With chromaticities not very
+far from SMPTE-C (and SMPTE-240M), they strive to represent the evolution of our standard TV and its
+convergence with the PC world, while maintaining compatibility with the large quantity of recorded media.
+Advertised as a general-purpose space for consumer use, sRGB is proposed for applications where embedding the
+space profile (ex: ICC profile) may not be convenient for file size or compatibility purposes. By having all elements in
+a system sRGB compliant, no time is lost in conversions. The World Wide Web is obviously a target of choice for
+this space but it should not be discounted for other “scanner-to-printer” applications. An extended gamut color
+encoding standard has been proposed for sRGB; it supports multiple levels of precision while being compatible with
+the base standard.
+NTSC RGB
+The color space of the first North-American TV sets. It is now an obsolete space that has been replaced by one
+defined with more efficient – brighter – phosphors, SMPTE-C, albeit at the expense of the gamut size. In a strange
+turn of events, the Adobe RGB space, which was devised mostly for printed graphics applications, is very similar to
+this space, a sign of the significant recent progress in the printing industry.
+PAL / SECAM RGB
+The current 50 Hz television standard. Very similar in gamut size to the current North-American standard (SMPTEC), and to Apple RGB, SGI RGB and sRGB.
+SGI RGB
+The chromaticities of a Sony Trinitron CRT are shown but other displays by Hitachi and Mitsubishi, with different
+chromaticities, are also found in the SGI product line. The relatively low gamma of 0,35 (or high gamma, if you
+consider the reverse value of 2,86 quoted as being the gamma by the tube’s manufacturer) is common for Sony’s
+GDM series of displays from which the SGI-Sony displays are derived.
+When a gamma number is entered by the user in an SGI system, the LUT is filled with values corresponding to a
+γLUT = 1/gamma_number.
+SMPTE-C and SMPTE-240M RGB
+SMPTE-C defines the primaries for the current North American and Japanese standard, SMPTE 170-1999. You
+should note that, for compatibility with existing studio equipment, the primaries of NTSC are also accepted in
+SMPTE 170-1999. The gamma defined in SMPTE 170-1999 is identical to the one defined in ITU-R BT709.3, which
+is slightly different than the one defined in SMPTE-240M. However, a simple gamma of 0,455 (1/2,2) is often used
+in computer software for both spaces. The single parameter gamma values in Table 5 (“simple gamma”) were
+obtained by deriving a best fit on the detailed gamma function.
+Wide gamut RGB
+As its name says, this is an extremely wide gamut. It is based on monochromatic primaries at 700, 525, and 450 nm.
+Although possible to generate these wavelengths with lasers, the red primary is in a region where the response of the
+eye is quite low. Since a 700 nm red requires significantly more power to match the brightness of the other two
+wavelengths, and since cost is proportional to power, it is more cost-effective to use a shorter red wavelength. As
+mentioned previously, proposed wavelengths for optimum luminous efficiency for a display with three primaries are
+610, 530, and 450 nm.
+
+A Review of RGB Color Spaces…
+
+3
+
+Television and multimedia systems
+Recent years have seen an explosion of new standards following the development of analog HDTV, which has really
+only caught on in Japan, and now digital TV (DTV) and HDTV. We also have witnessed the emergence of
+multimedia, a new form of information distribution mixing text, images, video, sound and interaction, which was
+rendered possible with the development of powerful personal computers. The commonalities of many parameters of
+the various RGB spaces defined for the television and multimedia fields show how intertwined these technologies
+have become. Eventually, some may hope that they are the same, but history has shown that new requirements will
+most likely create a need for new standards. For example, we could well standardize now on ITU-R BT.709-3 and the
+derivative IEC 61966-2-1 (sRGB) for all TV and computer work. However, this solution would not meet the
+requirements of the printing industry that, in many instances, needs displays with a larger color gamut then what can
+be obtained with current CRT phosphors. Also, HDTV itself is in constant evolution and the operating
+infrastructure, which requires new equipment for production and transmission, is far from being ready. In such an
+environment, the best bet is to keep abreast of as many standards as we can, if only because a lot of content will be
+created with these interim systems which will then have to be translated to the final colorimetric characteristics.
+The colorimetric and opto-electronic transfer characteristics of major TV standards as well as a short content
+description are presented in Table 6. Most of these standards can now be purchased “online” from the organizations
+Web sites.23 The rightmost column, “opto-electronic transfer characteristic”, is the definition of the input, or camera,
+gamma with parameters to be used as per Equation (9). The corresponding reference reproducer is not always
+specified, but when it is, it is the reverse equation from these parameters. When the transfer characteristic is identical
+to another standard, the number of the reference standard, or the standard often quoted as such, is shown in place of
+the characteristics. Not all standards characterize opto-electronic transfer and the mention “N.A.” (Not Applicable) is
+shown in these cases.
+Phosphors primaries and white point are shown, when applicable. Some standards propose different primaries-white
+point combinations for specific cases. The number of the standard, or its well-recognized industry name, such as
+SMPTE-C, is shown when primaries are identical to the reference standard.
+The display ratio, the ratio of the horizontal image size on the vertical image size, is either 4:3 or 16:9. The squarer
+4:3 ratio is the one used in our current TV systems (NTSC, PAL, SECAM). The “letterbox” 16:9 ratio is used for the
+many flavors of HDTV.
+A TV image, or frame, is composed of lines that have traditionally been displayed in two sequences, or fields. The
+two fields are interlaced; the first field contains the odd lines and the second field the even lines. The field rate is twice
+the frame rate. This scheme was done to maximize the apparent resolution while minimizing the jitter that would be
+noticeable if the entire image was updated at the lower frame rate. This interlace is noted as 2:1.
+With the improvement in electronic devices performance, it is now possible, if not always cost-effective, to send all
+the frame in one field, called progressive scan, and noted as 1:1. All computer displays as well as many of the various
+HDTV modes work on this principle. However, due to equipment and bandwidth related cost reasons, a 2:1 interlace
+will still be used in HDTV.
+The frame rates have historically been close or equal to the power line frequencies, 59,94 Hz in North America and
+50 Hz in Europe. Compatibility with the vast number of sets and already recorded media imposes a continued
+support for these frequencies.
+There is a tradition of specifying TV displays in terms of “lines” for both the vertical and horizontal resolution. The
+vertical resolution is fixed by design but the horizontal resolution, coming from an analog signal, is dependent of the
+signal bandwidth. A top-of-the-line higher-bandwidth TV will be specified as capable of showing more horizontal
+lines than a lower cost model. Such is not the case in computers and in digital TVs where the number of pixels is
+fixed both horizontally and vertically, with the caveat that the actual resolution always depends on the resolution of
+the source image and the display physical dot pitch.
+Also, the number of visible, or active, vertical lines is always smaller than the total number of lines in a frame. The
+hidden lines are used for screen refresh, to enable the electron beam in a CRT to get back to the top of the display, as
+well as to transmit non-image information, such as captions.
+
+•
+
+23
+
+24
+
+•
+
+A Review of RGB Color Spaces…
+
+standard
+
+title
+
+additional information
+
+primaries
+(white)
+R
+G
+B
+x: 0,6300 0,3100 0,1550
+y: 0,3400 0,5950 0,0700
+(D65)
+SMPTE C (i.e.: RP-145)
+(D65)
+and NTSC (1953):
+R
+G
+B
+x: 0,6700 0,2100 0,1400
+y: 0,3300 0,7100 0,0800
+
+opto-electronic
+transfer
+characteristic
+
+luma
+(E'Y )
+
+N.A.
+
+N.A.
+
+Same as
+ITU-R BT.709-3
+
+ITU-R BT.601-5
+
+RP 145-1994 (SMPTE)
+
+SMPTE C Color Monitor Colorimetry
+
+Current North American and Japanese broadcast standard. No
+aspect and interlace ratios, sampling, resolution, number of
+lines, and picture rate specification in this standard.
+
+SMPTE 170M-1999
+
+Television - Composite Analog Video Signal NTSC for Studio Applications
+
+Current North American and Japanese broadcast standard.
+4:3 ratio.
+525/59,94/2:1.
+
+ANSI/SMPTE 240M-1995
+
+Television - Signal Parameters - 1125-Line High- 16:9 ratio, 1035 active lines per frame.
+Definition Production Systems
+1125/60/2:1 and 1125/59,94/2:1.
+
+SMPTE C
+(D65)
+
+offset: 0,115
+γ: 0,45
+transition: 0,0228
+slope: 4,0
+
+0,212 E'R +
+0,701 E'G +
+0,087 E'B
+
+SMPTE 260M-1999
+
+Digital representation of the 1125/60 ANSI/SMPTE 240M
+Television - 1125/60 High-Definition
+Production System - Digital Representation and signal parameters, plus the mechanical and electrical interface.
+16:9 ratio.
+Bit-Parallel Interface
+
+SMPTE C
+(D65)
+
+ANSI/SMPTE 240M
+
+ANSI/SMPTE 240M
+
+SMPTE 274M-1998
+
+Television - 1920 x 1080 Scanning and Analog
+and Parallel Digital Interfaces for Multiple
+Picture Rates
+
+ITU-R BT.709-3
+(D65)
+
+ITU-R BT.709-3
+
+ITU-R BT.709-3
+
+ANSI/SMPTE 293M-1996
+
+Television - 720 x 483 Active Line at 59,94-Hz
+Principally defined for the production of content for
+Progressive Scan Production - Digital
+EDTV-II (NTSC letterbox compatible with SMPTE 170M).
+Representation
+
+SMPTE C
+(D65)
+
+ITU-R BT.709-3
+
+ITU-R BT.601-5
+
+ANSI/SMPTE 295M-1997
+
+Television - 1920 x 1080 50-Hz - Scanning and Analog and digital, 16:9 ratio, 1250 total lines per frame.
+Interface
+1920 x 1080/50 in both 1:1 and 2:1 interlace.
+
+ITU-R BT.709-3
+(D65)
+
+ITU-R BT.709-3
+
+ITU-R BT.709-3
+
+ANSI/SMPTE 296M-1997
+
+Television - 1280 x 720 Scanning, Analog and
+Digital Representation and Analog Interface
+
+ITU-R BT.709-3
+(D65)
+
+ITU-R BT.709-3
+
+ITU-R BT.709-3
+
+EBU Tech. 3213
+and other documents.
+
+EBU standard for chromaticity tolerances for Current European broadcast standard.
+studio monitors (1975, re-issued 1981, Out-of- PAL / SECAM.
+Print)
+625/50.
+
+R
+G
+B
+x: 0,6400 0,2900 0,1500
+y: 0,3300 0,6000 0,0600
+
+Assumed gamma
+of receiver: 2,8
+
+ITU-R BT.601-5
+
+IEC 61966-2-1 (final draft)
+
+Multimedia systems and equipment - Colour
+measurement and management - Part 2-1:
+Colour management - Default RGB colour
+space - sRGB
+
+ITU-R BT.709-3
+(D65)
+
+offset: 0,055
+γ: 1 / 2,4
+transition: 0,0031308
+slope: 12,92
+
+N.A.
+
+ITU-R BT.470-6
+
+ITU-R BT.601-5
+
+ITU-R BT.709-3
+
+ITU-R BT.1358
+
+Conventional television systems
+
+16:9 ratio, 1125 total lines per frame.
+1920 x 1080/60, /59,94, and /50 in both 1:1 and 2:1 interlace.
+1920 x 1080/30, /29,97, /25, /24, and /23,98 in 1:1 only.
+
+Analog and digital, 16:9 ratio, 750 total lines per frame.
+1280 x 720/60/1:1 and 1280 x 720/59,94/1:1.
+
+No aspect and interlace ratios, sampling, resolution, number of
+lines, and picture rate specification in this standard.
+
+Worldwide inventory of specifications for recommended
+NTSC, PAL, and SECAM systems and variants.
+Analog, 4:3 ratio, 2:1 interlace.
+525/60, 525/59,94, and 625/50.
+
+NTSC (1953) and (C): for
+Assumed gamma
+M/NTSC, M/PAL and
+of receiver:
+some PAL variants
+2,2 for M/NTSC and
+(permitted for existing
+some M/PAL variants;
+SECAM sets).
+EBU 3213 and (D65): for 2,8 for M/PAL and
+others.
+most PAL and SECAM
+variants.
+
+4:3 and 16:9 ratios, 13,5 MHz:
+4:2:2, 525/60 and 625/50;
+Studio encoding parameters of digital television
+4:4:4, 525/60 and 625/50.
+N.A.
+for standard 4:3 and wide-screen 16:9 aspect
+16:9 ratio, 18 MHz:
+ratios
+4:2:2, 525/60 and 625/50;
+4:4:4, 525/60 and 625/50.
+Analog and digital, 16:9 ratio.
+ITU-R BT.709-3 luma used for systems related to conventional
+TV: 1125/60/2:1, and for square pixel common image format
+R
+G
+B
+Parameter values for the HDTV standards for (HD-CIF):
+x: 0,6400 0,3000 0,1500
+1125/60 (comprises 1080/60/2:1, 1080/59,94/2:1,
+production and international programme
+y: 0,3300 0,6000 0,0600
+1080/60/1:1, and 1080/59,94/1:1), and
+exchange
+(D65)
+1250/50 (comprises 1080/50/2:1 and 1080/50/1:1).
+ITU-R BT.601-5 luma used only for systems related to
+conventional TV: 1250/50/2:1 (1152 active lines).
+EBU 3213
+for 625 line system
+Analog and digital, 4:3 and 16:9 ratios.
+Studio parameters of 625 and 525 line
+SMPTE C
+625/50/1:1, 576 active lines per picture, and
+progressive scan television systems
+for 525 line system
+525/59,94/1:1, 483 active lines per picture.
+(D65)
+
+N.A.
+
+offset: 0,099
+γ: 0,45
+transition: 0,018
+slope: 4,5
+
+ITU-R BT.709-3
+
+ITU-R BT.601-5
+
+0,299 E'R +
+0,587 E'G +
+0,114 E'B
+
+0,2126 E'R +
+0,7152 E'G +
+0,0722 E'B
+ITU-R BT.601-5
+also specified, see
+additional information.
+
+ITU-R BT.601-5
+
+Table 6: Colorimetric and opto-electronic transfer characteristics of major TV standards. These standards are defined
+by the following organizations: ANSI: American National Standards Institute; EBU: European Broadcasting Union;
+IEC: International Electrotechnical Commission; ITU: International Telecommunication Union; SMPTE: Society of
+Motion Picture and Television Engineers. See Reference 23 for Web sites addresses.
+
+A Review of RGB Color Spaces…
+
+There is no published industry-wide standard for the colorimetric characteristics of personal computers and each
+platform (Apple, SGI, etc.) has its own set of requirements. Moreover, until the recently completed IEC 61966-2-1
+standard for sRGB, there was virtually no colorimetric information available for Intel/Windows compatible
+computers. In particular, for this open platform, there is not much control on the characteristics of the display
+phosphors, which can vary between manufacturers and between models. For critical work, specific tristimulus
+coordinates can usually be found in the user manual but the specifications of ITU-R BT.709-3 (sRGB) should be
+used if the images are going to be distributed and looked at on unknown displays. This is not as bad as it looks since,
+in modern displays, the chromaticities are quite close, at least between CRTs, and it is possible to adjust the color
+temperature at specific values.
+In terms of resolution, computer displays, with their multi-sync capabilities, have fewer ties with the past in terms of
+frame rate and resolution. For example, in the IBM compatible world, each step up, from VGA at 640 by 480 pixels
+to UXGA at 1600 by 1200 pixels, is backward compatible with the data generated with the previous generations.
+An overview of the colorimetric characteristics of TVs and displays would not be complete without a description of
+Luma. Luma is an electrical TV signal on which the luminance of the image is encoded. It is the only signal, apart
+from the synchronizing signals, which is required for black and white TV. The term Luma is preferred to luminance
+since it is determined from gamma corrected signals, whereas luminance is determined from physical, linear, data.
+Confusion may still arise however, because Luma coefficients are sometimes identical to the luminance coefficients,
+the middle row, of the RGB to XYZ matrix.
+Luma coefficients are not used in any part of the XYZ to RGB conversion; they are simply a way of encoding
+luminance for recording or transmission purposes. There are basically three Luma definitions used in all TVs
+worldwide; they are shown in Table 7.
+standard
+ANSI/SMPTE 240M-1995
+
+Luma (E'y)
+0,212 E'r + 0,701 E'g + 0,087 E'b
+
+ITU-R BT.601-5
+ITU-R BT.709-3
+
+0,299 E'r + 0,587 E'g + 0,114 E'b
+0,2126 E'r + 0,7152 E'g + 0,0722 E'b
+
+Table 7: The principal Luma definitions found in TV standards.
+Another important specification of a display system is represented by a series of three numbers such as “4:2:2”.
+These numbers are the relative bandwidths of the Luma and the two color signals – chrominance – into which the
+image is encoded. In ITU-R BT.601-5, for example, the 4:2:2 specification at 13,5 MHz means that the two
+chrominance signals are encoded at 6,75 MHz and the Luma signal at 13,5 MHz. The lower bandwidth for chroma is
+a common display configuration that takes advantage of the eye higher sensitivity to luminance resolution relative to
+color resolution. In particular, the eye cannot well resolve bluish colors but is quite sensitive to their shades.
+In Table 6, the “additional information” column contains information on aspect and interlace ratios, sampling,
+resolution, number of lines, and picture rate specification. For instance, the description for SMPTE 274M, an analog
+and digital HDTV standard, as shown in Table 6 is:
+16:9 ratio, 1125 total lines per frame
+1920 x 1080/60, /59,94, and /50 in both 1:1 and 2:1 interlace
+1920 x 1080/30, /29,97, /25, /24, and /23,98 in 1:1 only
+In condensed form, this information describes a total of eleven display formats at 1920 x 1060 resolution: three with
+1:1 interlace at 60 Hz, 59,94 Hz, and 50 Hz frame rates; three with 2:1 interlace at 60 Hz, 59,94 Hz, and 50 Hz frame
+rates; five with 1:1 interlace at 30 Hz, 29,97 Hz, 25 Hz, 24 Hz and 23,98 Hz frame rates. All formats have a 16:9
+image size ratio and a total of 1125 lines.
+
+•
+
+25
+
+26
+
+•
+
+A Review of RGB Color Spaces…
+
+4
+
+From xyY to R’G’B’
+Figure 5 shows a flow chart of the steps required to convert xyY data to a specific gamma encoded RGB space. The
+chart also covers starting with XYZ and L*a*b* data since these representations are often used. The parameters of
+many common RGB spaces can be found in Table 5 but the procedure provided in this document can be applied to
+any variant or specific need. The steps are detailed in the following sections.
+All these conversions can easily be performed with a spreadsheet. You may also want to make a stand-alone program
+from scratch from the basic equations. A few software libraries were developed for color conversions. Some are
+freely available on the Web and often found in universities’ sites. Of course, commercial color conversion program
+do exist but they are usually associated with hardware.
+
+xyY
+data
+
+xyY to XYZ
+conversion
+(Section 4.1)
+
+XYZ
+data
+
+Figure 5: Flow chart to convert XYZ, xyY and L*a*b*
+data into R’G’B’.
+
+XYZ and RGB with
+same illuminant ?
+
+Yes
+
+XYZ to RGB
+conversion
+(Section 4.4)
+
+RGB to R’G’B’
+conversion
+(Section 4.5)
+
+No
+L*a*b* to XYZ
+conversion
+(Section 4.2)
+
+L*a*b*
+data
+
+4.1
+
+Bradford
+matrix
+(Section 4.3)
+
+•
+
+For data available as xyY coordinates, start with the simple conversion described in Section 4.1.
+
+•
+
+If the data is available in XYZ format, and if it was taken with the same illuminant as the target RGB space,
+you can go directly to Section 4.4.
+
+•
+
+If the data is available in XYZ format, but was taken with a different illuminant as the target RGB space,
+you first have to convert it using the Bradford matrix method described in Section 4.3.
+
+•
+
+For data available in L*a*b* format, go to Section 4.2.
+
+From xyY to XYZ
+For data available in the xyY format, we simply need to reverse the XYZ to xyY conversion described earlier. From
+Equations (1) and (2) we obtain:
+X = x(Y / y )
+
+and
+
+Z = (1 − x − y ) (Y / y )
+From here you can go to Section 4.3.
+
+(14)
+.
+
+(15)
+
+A Review of RGB Color Spaces…
+
+4.2
+
+From L*a*b* to XYZ
+Transforming L*a*b* data to XYZ requires knowing at least the XYZ coordinates of the illuminant used for
+measurements (defined as Xn, Yn, and Zn). Coordinates of standard illuminants can be found in Table 3. For nonstandard illuminants, you will need to determine their XYZ coordinates either with a colorimeter or with the method
+described in Table 1.
+The XYZ coordinates are found by inverting the set of L*a*b* relations of Equation (3) presented in Section 2.1.3:
+For L* ≤ 8,000:
+
+For L* > 8,000:
+
+[
+
+X = X n (L * / 903,3)
+
+1/ 3
+
+]
+
++ (a * / 500 )
+
+3
+
+Y = Yn (L * / 903,3)
+
+[
+
+X = X n [((L * +16 ) / 116 ) + (a * / 500 )]3
+Y = Yn ((L * +16 ) / 116 )3
+
+Z = Z n (L * / 903,3)
+
+1/ 3
+
+]
+
+− (b * / 200 )
+
+3
+
+Z = Z n [((L * +16 ) / 116 ) − (b * / 200 )]3
+
+(16)
+.
+
+If your data was taken with the same illuminant as the target RGB space, you can go directly to Section 4.4. If not,
+you should proceed to the next section.
+Note: When transforming XYZ data back to L*a*b*, using Equation (3), make sure that the Xn, Yn, and Zn
+coordinates are the ones of the illuminant used to measure XYZ. If you want L*a*b* coordinates for a
+different illuminant, you first have to convert the XYZ data to the new illuminant using a Bradford matrix.
+
+4.3
+
+From XYZ (Source illuminant) to XYZ (Destination illuminant) – Bradford Matrix
+The Bradford matrix transform should be applied if the illuminant used to determine the XYZ coordinates of the
+original data (the source) is different from the illuminant of the target RGB space (the destination). Bradford matrices
+for often-required transforms are presented in Table 4. For other sets of standard illuminants, a Bradford matrix can
+be determined using the method shown in Section 2.1.5 from illuminant data found in Table 3.
+For non-standard illuminants, you will have to determine their XYZ coordinates either with a colorimeter or with the
+method described in Table 1.
+The XYZ coordinates corresponding to the illuminant of the target RGB space are:
+⎡X ⎤
+⎡
+⎢Y ⎥
+⎢
+=⎢
+⎢ ⎥
+⎢⎣ Z ⎥⎦
+⎢⎣
+dest .
+
+4.4
+
+Bradford
+3× 3
+matrix
+
+⎤ ⎡X ⎤
+⎥ ⎢Y ⎥
+⎥•⎢ ⎥
+⎥⎦ ⎢⎣ Z ⎥⎦
+source
+
+.
+
+(17)
+
+From XYZ to RGB, and vice-versa
+The XYZ to RGB matrices for various spaces are shown in Table 5. The RGB triads are obtained with the following
+multiplication:
+
+⎡R⎤ ⎡
+⎢G ⎥ ⎢
+⎢ ⎥=⎢
+⎢⎣ B ⎥⎦ ⎢⎣
+
+XYZ → RGB
+3× 3
+matrix
+
+⎤ ⎡X ⎤
+⎥ • ⎢Y ⎥
+⎥ ⎢ ⎥
+⎥⎦ ⎢⎣ Z ⎥⎦
+
+.
+
+(18)
+
+After this operation, the RGB coordinates of the illuminant are (100, 100, 100). All RGB triads should be rescaled at
+this point – divided by 100 – and the illuminant coordinates be (1, 1, 1). Results over one or below zero are clipped at
+one and zero respectively.
+
+•
+
+27
+
+28
+
+•
+
+A Review of RGB Color Spaces…
+
+For spaces not covered in the table, the following procedure based on a recommended practice from the Society of
+Motion Picture and Television Engineers24 can be used. This is done by first determining a RGB to XYZ matrix, and
+then finding the inverse XYZ to RGB matrix.
+The conversion between RGB to XYZ is expressed with a 3x3 matrix that has the form:
+
+⎡X ⎤ ⎡
+⎢Y ⎥ ⎢
+⎢ ⎥=⎢
+⎢⎣ Z ⎥⎦ ⎢⎣
+
+RGB → XYZ
+3× 3
+matrix
+
+⎤ ⎡R⎤
+⎥ • ⎢G ⎥
+⎥ ⎢ ⎥
+⎥⎦ ⎢⎣ B ⎥⎦
+
+.
+
+(19)
+
+What this matrix has to perform is map a space defined by three primaries, expressed in xyz coordinates, into a space
+defined by relative ratios of Red, Green, and Blue. This is easily derived from the special case where RGB = (1, 1, 1),
+corresponding to pure white, or more precisely, to the illuminating source characterized with known XYZ
+coordinates. The problem is further simplified since, for a source, we can normalize Y to one, and we can express X
+and Z, using Equation (1), as xw/yw and zw/yw respectively. The “w” index is an indication these coordinates
+correspond to the “white” source.
+The RGB to XYZ matrix is defined by the xyz chromaticities of the RGB primaries (xRyRzR, xGyGzG, xByBzB)
+proportioned, with unknown constants CR, CG and CB, to meet the goal of the transform. The equation to solve is
+
+⎡xw / y w ⎤
+⎡ (C R × x R )
+⎢
+⎢(
+⎥
+=
+1
+⎢
+⎢ CR × yR )
+⎥
+⎢⎣ z w / y w ⎥⎦
+⎢⎣ (C R × z R )
+norm XYZ white
+
+(C G × xG ) (C B × x B )⎤
+⎡1⎤
+⎢
+(C G × y G ) (C B × y B )⎥⎥
+• ⎢1⎥⎥
+(C G × z G ) (C B × z B )⎥⎦ RGB→ XYZ ⎢⎣1⎥⎦ RGB white
+
+(20)
+
+that can be expressed as the following three equations:
+x w / y w = (C R × x R ) + (C G × x G ) + (C B × x B )
+1 = (C R × y R ) + (C G × y G ) + (C B × y B )
+z w / y w = (C R × z R ) + (C G × z G ) + (C B × z B )
+
+(21)
+,
+
+to be solved in the usual manner for three equations and three unknowns.
+The XYZ to RGB matrix can then be found by inverting the RGB to XYZ matrix with the standard matrix inversion
+procedure:
+
+⎡
+⎢
+⎢
+⎢⎣
+
+XYZ → RGB
+3×3
+matrix
+
+⎤ ⎡
+⎥ ⎢
+⎥=⎢
+⎥⎦ ⎢⎣
+
+RGB → XYZ
+3×3
+matrix
+
+⎡ RGB → XYZ
+3× 3
+adjoint ⎢⎢
+−1
+⎤
+⎢
+matrix
+⎥
+⎣
+⎥ =
+determinant
+⎥⎦
+RGB → XYZ
+
+⎤
+⎥
+⎥
+⎥⎦
+
+(22)
+
+matrix
+where the adjoint of the matrix to invert is divided by its determinant.
+A simple way to verify the calculation is to multiply the two inverse matrices together and check that the result is a
+unitary diagonal matrix. Also, the coefficients of the middle row of the RGB to XYZ matrix, Equation (20), should
+add up exactly to one (within significant digits) since the special case with Y = 1 when RGB = (1, 1, 1) was used to
+deduce the matrix.
+
+A Review of RGB Color Spaces…
+
+•
+
+Now that we have both the XYZ to RGB and RGB to XYZ matrices, we can use them to transform RGB data from
+one RGB space to another. If the illuminant is not the same for both spaces, we need to apply a Bradford matrix
+transform in mid process. The RGB space-to-space conversion procedure is represented by the equation:
+⎡R⎤
+⎢G ⎥
+⎢ ⎥
+⎢⎣ B ⎥⎦
+
+⎡
+= ⎢⎢
+⎢⎣
+space 2
+
+XYZ → RGB
+3× 3
+Illuminant 2
+
+⎤ ⎡
+⎥•⎢
+⎥ ⎢
+⎥⎦ ⎢⎣
+
+⎤ ⎡
+⎥•⎢
+⎥ ⎢
+⎥⎦ ⎢⎣
+
+Bradford
+XYZ ( ILL1) → XYZ ( ILL 2)
+3 x3 matrix
+
+RGB → XYZ
+3× 3
+Illuminant 1
+
+⎤ ⎡R⎤
+⎥ • ⎢G ⎥
+.
+⎥ ⎢ ⎥
+⎥⎦ ⎢⎣ B ⎥⎦
+space1
+
+(23)
+
+If the illuminant is the same, the Bradford matrix is simply omitted. It is important to mention that converting from
+one space to another is frequently performed in conjunction with an additional step, called gamut mapping, which is
+not represented in the preceding equation. Gamut mapping algorithms attempt to minimize the effects of clipping by
+distorting the values of either or both the clipped and non-clipped colors. Variants of the process, still a subject of
+active research,25 have been devised for different requirements such as maintaining saturated colors in business
+graphics or achieving a balanced “realistic” look in pictures, even if none of the resulting colors are accurate.
+However, you should realize that many RGB to RGB conversion matrices found in the literature are simply the
+RGB-to-XYZ and XYZ-to-RGB matrices of Equation (23) combined into one, as per ASTM RP 177-93, with no
+Bradford matrix or gamut mapping.
+
+4.5
+
+From RGB to R’G’B’
+Depending on your choice of a detailed or simple gamma, R’, G’, and B’ are determined with either one of the
+following equations (for simplicity, only R’ is shown; G’ and B’ are similar):
+
+(
+
+(
+
+R' = round 255 × (1 + offset )R γ − offset
+
+))
+
+R' = round (255 × slope × R )
+
+for 1 ≥ R ≥ transition
+for transition > R ≥ 0
+
+(24)
+
+for 0 ≤ R ≤ 1
+
+(25)
+
+or:
+
+(
+
+R' = round 255 × R γ
+
+)
+
+.
+
+These equations are similar to Equations (9) and (10) with terms added to scale and round the values to the nearest
+integer between zero and 255. This scale corresponds to 8 bits per primary, a 24-bit color system.
+
+4.6
+
+Conversion accuracy vs. requirements
+Color differences can be expressed mathematically for any space but they make practical sense only for the more
+uniform spaces where the resulting numbers can be better associated to what the eye perceives. For the L*a*b* space
+the color difference equation is:
+
+[
+
+∆E * ab = (∆a *)2 + (∆b *)2 + (k∆L *)2
+
+]
+
+1/ 2
+
+,
+
+(26)
+
+where k=1 for samples compared in close proximity (k=0,5 or less for samples compared further away from each
+other, where the eye is less sensitive to lightness differences). A ∆E*ab=1 corresponds to colors which are barely
+differentiable by 50% of a group of observers; the other 50% would see no difference. Even though Equation (26) is
+a workhouse of the color industry, its statistical threshold is a cause of concern, and of possible litigation, in many
+industrial applications where expert observers’ judgments are confronted. For this reason, better color difference
+equations are being sought.26
+
+29
+
+30
+
+•
+
+A Review of RGB Color Spaces…
+
+When converting from XYZ to R’G’B’, beside the inherent errors coming from the accuracy of the original data, the
+conversion process can introduce additional errors from the number of decimal places used in the conversion
+matrices constants, from the approximate form of the Bradford matrix, from the clipping required to limit RGB
+values between zero and one, from the use of a simple gamma instead of a detailed gamma, and from the rounding of
+the R’G’B’ values. Table 8 shows typical errors associated with each operation.
+
+Processing step
+
+Average ∆E*ab error
+
+Standard deviation
+
+Bradford matrix
+
+1,4
+
+0,9
+
+≈0
+
+≈0
+
+variable
+
+variable
+
+1,3
+
+0,92
+
+0,23
+
+0,11
+
+XYZ to RGB
+(matrix)
+XYZ to RGB
+(clipping)
+RGB to R’G’B’
+(simple vs.
+detailed gamma)
+RGB to R’G’B’
+(rounding error)
+
+Notes
+Measured for a D65 to D50 conversion.
+From Reference 27.
+Negligible error when constants with at
+least 4 significant decimals are used.
+See text.
+When a simple gamma expression is
+used instead of a detailed one (when
+available). Measured for sRGB.
+Typical values. Values are slightly higher
+for larger spaces (Ex.: 0,28 average for
+Adobe (1998)).
+
+Table 8: Typical errors associated to a XYZ to R’G’B’ conversion.
+Errors due to clipping are not considered.
+A detailed evaluation of the Bradford matrix accuracy was performed on over 1000 colors from the Pantone color
+data set covering a very large gamut.27 A first set of color coordinates was determined from spectral data for a D50
+illuminant with a method similar to the one shown in Table 2. These coordinates were then converted to a D65
+illuminant using the simplified Bradford matrix. The results were compared to a second set of coordinates obtained
+from spectral data processed with a D65 illuminant. The average ∆E*ab was 1,4 with a standard deviation of 0,9.
+The error associated with the Bradford matrix presented above does not include any effect resulting from the
+precision of the matrix terms. If constants with at least four significant decimals are used, then virtually no error is
+induced by the mathematics of the conversion. This is also true for the XYZ to RGB matrix.
+Clipping error values are not shown in this table since they are very dependent of the specific target space and the
+gamut of the original data. Clipping will most often be noticed for single-color large-area zones, an annoying situation
+if that color is associated with a “brand” product. This is where the use of “spot” colors – additional printing plates
+for dedicated colored inks other than CMY – is justified in many graphic design applications.
+Using a simple gamma expression when a detailed one is available adds a ∆E*ab of 1,3 on average with a standard
+deviation of 0,92, about the same as for the Bradford matrix.
+Rounding the R’G’B’ introduces an inevitable error of 0,23, on average, which is not noticeable. However, multiple
+conversions between different RGB spaces could degrade the color fidelity to a point where it could be noticed.
+The errors of Table 8 should not be added since they are statistical in nature. The combined effect of multiple
+processes can be evaluated by calculating the Root-Sum-Squared (RSS) value:
+
+[
+
+Combined _ error = (error # 1)2 + (error # 2)2 + L + (error # n )2
+
+]
+
+1/ 2
+
+.
+
+(27)
+
+As an example, Table 9 shows the error budget associated with a sRGB to ColorMatch conversion. Of course, if the
+sRGB R’G’B’ values were previously calculated with a simple gamma, we can remove this contribution from Table 9
+and we are left with the Bradford matrix and the R’G’B’ rounding error.
+An average ∆E*ab error of 1,9 can be expected for converting between sRGB and ColorMatch, an acceptable result
+which does not include the effects of clipping which affects only a portion of the conversions. Table 10 shows some
+characteristics of the clipping errors found in ColorMatch-to-sRGB and sRGB-to-ColorMatch conversions.
+
+A Review of RGB Color Spaces…
+
+sRGB: R’G’B’ to RGB, simple gamma
+sRGB to XYZ
+Bradford matrix: XYZD65 to XYZD50
+XYZ to ColorMatch RGB (matrix)
+XYZ to ColorMatch RGB (clipping)
+ColorMatch: RGB to R’G’B’ rounding
+
+Average ∆E*ab error
+1,3
+0
+1,4
+0
+Not included (see text)
+0,23
+
+Combined RSS error
+
+1,9
+
+Processing steps
+
+Table 9: The error budget associated with a sRGB to ColorMatch conversion. The RGB to R’G’B’
+conversion is assumed to be with a simple gamma expression.
+
+Average ∆E*ab due to clipping only
+Standard deviation for ∆E*ab
+Conversions clipped at 0
+Conversions clipped at 1
+Conversions clipped at both 0 and 1
+Conversions clipped
+Maximum ∆E*ab error
+R’G’B’ coordinates for maximum error
+
+sRGB to ColorMatch
+0,95
+
+ColorMatch to sRGB
+1,1
+
+1,8
+
+2,2
+
+20,6%
+2,4%
+0,66%
+22,4%
+13,6
+
+16,8%
+4,6%
+0%
+21,4%
+11,6
+
+sRGB (0, 0, 255)
+
+ColorMatch (0, 255, 0)
+
+Table 10: Characteristics of the clipping errors found for random samples in ColorMatch-to-sRGB and sRGB-toColorMatch conversions. A conversion is considered clipped when one of the R, G, or B values is clipped.
+The most surprising result in Table 10 is the high percentage of clipped conversions, a number that cannot be
+anticipated from a simple comparative observation of the triangular gamut shapes in the chromaticity diagram. Figure
+6 shows three-dimensional representations of these two spaces in various coordinate systems. To help visualize how
+the colors are transformed, the initial R’G’B’ cube, identical for both spaces, is divided in 125 uniformly sized smaller
+cubes. A comparison with the RGB cubes show how the gamma compression assigns more R’G’B’ values to lower
+luminance colors. The RGB cubes are then transformed into XYZ parallelepipeds where the sRGB volume is
+apparently much larger than the ColorMatch volume. The size difference is no longer obvious when the sRGB XYZ
+data is transformed from Illuminant D65 to Illuminant D50 using the Bradford matrix. However, even if they are
+similar and size and almost coincident in space, it just happens that some of the non-coincident zones are for the
+densely packed low luminance colors. It can easily be seen in the XYZ, xyY and L*a*b* diagrams that almost a
+complete slice of the shapes, corresponding to 20% of the gamut, is not comprised in the other space. As for which
+gamut of the two is larger, the answer is a tie since their L*a*b* volumes – used as simplistic estimates for this hard
+to answer question – are identical within a fraction of a percent.
+The largest clipping error occurs for pure blue in the sRGB to ColorMatch conversion, and for pure green in the
+ColorMatch to sRGB conversion. However, even if the maximum error due to clipping is higher in the sRGB to
+ColorMatch conversion, there are a higher number of conversions with larger errors when going from ColorMatch to
+sRGB than from sRGB to ColorMatch. The result is a slightly bigger average and a significant increase in the
+standard deviation for the ColorMatch to sRGB conversions. The higher “visibility” of this effect could explain the
+popular impression that the ColorMatch space is larger than sRGB.
+To place these errors in perspective, we should take into consideration the conditions in which these images will be
+seen. One of these conditions is the observation time. According to a review article by Has & al.,28 an inexperienced
+user will take approximately 5 seconds to notice a ∆E*ab difference of 15 from an original. The time goes up to 10
+seconds for a ∆E*ab of 10, and 15 seconds for a ∆E*ab of 5. Another study29 has shown that errors of less than 2,5
+∆E*ab are not visible on real world images shown on a CRT. In essence, the threshold value of ∆E*ab = 1 can only be
+achieved only by prolonged comparative viewing in a controlled environment.
+
+•
+
+31
+
+32
+
+•
+
+A Review of RGB Color Spaces…
+
+Figure 6: A visual comparison of the ColorMatch and sRGB spaces.
+(1, 1, 1)
+
+R’G’B’
+
+ColorMatch
+
+(1, 1, 1)
+
+RGB
+
+(0, 0, 0)
+
+sRGB
+
+(0, 0, 0)
+(1, 1, 1)
+
+(1, 1, 1)
+
+XYZ
+
+ColorMatch D50
+sRGB D50
+
+ColorMatch D50
+sRGB D65
+
+(0, 0, 0)
+
+(0, 0, 0)
+
+xyY
+
+L*a*b*
+
+-120 b*
+
++120 a*
+
+-120 b*
+
++120 a*
+
+A Review of RGB Color Spaces…
+
+On the hardware side, it has been shown30 that CRTs require a warm-up time varying between 15 minutes and three
+hours, depending on models, before achieving a long term stability of 0,15 ∆E*ab on average. On a given CRT
+subjected to a large luminance variation, an initial ∆E*ab of 1,0 was seen to exponentially decrease to about 0,1 ∆E*ab
+in 60 seconds. As for printed material, errors between 2 and 4 ∆E*ab are mentioned by Has & al. for the offset and
+rotogravure process.
+From this data we are able to conclude that the procedures shown in these pages can provide accurate results for all
+but the most critical applications. In all cases however, and in particular for space to space conversions, it is
+important to verify the extent of clipping since it can result in easily noticeable errors.
+
+5
+
+A practical example: the GretagMacbeth ColorChecker
+The ColorChecker card is ubiquitous in the photographic and video fields. Its main application is for obtaining a
+rapid assessment of an imaging devices’ calibration, although it can be used for simple calibration purposes. It
+consists of a small card containing 24 color patches defined to cover common natural colors such as skin colors,
+foliage, sky, additive and subtractive primaries, and a six steps gray scale.31 The patches are manufactured for
+optimum color consistency under varying lighting conditions.
+R’G’B’ values for this chart are difficult to find. In particular, the R’G’B’ coordinates supplied with the card are not
+properly defined and correspond to none of the spaces presented here. To fulfill this need, the coordinates for twelve
+R’G’B’ spaces are given in Table 11. The source data, xyY coordinates measured with CIE Illuminant C, is from
+Reference 31.
+These coordinates should be used in any program where specific “RGB” values can be assigned. Please notice the
+absence of primes against the letters of “RGB” in the preceding sentence, which reflect how gamma corrected
+coordinates are referred to in most software.
+When comparing displayed or printed patches with the original set, you may find that there are differences for some
+or all of the reproduced colors. These differences are most likely due to non-calibrated displays, non-calibrated
+printers, or wrong printer drivers. Even when using what may seem as the “right” ICC profile, a print may not look
+perfect. This, in turn, may simply be attributed to non-perfect profiles, a situation which highlights the immature
+state of these technologies. Although more expensive in terms of process time and hardware requirements, user
+generated ICC profiles should be used for best results instead of the generic ones supplied by the devices’
+manufacturers. Procedures to perform this calibration based on the ColorChecker card do exist but most systems
+generally perform calibration with a larger number of patches, sometimes up in the thousands for high-end
+applications. Many calibration systems rely on IT8 targets, manufactured by major film companies, that contain 108
+standard color patches plus additional neutral and vendor specific patches.
+
+About the author
+Danny Pascale, M.Sc.A., B.Ing.: Following a Bachelor degree in Engineering Physics at
+École Polytechnique, University of Montreal, he obtained his Master’s degree in the same
+group for the study of non-linear effects in optical fibers. Subsequently, he participated in
+the development of lasers and instrumentation dedicated to laser-matter interaction
+research at INRS-Énergie. He then designed electro-optical instrumentation and thermal
+sensors for military applications at Bendix Avelex, a unit of Allied-Signal Aerospace. A
+few years later he became a partner at Simdev Electronics, a military simulation system
+and software design firm where he took charge of video display and positioning systems
+development. He now does technology assessment and help companies bring new
+products into the market in the computer and consumer electronics industries. He recently
+formed a new company, BabelColor, dedicated to the development of colorimetric
+software tools. He is a member of SPIE, OSA, and IEEE.
+
+•
+
+33
+
+34
+
+•
+
+A Review of RGB Color Spaces…
+
+Adobe
+
+xyY (CIE C)
+y
+0,3161
+0,3504
+0,3446
+0,2514
+0,4220
+0,2400
+0,3430
+0,4070
+0,1750
+0,3058
+0,2020
+0,4887
+0,4375
+0,1285
+0,4782
+0,3129
+0,4703
+0,2325
+0,2519
+0,3163
+0,3163
+0,3163
+0,3163
+0,3163
+0,3163
+
+x
+0,3101
+0,4002
+0,3773
+0,2470
+0,3372
+0,2651
+0,2608
+0,5060
+0,2110
+0,4533
+0,2845
+0,3800
+0,4729
+0,1866
+0,3046
+0,5385
+0,4480
+0,3635
+0,1958
+0,3101
+0,3101
+0,3101
+0,3101
+0,3101
+0,3101
+
+L*a*b* (CIE D50)
+
+PAL / SECAM
+
+No.
+Color name
+0 illuminant
+1 dark skin
+2 light skin
+3 blue sky
+4 foliage
+5 blue flower
+6 bluish green
+7 orange
+8 purplish blue
+9 moderate red
+10 purple
+11 yellow green
+12 orange yellow
+13 blue
+14 green
+15 red
+16 yellow
+17 magenta
+18 cyan
+19 white 9.5 (.05 D)
+20 neutral 8 (.23 D)
+21 neutral 6.5 (.44 D)
+22 neutral 5 (.70 D)
+23 neutral 3.5 (1.05 D)
+24 black 2 (1.5 D)
+
+L*
+100
+38,14
+66,63
+50,73
+43,36
+56,01
+71,50
+62,28
+40,44
+51,94
+30,49
+72,83
+72,18
+28,59
+55,66
+41,71
+81,95
+51,56
+51,06
+96,00
+81,35
+66,67
+51,58
+35,98
+20,56
+
+R'
+255
+102
+188
+83
+73
+121
+93
+210
+60
+187
+78
+151
+222
+33
+58
+167
+231
+180
+0
+242
+196
+152
+110
+70
+34
+
+a*
+0
+13,81
+15,38
+-3,14
+-14,99
+9,63
+-31,93
+31,89
+11,42
+45,26
+24,00
+-23,76
+17,41
+20,31
+-38,77
+53,43
+1,66
+49,00
+-28,00
+-0,05
+-0,04
+-0,04
+-0,03
+-0,02
+-0,02
+
+Y
+100
+10,05
+35,82
+19,33
+13,29
+24,27
+43,06
+30,05
+12,00
+19,77
+6,56
+44,29
+43,06
+6,11
+23,39
+12,00
+59,10
+19,77
+19,77
+90,01
+59,10
+36,20
+19,77
+9,00
+3,13
+
+b*
+0
+14,75
+17,30
+-22,43
+21,85
+-25,74
+0,83
+58,56
+-44,07
+15,56
+-23,65
+58,63
+66,70
+-52,83
+33,09
+26,98
+78,47
+-15,57
+-27,36
+0,06
+0,06
+0,05
+0,04
+0,03
+0,02
+
+R'
+255
+107
+184
+105
+94
+131
+134
+196
+81
+173
+86
+168
+211
+55
+100
+154
+225
+167
+64
+243
+201
+161
+122
+85
+53
+
+G'
+255
+82
+150
+123
+109
+129
+190
+125
+92
+88
+60
+188
+162
+62
+149
+51
+199
+85
+135
+243
+201
+161
+122
+85
+53
+
+Apple
+
+No.
+Color name
+0 illuminant
+1 dark skin
+2 light skin
+3 blue sky
+4 foliage
+5 blue flower
+6 bluish green
+7 orange
+8 purplish blue
+9 moderate red
+10 purple
+11 yellow green
+12 orange yellow
+13 blue
+14 green
+15 red
+16 yellow
+17 magenta
+18 cyan
+19 white 9.5 (.05 D)
+20 neutral 8 (.23 D)
+21 neutral 6.5 (.44 D)
+22 neutral 5 (.70 D)
+23 neutral 3.5 (1.05 D)
+24 black 2 (1.5 D)
+
+G'
+255
+66
+141
+111
+95
+117
+184
+114
+77
+73
+42
+182
+154
+43
+139
+32
+194
+69
+124
+242
+196
+152
+110
+70
+34
+
+B'
+255
+69
+132
+156
+69
+176
+172
+52
+164
+99
+107
+73
+58
+147
+78
+60
+56
+148
+165
+243
+201
+161
+122
+85
+53
+
+B'
+255
+51
+119
+149
+49
+171
+163
+23
+159
+86
+96
+40
+23
+141
+55
+42
+5
+141
+158
+242
+196
+152
+110
+70
+34
+
+R'
+255
+95
+181
+79
+71
+113
+91
+204
+58
+178
+74
+146
+218
+35
+61
+158
+228
+171
+0
+240
+190
+145
+104
+67
+37
+
+G'
+255
+63
+133
+104
+91
+110
+180
+105
+72
+65
+42
+178
+146
+43
+134
+28
+189
+61
+118
+241
+190
+145
+104
+67
+37
+
+CIE
+B'
+255
+51
+112
+142
+48
+165
+156
+25
+154
+81
+91
+36
+22
+135
+52
+44
+0
+135
+152
+240
+190
+145
+104
+67
+37
+
+R'
+255
+112
+190
+98
+94
+127
+124
+207
+69
+182
+86
+170
+221
+36
+96
+164
+234
+173
+26
+243
+201
+161
+122
+85
+53
+
+B'
+255
+35
+93
+125
+33
+150
+139
+15
+137
+63
+72
+23
+13
+117
+36
+30
+0
+117
+135
+237
+178
+128
+85
+50
+24
+
+R'
+255
+103
+192
+77
+68
+119
+74
+218
+54
+194
+79
+147
+229
+27
+41
+174
+235
+187
+0
+242
+195
+151
+108
+67
+31
+
+SGI
+R'
+255
+76
+168
+61
+53
+94
+72
+194
+42
+165
+56
+129
+210
+22
+44
+142
+223
+156
+0
+237
+178
+128
+85
+50
+24
+
+G'
+255
+46
+114
+85
+72
+91
+167
+86
+54
+48
+28
+165
+129
+28
+116
+17
+177
+44
+99
+237
+178
+128
+85
+50
+24
+
+G'
+255
+85
+154
+124
+104
+134
+182
+133
+100
+105
+70
+179
+164
+74
+138
+76
+195
+107
+131
+243
+201
+161
+122
+85
+53
+
+ColorMatch
+B'
+255
+71
+134
+153
+73
+173
+172
+67
+160
+101
+105
+89
+77
+142
+85
+64
+83
+146
+162
+243
+201
+161
+122
+85
+53
+
+SMPTE-240M
+G'
+255
+63
+139
+109
+94
+115
+185
+110
+73
+66
+37
+184
+152
+38
+140
+21
+194
+61
+123
+242
+195
+151
+108
+67
+31
+
+B'
+255
+49
+118
+147
+47
+169
+162
+25
+157
+84
+93
+44
+27
+138
+55
+40
+16
+139
+157
+242
+195
+151
+108
+67
+31
+
+R'
+255
+93
+178
+82
+71
+115
+97
+198
+63
+173
+73
+145
+212
+41
+64
+152
+223
+167
+17
+240
+190
+145
+104
+67
+37
+
+G'
+255
+63
+132
+104
+91
+109
+180
+105
+71
+64
+41
+179
+146
+42
+135
+27
+190
+60
+118
+241
+190
+145
+104
+67
+37
+
+B'
+255
+50
+111
+143
+48
+166
+156
+22
+154
+80
+91
+36
+20
+135
+52
+43
+0
+134
+152
+240
+190
+145
+104
+67
+37
+
+HDTV
+R'
+255
+103
+190
+82
+72
+121
+87
+213
+60
+190
+80
+150
+225
+32
+52
+170
+232
+183
+0
+242
+196
+152
+110
+70
+34
+
+SMPTE-C
+R'
+255
+104
+192
+78
+69
+119
+75
+218
+56
+195
+80
+147
+229
+28
+42
+175
+235
+187
+0
+242
+195
+151
+109
+69
+33
+
+G'
+255
+64
+139
+109
+95
+115
+185
+111
+74
+67
+39
+184
+153
+39
+140
+23
+195
+62
+124
+242
+195
+151
+109
+69
+33
+
+B'
+255
+50
+119
+147
+49
+170
+162
+26
+158
+85
+94
+45
+29
+139
+56
+42
+18
+139
+157
+242
+195
+151
+109
+69
+33
+
+G'
+255
+66
+141
+111
+95
+117
+184
+114
+77
+73
+42
+182
+154
+43
+139
+32
+194
+69
+124
+242
+196
+152
+110
+70
+34
+
+NTSC
+B'
+255
+51
+119
+149
+49
+171
+163
+25
+159
+86
+95
+44
+27
+140
+56
+42
+13
+140
+158
+242
+196
+152
+110
+70
+34
+
+R'
+255
+92
+175
+94
+79
+122
+126
+186
+70
+162
+71
+158
+203
+43
+86
+141
+218
+157
+56
+242
+196
+152
+110
+70
+34
+
+B'
+255
+67
+132
+159
+65
+179
+172
+41
+168
+100
+109
+60
+43
+151
+72
+58
+28
+151
+168
+243
+202
+162
+123
+85
+49
+
+R'
+255
+104
+179
+108
+97
+131
+145
+186
+83
+162
+83
+171
+204
+56
+110
+142
+221
+157
+82
+243
+201
+161
+122
+85
+53
+
+sRGB
+R'
+255
+116
+197
+96
+87
+133
+101
+218
+75
+197
+94
+160
+228
+48
+68
+179
+235
+190
+0
+243
+202
+162
+123
+85
+49
+
+G'
+255
+81
+152
+124
+109
+130
+191
+126
+91
+88
+58
+190
+164
+59
+150
+47
+201
+84
+136
+244
+202
+162
+123
+85
+50
+
+G'
+255
+68
+143
+107
+97
+113
+184
+120
+67
+75
+37
+188
+160
+29
+142
+37
+201
+65
+120
+242
+196
+152
+110
+70
+34
+
+B'
+255
+53
+122
+146
+53
+168
+163
+43
+154
+88
+93
+62
+51
+135
+63
+47
+51
+138
+155
+242
+196
+152
+110
+70
+34
+
+Wide Gamut
+G'
+255
+85
+154
+123
+105
+133
+183
+135
+97
+105
+69
+181
+166
+70
+140
+76
+197
+106
+130
+243
+201
+161
+122
+85
+53
+
+Table 11: The GretagMacbeth ColorChecker patches color coordinates for the RGB spaces defined in Table 5.
+Whenever applicable, a detailed gamma function was used in the conversions. The xyY coordinates are from
+Reference 31, as determined with CIE Illuminant C. L*a*b* coordinates are given for CIE Illuminant D50.
+
+B'
+255
+70
+133
+155
+71
+174
+172
+61
+162
+101
+106
+82
+69
+145
+81
+63
+71
+147
+163
+243
+201
+161
+122
+85
+53
+
+A Review of RGB Color Spaces…
+
+References:
+R.W.G. Hunt, The reproduction of Colour, 5th ed., Fountain Press (1995), ISBN 0-86343-381-2.
+Les mécanismes de la vision, préface d’Yves Galifret, Pour La Science 1979 à 1989, ISBN 2-9029-18-43-7.
+3 The Science of Color, Committee on Colorimetry, Optical Society of America, Washington (1973), ISBN 0-96003-801-9.
+4 ASTM E308-99: “Standard Practice for Computing the Colors of Objects by Using the CIE System,” available from their
+Web site: http://www.astm.org .
+5 From files originally contributed by Mike Vrhel. Available by ftp on NCSU's Electrical and Computer Engineering
+department Web site: ftp://ftp.eos.ncsu.edu/pub/spectra/ .
+6 ColorChecker, product No. 50105, manufactured by Munsell Color, division of GretagMacbeth.
+7 W. Thornton, “Matching lights, visual response, and the painfully sub-human CIE Standard Observers,” Perceiving,
+Measuring and Using Color, Vol. 26, 1990, p. 1250.
+8 Uwe Brinkmann, “Solid-state lasers project laser television signals,” Laser Focus World, November 1997, pp. 52-56.
+9 David Hargis, Allen Earman, “Lasers replace conventional technology in display designs,” Laser Focus World, July 1998, pp.
+145-149.
+10 G.A. Agoston, Color Theory and its Application in Art and Design, Springer Series in Optical Sciences, Vol. 19, David L.
+MacAdam ed., Springer-Verlag, Berlin (1979), ISBN 3-540-09564-X.
+11 David L. MacAdam, "Visual sensitivities to color differences in daylight," J. Opt. Soc. Am., Vol. 32, 1942, pp. 247-273.
+12 MIL-HDBK-141, Section 4.
+13 The Infrared & Electro-Optical Systems Handbook, Vol. 1: Sources of Radiation, George J. Zissis ed., Joseph S. Accetta & David L.
+Shumaker executive ed., ERIM & SPIE (1993), ISBN 0-8194-1072-1.
+14 ICC Specification ICC.1:1998-09: “File Format for Color Profiles,” available on the Internet at http://www.color.org .
+15 M.R. Luo, R.W.G. Hunt, B. Rigg, K.J. Smith, “Recommended colour-inconstancy index,” Journal of the Society of Dyers
+and Colourist, Vol. 115, May/June 1999, pp. 183-188.
+16 Mary Nielsen, Michael Stokes, “The Creation of the sRGB ICC Profile,” Proceedings of IS&T Sixth Color Imaging
+Conference: Color Science Systems and Applications 1998, Scottsdale, Arizona, ISBN 0-89208-213-5.
+17 Roy S. Berns, Ricardo J. Motta, Mark E. Gorzynski, “CRT Colorimetry, Part I: Theory and Practice,” COLOR research and
+application, Vol. 18, No. 5, Oct. 1993, pp. 299-314.
+18 Charles A. Poynton, A Technical Introduction to Digital Video, John Wiley & Sons (1996), ISBN 0-471-12253-X. From the same
+author, on the Internet, on the site http://www.poynton.com/Poynton-color.html :
+“Frequently Asked Questions About Gamma,” available as “GammaFAQ.pdf”;
+“The rehabilitation of gamma,” available as “Rehabilitation_of_gamma.pdf”;
+“Frequently Asked Questions About Color,” available as “ColorFAQ.pdf”.
+19 PNG (Portable Network Graphics) Specification, Version 1.0, World Wide Web Consortium (W3C) Recommendation 01October-1996, available on the Internet on the site http://www.w3.org .
+20 J. R. Jiménez, J. F. Reche, J. A. Díaz, L. Jiménez del Barco, E. Hita, “Optimization of Color Reproduction on CRT-Color
+Monitors,” COLOR research and application, Vol. 24, No. 3, June 1999, pp. 207-213.
+21 From Reference 17. The gamma function of that reference is defined with a different equation than the one used in this
+document. The gamma curve of the reference was regenerated and fitted against the detailed gamma function defined in this
+document.
+22 Karl Lang, miro displays inc., private communication, 1999.
+23 ANSI : http://www.ansi.org ; EBU: http://www.ebu.ch ; IEC : http://www.iec.ch ; ITU: http://www.itu.int ;
+SMPTE: http://www.smpte.org .
+24 SMPTE Recommended Practice RP 177-1993: “Derivation of Basic Television Color Equations.”
+25 Ján Morovič, To develop a Universal Gamut Mapping Algorithm, Ph.D. thesis, University of Derby, October 1998, available on the
+Internet at http://colour.derby.ac.uk/%7Ejan/pubs/thesis.html .
+26 Alison Gilchrist, Jim Nobbs, “Colour by numbers,” Journal of the Society of Dyers and Colourist, Vol. 115, Jan. 1999,
+pp. 4-7, available on the Internet at http://www.sdc.org.uk/pdf-features/jn99f1.pdf .
+27 The method is described in Reference 16. The results are from the slide presentation at the conference.
+28 Michael Has, Todd Newman, “Color Management: Current Practice and the Adoption of a New Standard,” available on the
+Internet on the ICC Web site at http://www.color.org/wpaper1.html .
+29 Michael Stokes, M.D. Fairchild, Roy S. Berns, “Colorimetric quantified visual tolerances for pictorial images,” Comparison
+of Color Images Presented in Different Media, Proceedings 1992, Vol. 2, M. Pearson ed.,Tech. Assoc. Graphic Arts and
+Inter-Soc. Color Council, pp. 757-777.
+30 Roy S. Berns, Mark E. Gorzynski, Ricardo J. Motta, “CRT Colorimetry, Part II: Metrology,” COLOR research and
+application, Vol. 18, No. 5, Oct. 1993, pp. 315-325.
+31 C.S. McCamy, H. Marcus, J.G. Davidson, “A Color-Rendition Chart,” J. Appl. Phot. Eng., Vol. 2, No. 3, Summer 1976, pp.
+95-99, Society of Photographic Scientists and Engineers (now called “The Society for Imaging Science and Technology”;
+Web site: http://www.imaging.org ).
+1
+
+2
+
+•
+
+35
+
+

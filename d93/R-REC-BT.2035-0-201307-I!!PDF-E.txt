@@ -1,0 +1,728 @@
+Recommendation ITU-R BT.2035
+(07/2013)
+
+A reference viewing environment for
+evaluation of HDTV program material or
+completed programmes
+
+BT Series
+Broadcasting service
+(television)
+
+ii
+
+Rec. ITU-R BT.2035
+
+Foreword
+The role of the Radiocommunication Sector is to ensure the rational, equitable, efficient and economical use of the
+radio-frequency spectrum by all radiocommunication services, including satellite services, and carry out studies without
+limit of frequency range on the basis of which Recommendations are adopted.
+The regulatory and policy functions of the Radiocommunication Sector are performed by World and Regional
+Radiocommunication Conferences and Radiocommunication Assemblies supported by Study Groups.
+
+Policy on Intellectual Property Right (IPR)
+ITU-R policy on IPR is described in the Common Patent Policy for ITU-T/ITU-R/ISO/IEC referenced in Annex 1 of
+Resolution ITU-R 1. Forms to be used for the submission of patent statements and licensing declarations by patent
+holders are available from http://www.itu.int/ITU-R/go/patents/en where the Guidelines for Implementation of the
+Common Patent Policy for ITU-T/ITU-R/ISO/IEC and the ITU-R patent information database can also be found.
+
+Series of ITU-R Recommendations
+(Also available online at http://www.itu.int/publ/R-REC/en)
+
+Series
+BO
+BR
+BS
+BT
+F
+M
+P
+RA
+RS
+S
+SA
+SF
+SM
+SNG
+TF
+V
+
+Title
+Satellite delivery
+Recording for production, archival and play-out; film for television
+Broadcasting service (sound)
+Broadcasting service (television)
+Fixed service
+Mobile, radiodetermination, amateur and related satellite services
+Radiowave propagation
+Radio astronomy
+Remote sensing systems
+Fixed-satellite service
+Space applications and meteorology
+Frequency sharing and coordination between fixed-satellite and fixed service systems
+Spectrum management
+Satellite news gathering
+Time signals and frequency standards emissions
+Vocabulary and related subjects
+
+Note: This ITU-R Recommendation was approved in English under the procedure detailed in Resolution ITU-R 1.
+
+Electronic Publication
+Geneva, 2013
+ ITU 2013
+All rights reserved. No part of this publication may be reproduced, by any means whatsoever, without written permission of ITU.
+
+Rec. ITU-R BT.2035
+
+1
+
+RECOMMENDATION ITU-R BT.2035
+A reference viewing environment for evaluation of HDTV program
+material or completed programmes
+(2013)
+Scope
+This Recommendation prescribes a method allowing HDTV producers or broadcasters to establish a
+reference viewing condition for evaluation of HDTV program material or completed programmes that can
+provide repeatable results from one facility to another when viewing the same material. This includes the
+display device and the surrounding environment.1
+
+The ITU Radiocommunication Assembly,
+considering
+a)
+that HDTV CRT displays are no longer available and revised criteria for subjective
+evaluation of HDTV images is required;
+b)
+
+that the picture rendering characteristics differ between CRT and non-CRT displays;
+
+c)
+that the impact of the viewing environment can significantly change the perceived image
+characteristics;
+d)
+
+that a defined reference display is required to minimize differences in display technology;
+
+e)
+that other ITU Recommendations such as Recommendation ITU-R BT.2022 define other
+viewing conditions for specific applications;
+f)
+
+that repeatable visual evaluations are required to confirm image representations,
+recommends
+
+1
+that for evaluation of HDTV program material or completed programmes, the
+characteristics of a reference viewing condition described in Annex 1 should be used.
+2
+that for the greatest degree of displayed image uniformity, the same display technologies be
+used between facilities when comparisons are to be made.
+NOTE 1 – Not all the possible parameters have been defined and it is assumed that the display
+device has been qualified for any obvious deficiencies prior to the evaluation process. Display
+devices intended for consumer displays should not be used for professional evaluation.
+
+1
+
+High quality, critical viewing facilities can and will continue to be established in many ways by entities
+involved in editing, colour correction, screening and the like, and this Recommendation is not intended to
+suggest a need for absolute uniformity in such facilities.
+
+2
+
+Rec. ITU-R BT.2035
+
+Annex 1
+Overview
+For the purposes of assessing the performance of a display device, it is necessary to measure or
+characterize a very large number of parameters such as those described in Report ITU-R BT.2129.
+For everyday image evaluation it is impractical to perform these measurements; it is therefore
+suggested that this sub-set of these parameters be used for daily use. This Recommendation also
+recommends a reference viewing condition.
+The huge range of technologies employed in flat panel displays makes the task of defining a single
+set of parameters for a reference display near impossible. Unlike the CRT where a single
+technology was deployed for the conversion of electrical signals to a viewable image, the various
+flat panel technologies provide an infinite number of variables.
+The intent of the Recommendation is to provide guidance on the parameter values to be measured to
+set up the environment and the display parameters keeping in mind that measurement and
+adjustment of all possible parameters could be very extensive and time consuming.
+As a further cautionary note, commercially available measurement instruments may yield different
+results; these differences may be as a result of different technologies used to sense the light on the
+display. The manufacturers instruction manuals should be consulted.
+1
+
+Reference viewing conditions
+
+The reference viewing environment is intended to provide an environment which can be replicated
+from one facility to another. The display devices using different technologies may influence the
+extent to which uniformity of the displayed image can be achieved. This reference viewing
+environment is intended as a guideline for a practical implementation:
+1.1
+
+Viewing environment for subjective assessment
+
+a)
+b)
+
+Room illumination:
+Chromaticity of background:
+
+10 Lux
+D65 (optionally D93 in some
+regions)
+
+c)
+
+Ratio of luminance of background behind picture
+monitor to peak luminance of picture:
+
+≈ Between 10% ±2% of
+reference white value
+
+1.2
+
+Viewing distance
+
+The viewing distance is based on the screen size and it can be selected according to two distinct
+criteria: the preferred viewing distance (PVD) and the design viewing distance (DVD). For this
+application the DVD criteria is used.
+1.2.1
+
+Design viewing distance
+
+The design viewing distance (DVD), or optimal viewing distance, for a digital system is the
+distance at which two adjacent pixels subtend an angle of 1 arc-min at the viewer’s eye; and the
+optimal horizontal viewing angle as the angle under which an image is seen at its optimal viewing
+distance.
+
+Rec. ITU-R BT.2035
+
+3
+
+Image
+system
+
+Reference
+
+Aspect
+ratio
+
+Pixel aspect
+ratio
+
+Optimal
+horizontal
+viewing angle
+
+Optimal
+viewing
+distance
+
+1 920 × 1 080
+
+Rec. ITU-R BT.709
+
+16:9
+
+1
+
+31°
+
+3.2 H
+
+1.3
+
+Observation angle
+
+The maximum observation angle relative to the normal should be constrained so that deviations in
+reproduced colour on the screen should not be visible to an observer. The optimal horizontal
+viewing angle of an image system under test should also be considered to determine the observation
+angle.
+As a guide to an acceptable numerical value, Δu’, Δv’ (CIE 1976 chromaticity differences) should
+be less than 0.01 for any of the colours within the Recommendation ITU-R BT.709 gamut.
+As a guide to an acceptable numerical value, the luminance value should drop less than 10% for
+viewing angles within ±30° horizontally, vertically, and diagonally, and less than 20% for viewing
+angles within ±30° and ±45° horizontally, vertically, and diagonally.
+1.4
+
+Room environment-colour scheme
+
+The colour of the display background should be the same as the reference white point; for the
+remaining room surfaces dark matte surfaces should be used. The objective is to minimize stray
+light on the display screen.
+2
+
+Display characteristics
+
+There are a number of display technologies available all with different characteristics. The
+following text in this section gives a general overall set of criteria that should be used to minimize
+display technology differences.
+2.1
+
+Image size
+
+Images to be evaluated should fill the complete screen. Screen sizes between 25 inches and
+60 inches are recommended. Larger screen sizes are not prohibited.
+2.2
+
+Display image processing
+
+Monitor processing such as image scaling, frame rate conversion, image enhancement,
+if implemented, should be done in such a way as to avoid introducing visible artifacts. Any report
+should indicate whether a de-interlacer is used or not for the presentation of interlaced signals. For
+interlace images it is preferable not to use a de-interlacer; the displayed image should preferably be
+presented as interlace.
+2.3
+
+Display pixel array
+
+The minimum pixel array should be at least 1 920 × 1 080.
+2.4
+
+Ringing
+
+Ringing or overshoots should not be introduced by any processing in the display. Ringing “in the
+image signal” should be displayed. Monitors should not cut off under- and over-shoots, or sub-black
+and super-white levels that do not violate protected values used for synchronization.
+
+4
+
+Rec. ITU-R BT.2035
+
+2.5
+
+Temporal characteristics
+
+Care should be paid to the temporal characteristics of the display for the following reason.
+Temporal characteristics of displays vary according to display technologies and display processing
+parameters. In the past CRT technology was virtually the only display device for television image
+display; its characteristics were predictable and it ensured the consistency of the temporal
+characteristics of the displays both in studio and at home.
+3
+
+Display adjustment
+
+The topic of display adjustment and setting of values continues to be covered in many industry
+forums. In many cases the individual manufacturers provide information on individual products that
+may be necessary to achieve the desired result.
+3.1
+
+Interface
+
+The HDTV signal interface defined in Recommendation ITU-R BT.1120 should be used as the
+input source.
+3.2
+
+Reference white and reference black
+
+Reference white (value 940) should correspond to 100 cd/m2 and reference black (Value 64) should
+2
+be less than 0.01 cd/m2 . The waveform defined in Recommendation ITU-R BT.815 may be used to
+set these levels.
+3.3
+i)
+
+White point
+For a D65 white point, the coordinates should be:
+Y = 100 cd/m2, x = 0.3127, y = 0.3290.
+
+If CIE1931 XYZ colorimetric system and the colour matching functions are used by the
+measurement instrument, the measurement instrument may give an erroneous result. The
+application of the Judd modification3 to these measurements can greatly improve matching results
+between different technologies. If other CIE reference scales are used appropriate conversions are
+required.
+ii)
+In some regions D93 is used as the reference white point, in that case:
+x = 0.2831 and y = 0.2971.
+3.4
+
+Gamma characteristics
+
+The gamma characteristics (electro-optical transfer characteristic) of the display should be adjusted
+to the values of the curve over the full range contained in Recommendation ITU-R BT.1886 –
+Reference electro-optical transfer function for flat panel displays used in HDTV studio production.
+
+2
+
+This measurement may prove to be difficult under some conditions.
+
+3
+
+CIE 1988 2 Â° Spectral Luminous Efficiency Function for Photopic Vision.
+
+Rec. ITU-R BT.2035
+3.5
+
+5
+
+Test pattern
+
+The test pattern, as defined by Recommendation ITU-R BT.1729 – Common 16:9 or 4:3 aspect
+ratio digital television reference test pattern, may be used to confirm linearity of the display device.
+Confirm that clipping does occur beyond the reference white level (and reference black level).
+Recommendation ITU-R BT.1729 defines all signal parameters that may be used to set up the
+display device other than the parameters contained in § 3.1 through § 3.5, which correspond to
+Recommendation ITU-R BT.815.
+3.5.1
+
+100% Colour Bar x, y values (Zone 4)
+FIGURE 1
+Multi-format test pattern – as seen on screen
+
+4 × 3 zone
+
+Left side zone
+
+Right side zone
+
+100%
+9%
+
+3.5%
+
+12.5%
+
+2.5%
+
+75%
+
+7.0%
+
+2.5%
+
+9%
+
+3.5%
+
+12.5%
+
+3.5%
+
+9.3%
+
+USER-DEFINEDTEXT
+
+100%
+
+B
+
+720
+
+Horizontal moving bar
+with audio sync signal
+
+1 080
+
+4:2:2
+
+4:2:0
+
+A
+
+3.5%
+
+BT.2035-01
+
+(Diagram copied from Recommendation ITU-R BT.1729.)
+
+6
+
+Rec. ITU-R BT.2035
+FIGURE 2
+1080/720-line systems, colour bar waveforms, 100/100/0 bars
+50%
+Grey
+
+100%
+White
+
+100%
+Yellow
+
+940
+(235)
+502
+
+100%
+Cyan
+
+100%
+Green
+
+100%
+Magenta
+
+100%
+Red
+
+100%
+Blue
+
+0%
+Black
+
+50%
+Grey
+
+877
+(219)
+
+754
+(188)
+
+(126)
+
+691
+
+313
+
+(173)
+
+(78)
+
+502
+250
+(63)
+
+127
+(32)
+
+Y
+
+(126)
+64
+(16)
+
+960
+857
+512
+CB
+
+615
+
+512
+
+(128)
+
+(154)
+
+(128)
+64
+
+(214)
+167
+
+(240)
+512
+
+512
+
+(128)
+
+(128)
+
+471
+
+512
+
+512
+
+(118)
+
+(128)
+
+(128)
+
+409
+(102)
+
+(42)
+
+(16)
+919
+512
+CR
+
+(128)
+
+512
+
+553
+
+(128)
+
+(138)
+
+(230)
+
+64
+(16)
+
+960
+(240)
+
+105
+(26)
+
+BT.2035-02
+
+(Diagram copied from Recommendation ITU-R BT.1729.)
+TABLE 1
+Test pattern zone 4 typical values
+Colour/Y value
+
+L (cd/m2)
+
+x
+
+y
+
+Reference Black (6410)
+
+0.0001
+
+0.3889
+
+0.3701
+
+Reference White (94010)
+
+100.001
+
+0.3127
+
+0.3290
+
+Yellow (87710)
+
+91.9090
+
+0.4165
+
+0.5027
+
+Cyan (75410)
+
+76.2150
+
+0.2179
+
+0.3283
+
+Green (69110)
+
+69.2110
+
+0.2876
+
+0.6001
+
+Magenta (31310)
+
+29.3650
+
+0.3279
+
+0.1585
+
+Red (25010)
+
+22.2500
+
+0.6373
+
+0.3304
+
+Blue (12710)
+
+7.2947
+
+0.1501
+
+0.0605
+
+The above values are not absolute values and are provided as a sample of measured values.
+
+Rec. ITU-R BT.2035
+
+7
+
+TABLE 2
+Test pattern zone 4 calculated values
+Colour/Y value
+
+3.5.2
+
+x
+
+y
+
+Black (6410)
+
+0.3889
+
+0.3701
+
+White (94010)
+
+0.3127
+
+0.3290
+
+Yellow (87710)
+
+0.4193
+
+0.5053
+
+Cyan (75410)
+
+0.2246
+
+0.3287
+
+Green (69110)
+
+0.2876
+
+0.6001
+
+Magenta (31310)
+
+0.3209
+
+0.1542
+
+Red (25010)
+
+0.6400
+
+0.3300
+
+Blue (12710)
+
+0.1501
+
+0.0605
+
+Grey scale tracking (Zone 11)
+
+The 10 step grey scale in zone 11 should be measured to confirm that there is no non-linear
+processing distorting the grey scale. There should be no visual coloration of the grey scale.
+3.6
+
+Display motion artefacts
+
+The display should not introduce motion artifacts that are introduced by specific display
+technologies. Motion effects included in the input signal should be represented on the display. In
+addition the refresh rate of flat panel displays (FPDs) may not be at the same rate as the native rate
+of the image. Care should be taken to ensure that no difference in motion rendition is introduced.
+
+Appendix 1 (Informative)
+Display characteristics in general
+Note that using different display technologies may yield different image characteristics. Thus, it is
+strongly recommended that characteristics of the display used should be checked beforehand.
+Recommendation ITU-R BT.1886 – Reference electro-optical transfer function for flat panel
+displays used in HDTV studio production, and Report ITU-R BT.2129 – User requirements for a
+flat panel display (FPD) as a master monitor in an HDTV programme production environment, may
+be referred to when professional FPD monitors are used for subjective image assessment.
+
+
