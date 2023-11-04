@@ -1,5 +1,53 @@
 # How to use the matrix data
 
+## Different CSV files
+
+4 output CSVs are generated. These are:
+
+* `csv/matrix_XYZ.csv`. Contains both:
+  * Msrc (expected source colourspace - what you want to convert your source from) RGB-to-XYZ 3x3 matrices
+  * Mdst (expected destination/display colourspace - what you're going to look at with your eyes) XYZ-to-RGB 3x3 matrices
+  * Created to allow people with fast graphics processing systems (GPU shaders, etc) the ability to stay in CIE XYZ colourspace and do further processing before returning to RGB
+
+* `csv/matrix_sRGB.csv`, `csv/matrix_BT709.csv`, `csv/matrix_BT2020.csv`
+  * These contain single 3x3 matrices for RGB to RGB conversion in a single matrix multiply, which can save precious calc on low power devices, FPGA chips, hardaware scalers, etc
+  * Each file is pre-calculated to the given destination/display colourspace.  Inside are each of the source colourspaces used. 
+  * Note that because these only apply to normalised (0.0-1.0) linear (EOTF/gamma removed) RGB, sRGB and BT709 are going to be identical
+  * Likewise, the BT2020 matrices are colourspace/gamut only. You may choose to apply any EOTF/gamma you like, such as BT.1886 for BT.2020 SDR, or something like PQ/SMPTE-ST-2084 or HLG for BT.2020 HDR.  Don't forget to scale to appropriate 10/12 bit depth either.
+
+## Usage - short version
+
+### matrix_XYZ.csv
+* Columns Msrc0-Msrc8 (9 values) are the 3x3 SOURCE matrix
+  * This is what you expected the original source image/input to be
+* Columns Mdst0-Mdst8 (9 values) are the 3x3 DESTINATION matrix
+  * This is the screen you expect to be viewing the content on
+  * In the modern world, that's almost always going to be sRGB D65, BT.709 D65 or BT.2020 D65. 
+* Don't get source and destination confused.
+
+Workflow is:
+
+```
+Input image/frame -> normalise RGB to 0.0-1.0 -> remove EOTF/gamma -> apply SOURCE matrix -> apply DESTINATION matrix -> add EOTF/gamma -> scale up to 8/10/12bit
+```
+
+Between the source and destination matrix, you are in CIE XYZ colour space.  Here isn't a bad place to do other manipulations and transforms if you have the compute. 
+
+### matrix_sRGB.csv / matrix_BT709 / matrix_BT2020
+* Columns M0-M8 (9 values) are the 3x3 transform matrix
+* Choose the CSV that matches the screen you are viewing on
+* Choose the source row that matches the colourspace of the content you are viewing
+
+Workflow is:
+
+```
+Input image/frame -> normalise RGB to 0.0-1.0 -> remove EOTF/gamma -> apply RGB matrix -> add EOTF/gamma -> scale up to 8/10/12bit
+```
+
+With this method you don't have the opportunity to do anything in the middle CIE XYZ colourspace step, however you save considerable calculation on weaker/slower devices. 
+
+## Usage - long version
+
 It's quite critical to follow these steps in order.  Following these out-of-order will produce inaccurate output (often quite visually obvious). 
 
 The steps to use the matrices are
@@ -18,6 +66,8 @@ This step then converts that RGB value to XYZ colourspace. XYZ is absolute, alwa
 * sRGB D65 for users on standard PC desktops
 * BT.709 D65 for users on HD TVs
 * BT.2020 D65 for users on UHD (sometimes incorrectly called "4K") TVs with matching wide colour gamut. 
+
+'''NOTE''' - you can swap the source->destination method for the simpler RGB method.  It's one calc instead of 2, lighter on resources, but you don't have the opportunity to do further changes while in the interim XYZ colourspace. 
 
 6) You now have normalised 0.0-1.0 RGB values in the colourspace desired.  Next apply the EOTF/gamma of your display device, which is typically:
 * sRGB's non-linear gamma, near 2.2 with exception for near-black levels (the exact formula can be found on wikipedia)

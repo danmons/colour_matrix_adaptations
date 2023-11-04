@@ -1,6 +1,6 @@
 # CSV content
 
-The file "matrix.csv" is output by the Jupyter notebook "chromaticity_matrix_calculations.ipynb".  Run it to regenerate the file, and/or add in more chromaticity co-ordinates to generate further output.  (Also, feel free to contact me if you discover more useful co-ordinates you'd like to see added to this public repo).
+The file "matrix_XYZ.csv" is output by the Jupyter notebook "chromaticity_matrix_calculations.ipynb".  Run it to regenerate the file, and/or add in more chromaticity co-ordinates to generate further output.  (Also, feel free to contact me if you discover more useful co-ordinates you'd like to see added to this public repo).
 
 This is a plain-text, comma-delimited CSV file encoded in simple ASCII/UTF-8. 
 
