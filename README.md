@@ -12,7 +12,7 @@ The end goal is for these to be useful to developers of things like:
 Almost all of the work in this repo is based on the maths provided by Bruce Lindbloom here:
 * http://www.brucelindbloom.com/Eqn_RGB_XYZ_Matrix.html
 
-The matrices are in the "csv" folder, as "matrix.csv".  A README.md document in there documents the data format.  
+The matrices are in the `csv` folder, as `matrix_XYZ.csv`, `matrix_sRGB.csv`, `matrix_BT709.csv` and `matrix_BT2020.csv`, .  A README.md document in there documents the data format.  
 
 Also in this repo are a number of Jupyter notebooks (interactive Python web forms) that demonstrate the maths in action, including verifying against Bruce Lindbloom's pre-baked matrices, as well as testing on images to produce visual output to compare against real world displays. These are not required for people who simply want to use the matrices in question, but are provided for others to check/verify/reproduce the work, and/or learn how the sausage is made. 
 
