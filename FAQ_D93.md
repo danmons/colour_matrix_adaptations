@@ -10,6 +10,11 @@ Enthusiast users may go as far as to buy, calibrate and use era-matching display
 
 Doing so requires some documentation of these standards, and then maths to convert the data correctly.  This repo will attempt to document both. 
 
+## I need to see pictures, Dan. 
+
+Sure. Here you go:
+* https://www.retrorgb.com/colour-malarkey.html
+
 ## What is the term D93? 
 
 D93 is a term used to describe the colour temperature of a white point. The term derives from the temperature a "black body" (a hypothetical perfect object in space) would be if it was approximately the temperature 9300K (9027 degC, 16280 degF). The "D" refers to the standard illuminant D series, defined by the CIE. 
@@ -55,6 +60,6 @@ Contributions of measured chromaticity co-ordinates are welcome, and will be att
 
 ## What's in this repo?
 
-The "documents" section will contain collected documents from around the Internet that mention anything to do with D93, Japanese CRT phosphors, RGB chromaticity co-ordinates, etc.  Included will be the URL or ISBN they were sourced from, a "pdftotext" conversion for easy text searching, and machine translated versions if not in English. 
+The `d93` folder contains collected documents from around the Internet that mention anything to do with D93, Japanese CRT phosphors, RGB chromaticity co-ordinates, etc.  Included will be the URL or ISBN they were sourced from, a "pdftotext" conversion for easy text searching, and machine translated versions if not in English. 
 
-The "jupyter" section contains Jupyter notebooks.  These notebooks are working spaces to play with code and maths in the Python programming language, and are designed to be verbose enough that they explain the maths in a "pseudo-code" style manner for anyone wanting to implement these functions in other languages (say, port them to various shader or FPGA languages).  Notebooks can be viewed read-only on GitHub, or can be downloaded and used interactively either in Jupyter directly (install Python on your computer, and common Python libraries like jupyter, numpy, Pillow, etc, and then run "juptyer-notebook" to interact with these in a browser).  Some editors/IDEs like VS Code (and the open source vscodium) will also run interactive Jupyter notebooks.
+The `jupyter` folder contains Jupyter notebooks.  These notebooks are working spaces to play with code and maths in the Python programming language, and are designed to be verbose enough that they explain the maths in a "pseudo-code" style manner for anyone wanting to implement these functions in other languages (say, port them to various shader or FPGA languages).  Notebooks can be viewed read-only on GitHub, or can be downloaded and used interactively either in Jupyter directly (install Python on your computer, and common Python libraries like jupyter, numpy, Pillow, etc, and then run "juptyer-notebook" to interact with these in a browser).  Some editors/IDEs like VS Code (and the open source vscodium) will also run interactive Jupyter notebooks.
