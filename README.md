@@ -1,5 +1,9 @@
 # Colour Matrix Adaptations
 
+Click the little "play" button on each image to cycle through colour simulations. 
+
+![metroid_animated_all.gif](jupyter/out/metroid_animated_all.gif) ![zelda_animated_all.gif](jupyter/out/zelda_animated_all.gif)
+
 This repo contains a number of matrices you can use to convert anything in any given arbitrary colour space, colour standard or specific monitor/CRT/display characteristics to any other. 
 
 The end goal is for these to be useful to developers of things like: 
