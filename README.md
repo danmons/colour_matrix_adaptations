@@ -13,6 +13,8 @@ The end goal is for these to be useful to developers of things like:
 * Hardware mods in retro game consoles that produce high resolution digital output
 * Hardware scaling devices that convert low resolution analogue or digital signals to high resolution ones
 
+If you're a MiSTer FPGA user, head to the `mister` folder in this repo and grab the gamma correction files to try these for yourself.
+
 Almost all of the work in this repo is based on the maths provided by Bruce Lindbloom here:
 * http://www.brucelindbloom.com/Eqn_RGB_XYZ_Matrix.html
 
