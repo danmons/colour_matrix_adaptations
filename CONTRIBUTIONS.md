@@ -16,25 +16,30 @@ Finding the extreme limits of old CRTs is more interesting, and likewise fixed d
 
 You will need:
 
-* An electrically calibrated display. For things like CRTs, all internal voltages should meet the manufacturer's service manual specifications. 
+* An electrically calibrated display. For things like CRTs, all internal voltages should meet the manufacturer's service manual specifications.
 * A display with relatively low power-on hours. This is getting more difficult as time goes on. If you know the runtime hours of the device, let me know. 
-* A decent quality colorimeter.  The "Calibrite Colorchecker Display" family of colorimeters are decent quality for the asking price. 
+* A decent quality colorimeter.  The "Calibrite Colorchecker Display" family of colorimeters are decent quality for the asking price.
+* For SD SDR displays, attempt to get peak brightness in the range of 80-100 nits. Be careful not to grossly under or over drive the display. Check both the manufacturers specs and the colourspace spec you are working with.  Because we're looking for the extreme points of the gamut, we're not so worried about black levels, only 100% white and saturation points.
+* The white point should be calibrated to the spec/setting of the device.  i.e.: if it's been set to 6500K in the system menu, ensure that is in fact the white point.  Likewise if you've chosen 9300K. 
+* Software to generate colour patterns.  Ideally you want a 10% window to avoid over-driving displays with 100% brightness images.  The images themselves need to be 100% Red, Green, Blue and White.  You can use software like:
+  * 240p test suite - https://junkerhq.net/xrgb/index.php?title=240p_test_suite
+  * AVS HD 709 discs - https://www.avsforum.com/threads/avs-hd-709-blu-ray-mp4-calibration.948496/
+  * My own FreeCalRec601 DVDs - https://github.com/danmons/FreeCalRec601
+* Software to measure the output, such as
+  * HCFR - https://sourceforge.net/projects/hcfr/
+  * Argyll CMS -  https://www.argyllcms.com/
 
-If you have your own tools/methods for capturing this data, that's fine. Some people use HCFR (free and open source) to do so.
+If you have your own tools/methods for capturing this data, that's fine.
 
-If not, you can use "Argyll-CMS" - a free command line tool.  It comes with "spotread", which will do a one-time read of a display. 
-* https://www.argyllcms.com/
+If not, you can use "Argyll-CMS" - a free command line tool.  It comes with "spotread", which will do a one-time read of a display and produce results in absolute CIE XYZ and CIE Lab output. 
 
 # Capture process
 
 As above, you can use any tool you like to capture this data.  An example capture process using Argyll-CMS is:
 
 * Let your display warm up for 15 minutes or so.  You can use it during this time for content playback or gaming, just don't take measurements until it's been on for a while. 
-* Generate a picture with a tool that can show 100% R, G, B and white images.  You can use tools like:
-  * 240p test suite - https://junkerhq.net/xrgb/index.php?title=240p_test_suite
-  * AVS HD 709 discs - https://www.avsforum.com/threads/avs-hd-709-blu-ray-mp4-calibration.948496/
-  * My own FreeCalRec601 DVDs - https://github.com/danmons/FreeCalRec601
-* Ideally you want 10% windows to stop colour distortion happening when full screen pure signals over-drive the tube. 
+* Generate a picture with a tool that can show 100% R, G, B and white images. Some options mentioned above. 
+* Ideally you want a 10% window (or just larger than your colorimeter's lens if 10% is too small) to stop colour distortion happening when full screen pure signals over-drive the tube. 
 * Attach the colorimeter, bring up a 10% window of 100% pure white, run:
  ```
  spotread -c1 -yr -ew
