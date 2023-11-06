@@ -22,11 +22,12 @@ You will need:
 
 If you have your own tools/methods for capturing this data, that's fine. Some people use HCFR (free and open source) to do so.
 
-If not, you can use "Argyll-CMS" - a free command line tool.  It comes with "spotread", which will do a one-time read of a display.  
+If not, you can use "Argyll-CMS" - a free command line tool.  It comes with "spotread", which will do a one-time read of a display. 
+* https://www.argyllcms.com/
 
 # Capture process
 
-The process is:
+As above, you can use any tool you like to capture this data.  An example capture process using Argyll-CMS is:
 
 * Let your display warm up for 15 minutes or so.  You can use it during this time for content playback or gaming, just don't take measurements until it's been on for a while. 
 * Generate a picture with a tool that can show 100% R, G, B and white images.  You can use tools like:
