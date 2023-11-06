@@ -24,7 +24,7 @@ Also in this repo are a number of Jupyter notebooks (interactive Python web form
 
 # What's the point? 
 
-How an image looks on a screen is dependent on many things.  The biggest influences on the colour especially come down to two main features. Firstly, the regional standards that display used, such as various US/NTSC vs EU/PAL vs Japanese standards. The often-debated feature here is whether or not the authors of the content intended to use western-standard D65 white points, or 1990s-Japanese-standard D93.  For more on what this means, see the "FAQ_D93.md" file.
+How an image looks on a screen is dependent on many things.  The biggest influences on the colour especially come down to two main features. Firstly, the regional standards that display used, such as various US/NTSC vs EU/PAL vs Japanese standards. The often-debated feature here is whether or not the authors of the content intended to use western-standard D65 white points, or 1990s-Japanese-standard D93.  For more on what this means, see the `FAQ_D93.md` file.
 
 The second major feature is the physical characteristics of the display.  While we are quite used to modern standards like ITU-R BT.709 that define exactly how a HD screen should look and behave, in the 20th century the variance of displays came down to even the fact that certain brand CRTs had different phosphor compounds on their screens, so that the primary Red, Green and Blue colours looked subtly different to the human eye.  While ideal standards existed for colour spaces, physical differences in displays of the era, and the lack of strict adherence to these meant that the final visual output would be different. 
 
@@ -38,8 +38,14 @@ For purists, the best result always will be attained by using the widest colour 
 
 # How do I use these matrices? 
 
-See FAQ_USAGE.txt for a block diagram and walkthrough. 
+You can use them in MiSTer - https://github.com/danmons/colour_matrix_adaptations/tree/main/mister
+
+If you're a software or hardware developer, see `FAQ_USAGE.md` for a block diagram and walkthrough. 
+
+# Can I contribute data?
+
+Yes, this would be extremely helpful.  See `CONTRIBITIONS.md` for more details on how to do that. 
 
 # Which matrices should I use? 
 
-This is largely down to personal preference, however I've put together a "FAQ_RECOMMENDATIONS.md" you can read that have my own personal recommendations in there, dependent on what source material you are using, or what device you wish to simulate.  Again, I stress these are purely subjective, and there's no right or wrong way to view the content.  
+This is largely down to personal preference, however I've put together a `FAQ_RECOMMENDATIONS.md` you can read that have my own personal recommendations in there, dependent on what source material you are using, or what device you wish to simulate.  Again, I stress these are purely subjective, and there's no right or wrong way to view the content.  
