@@ -10,6 +10,10 @@ The file contains the following headers, left to right:
 
 A unique identifier that can be used programmatically. 
 
+## col_w
+
+A human-readable white point description.  Reference only, unused mathematically. 
+
 ## col_desc
 
 A human-readable colourspace description.  Reference only, unused mathematically. 
