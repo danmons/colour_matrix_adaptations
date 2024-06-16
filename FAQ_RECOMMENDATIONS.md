@@ -145,10 +145,10 @@ This is all very pedantic, and many of these settings will only have very slight
   * Limited range RGB, 8bit
 
 * LCD/OLED Television, UHD ("4K"), SDR
-  * Destination Matrix: BT.2020    
-  * Destination White Point: BT.2020 spec (near D65)
+  * Destination Matrix: BT.709
+  * Destination White Point: BT.709 spec (near D65)
   * Destination EOTF: BT.1886 (choose first mode if HD source, choose second "CRT approximation mode" if SD source).
-  * Narrow range RGB, 10bit
+  * Limited / Narrow range RGB, 8 / 10bit
 
 * LCD/OLED Television, UHD ("4K"), HDR
   * Destination Matrix: BT.2020
