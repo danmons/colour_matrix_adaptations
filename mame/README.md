@@ -59,7 +59,7 @@ manually increasing your screen's brightness.
 In other tools in this repo I offer gamma variations on files as well.  However MAME has its own gamma controls built in, so these are not necessary for these LUTs.  If you find the resulting 
 gamma with some of these LUTs unpleasant, adjust the output via the `gamma` setting in your `mame.ini` file (or change it realtime via MAME's internal user interface). 
 
-## These LUTs don't work!
+## Troubleshooting if you don't see changes
 
 Check all settings above, and in particular ensure you don't have conflicting `.cfg` files in your `cfg` folder that ignore your new settings. 
 
